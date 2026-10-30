@@ -1,0 +1,524 @@
+[
+  {
+    "x": 36,
+    "y": 26,
+    "size": 12,
+    "rotate": 0,
+    "weight": 400,
+    "text": "B/4",
+    "kind": "latin"
+  },
+  {
+    "x": 135.0,
+    "y": 96.6,
+    "size": 15.7,
+    "rotate": 0,
+    "weight": 400,
+    "text": "深層",
+    "kind": "cjk"
+  },
+  {
+    "x": 173.0,
+    "y": 97.7,
+    "size": 21.3,
+    "rotate": 0,
+    "weight": 700,
+    "text": "陰",
+    "kind": "cjk"
+  },
+  {
+    "x": 211.0,
+    "y": 97.7,
+    "size": 21.3,
+    "rotate": 0,
+    "weight": 700,
+    "text": "陽",
+    "kind": "cjk"
+  },
+  {
+    "x": 245.0,
+    "y": 97.1,
+    "size": 15.7,
+    "rotate": 0,
+    "weight": 400,
+    "text": "表層",
+    "kind": "cjk"
+  },
+  {
+    "x": 351.0,
+    "y": 97.1,
+    "size": 15.7,
+    "rotate": 0,
+    "weight": 400,
+    "text": "深層",
+    "kind": "cjk"
+  },
+  {
+    "x": 388.0,
+    "y": 97.7,
+    "size": 21.3,
+    "rotate": 0,
+    "weight": 700,
+    "text": "陰",
+    "kind": "cjk"
+  },
+  {
+    "x": 424.0,
+    "y": 97.7,
+    "size": 21.3,
+    "rotate": 0,
+    "weight": 700,
+    "text": "陽",
+    "kind": "cjk"
+  },
+  {
+    "x": 456.0,
+    "y": 97.1,
+    "size": 15.7,
+    "rotate": 0,
+    "weight": 400,
+    "text": "表層",
+    "kind": "cjk"
+  },
+  {
+    "x": 192.0,
+    "y": 211.0,
+    "size": 16.8,
+    "rotate": 0,
+    "weight": 400,
+    "text": "母",
+    "kind": "cjk"
+  },
+  {
+    "x": 155.0,
+    "y": 246.3,
+    "size": 12.3,
+    "rotate": 0,
+    "weight": 400,
+    "text": "心包",
+    "kind": "cjk"
+  },
+  {
+    "x": 194.0,
+    "y": 284.3,
+    "size": 12.3,
+    "rotate": 0,
+    "weight": 400,
+    "text": "三焦",
+    "kind": "cjk"
+  },
+  {
+    "x": 234.0,
+    "y": 275.0,
+    "size": 16.8,
+    "rotate": 0,
+    "weight": 400,
+    "text": "女",
+    "kind": "cjk"
+  },
+  {
+    "x": 184.0,
+    "y": 362.4,
+    "size": 16.8,
+    "rotate": 0,
+    "weight": 400,
+    "text": "父",
+    "kind": "cjk"
+  },
+  {
+    "x": 164.5,
+    "y": 428.3,
+    "size": 12.3,
+    "rotate": 0,
+    "weight": 400,
+    "text": "脾",
+    "kind": "cjk"
+  },
+  {
+    "x": 189.0,
+    "y": 467.3,
+    "size": 12.3,
+    "rotate": 0,
+    "weight": 400,
+    "text": "胃",
+    "kind": "cjk"
+  },
+  {
+    "x": 193.0,
+    "y": 561.0,
+    "size": 16.8,
+    "rotate": 0,
+    "weight": 400,
+    "text": "主",
+    "kind": "cjk"
+  },
+  {
+    "x": 182.0,
+    "y": 609.3,
+    "size": 12.3,
+    "rotate": 0,
+    "weight": 400,
+    "text": "肺",
+    "kind": "cjk"
+  },
+  {
+    "x": 230.0,
+    "y": 645.3,
+    "size": 12.3,
+    "rotate": 0,
+    "weight": 400,
+    "text": "大腸",
+    "kind": "cjk"
+  },
+  {
+    "x": 420.0,
+    "y": 199.0,
+    "size": 16.8,
+    "rotate": 0,
+    "weight": 400,
+    "text": "客",
+    "kind": "cjk"
+  },
+  {
+    "x": 365.0,
+    "y": 236.3,
+    "size": 12.3,
+    "rotate": 0,
+    "weight": 400,
+    "text": "腎",
+    "kind": "cjk"
+  },
+  {
+    "x": 398.0,
+    "y": 277.3,
+    "size": 12.3,
+    "rotate": 0,
+    "weight": 400,
+    "text": "膀胱",
+    "kind": "cjk"
+  },
+  {
+    "x": 435.0,
+    "y": 286.0,
+    "size": 16.8,
+    "rotate": 0,
+    "weight": 400,
+    "text": "妻",
+    "kind": "cjk"
+  },
+  {
+    "x": 370.0,
+    "y": 423.3,
+    "size": 12.3,
+    "rotate": 0,
+    "weight": 400,
+    "text": "肝",
+    "kind": "cjk"
+  },
+  {
+    "x": 405.0,
+    "y": 461.8,
+    "size": 12.3,
+    "rotate": 0,
+    "weight": 400,
+    "text": "膽",
+    "kind": "cjk"
+  },
+  {
+    "x": 450.0,
+    "y": 434.5,
+    "size": 16.8,
+    "rotate": 0,
+    "weight": 400,
+    "text": "子",
+    "kind": "cjk"
+  },
+  {
+    "x": 375.5,
+    "y": 609.3,
+    "size": 12.3,
+    "rotate": 0,
+    "weight": 400,
+    "text": "心",
+    "kind": "cjk"
+  },
+  {
+    "x": 441.0,
+    "y": 587.4,
+    "size": 16.8,
+    "rotate": 0,
+    "weight": 400,
+    "text": "夫",
+    "kind": "cjk"
+  },
+  {
+    "x": 419.0,
+    "y": 646.3,
+    "size": 12.3,
+    "rotate": 0,
+    "weight": 400,
+    "text": "小腸",
+    "kind": "cjk"
+  },
+  {
+    "x": 276.0,
+    "y": 238.5,
+    "size": 24.6,
+    "rotate": 0,
+    "weight": 700,
+    "text": "尺",
+    "kind": "cjk"
+  },
+  {
+    "x": 277.0,
+    "y": 424.5,
+    "size": 31.5,
+    "rotate": 0,
+    "weight": 700,
+    "text": "關",
+    "kind": "cjk"
+  },
+  {
+    "x": 276.0,
+    "y": 599.5,
+    "size": 24.6,
+    "rotate": 0,
+    "weight": 700,
+    "text": "寸",
+    "kind": "cjk"
+  },
+  {
+    "x": 502.0,
+    "y": 221.3,
+    "size": 29.1,
+    "rotate": 0,
+    "weight": 700,
+    "text": "水",
+    "kind": "cjk"
+  },
+  {
+    "x": 501.0,
+    "y": 263.5,
+    "size": 16.8,
+    "rotate": 0,
+    "weight": 400,
+    "text": "志",
+    "kind": "cjk"
+  },
+  {
+    "x": 502.0,
+    "y": 400.3,
+    "size": 29.1,
+    "rotate": 0,
+    "weight": 700,
+    "text": "木",
+    "kind": "cjk"
+  },
+  {
+    "x": 502.0,
+    "y": 442.0,
+    "size": 16.8,
+    "rotate": 0,
+    "weight": 400,
+    "text": "魂",
+    "kind": "cjk"
+  },
+  {
+    "x": 503.0,
+    "y": 580.3,
+    "size": 29.1,
+    "rotate": 0,
+    "weight": 700,
+    "text": "火",
+    "kind": "cjk"
+  },
+  {
+    "x": 505.0,
+    "y": 618.5,
+    "size": 16.8,
+    "rotate": 0,
+    "weight": 400,
+    "text": "神",
+    "kind": "cjk"
+  },
+  {
+    "x": 91.0,
+    "y": 409.3,
+    "size": 29.1,
+    "rotate": 0,
+    "weight": 700,
+    "text": "土",
+    "kind": "cjk"
+  },
+  {
+    "x": 92.0,
+    "y": 448.0,
+    "size": 16.8,
+    "rotate": 0,
+    "weight": 400,
+    "text": "意",
+    "kind": "cjk"
+  },
+  {
+    "x": 90.0,
+    "y": 579.3,
+    "size": 29.1,
+    "rotate": 0,
+    "weight": 700,
+    "text": "金",
+    "kind": "cjk"
+  },
+  {
+    "x": 93.0,
+    "y": 624.0,
+    "size": 16.8,
+    "rotate": 0,
+    "weight": 400,
+    "text": "魄",
+    "kind": "cjk"
+  },
+  {
+    "x": 187.0,
+    "y": 671.0,
+    "size": 33.6,
+    "rotate": 0,
+    "weight": 700,
+    "text": "氣",
+    "kind": "cjk"
+  },
+  {
+    "x": 187.0,
+    "y": 717.0,
+    "size": 33.6,
+    "rotate": 0,
+    "weight": 700,
+    "text": "口",
+    "kind": "cjk"
+  },
+  {
+    "x": 190.0,
+    "y": 745.1,
+    "size": 14.6,
+    "rotate": 0,
+    "weight": 400,
+    "text": "右腕",
+    "kind": "cjk"
+  },
+  {
+    "x": 402.0,
+    "y": 682.0,
+    "size": 33.6,
+    "rotate": 0,
+    "weight": 700,
+    "text": "人",
+    "kind": "cjk"
+  },
+  {
+    "x": 402.0,
+    "y": 714.0,
+    "size": 33.6,
+    "rotate": 0,
+    "weight": 700,
+    "text": "迎",
+    "kind": "cjk"
+  },
+  {
+    "x": 402.0,
+    "y": 745.1,
+    "size": 14.6,
+    "rotate": 0,
+    "weight": 400,
+    "text": "左腕",
+    "kind": "cjk"
+  },
+  {
+    "x": 518,
+    "y": 747,
+    "size": 10.6,
+    "rotate": 0,
+    "weight": 400,
+    "text": "J.Martin-Hartz",
+    "kind": "italic"
+  },
+  {
+    "x": 81.3,
+    "y": 188.1,
+    "size": 15.7,
+    "rotate": 19,
+    "weight": 400,
+    "text": "陰維脈",
+    "kind": "cjk"
+  },
+  {
+    "x": 110.1,
+    "y": 320.6,
+    "size": 15.7,
+    "rotate": -25,
+    "weight": 400,
+    "text": "陽維脈",
+    "kind": "cjk"
+  },
+  {
+    "x": 477.3,
+    "y": 146.3,
+    "size": 15.7,
+    "rotate": -41,
+    "weight": 400,
+    "text": "陰蹻脈",
+    "kind": "cjk"
+  },
+  {
+    "x": 500.8,
+    "y": 158.7,
+    "size": 15.7,
+    "rotate": -47,
+    "weight": 400,
+    "text": "陽蹻脈",
+    "kind": "cjk"
+  },
+  {
+    "x": 526.3,
+    "y": 311.4,
+    "size": 15.7,
+    "rotate": -47,
+    "weight": 400,
+    "text": "帶脈",
+    "kind": "cjk"
+  },
+  {
+    "x": 113.2,
+    "y": 499.5,
+    "size": 15.7,
+    "rotate": -55,
+    "weight": 400,
+    "text": "衝脈",
+    "kind": "cjk"
+  },
+  {
+    "x": 89.3,
+    "y": 688.4,
+    "size": 15.7,
+    "rotate": -51,
+    "weight": 400,
+    "text": "任脈",
+    "kind": "cjk"
+  },
+  {
+    "x": 526.5,
+    "y": 679.2,
+    "size": 15.7,
+    "rotate": 30,
+    "weight": 400,
+    "text": "督脈",
+    "kind": "cjk"
+  },
+  {
+    "x": 19,
+    "y": 733,
+    "size": 6,
+    "rotate": -90,
+    "weight": 400,
+    "text": "© Fondation Cornelius Celsus",
+    "kind": "latin"
+  }
+]

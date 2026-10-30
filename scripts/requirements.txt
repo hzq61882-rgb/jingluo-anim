@@ -1,0 +1,7 @@
+numpy>=1.26
+pillow>=10
+opencv-python-headless>=4.8
+scikit-image>=0.22
+scipy>=1.11
+fonttools[woff]>=4.50
+playwright>=1.40

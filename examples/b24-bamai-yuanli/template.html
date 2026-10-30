@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>__TITLE__</title>
+<style>
+@font-face{font-family:'NotoTC';font-weight:400;src:url(__FONTR__) format('woff2');}
+@font-face{font-family:'NotoTC';font-weight:700;src:url(__FONTB__) format('woff2');}
+html,body{margin:0;background:#2a1338;color:#f3ead6;font-family:'NotoTC','Noto Sans CJK TC','Microsoft JhengHei','Microsoft YaHei',sans-serif}
+svg text{font-family:'NotoTC','Noto Sans CJK TC','Microsoft JhengHei','Microsoft YaHei',sans-serif}
+.wrap{max-width:820px;margin:0 auto;padding:14px}
+h1{font-size:20px;color:#D4AF37;margin:6px 0 4px;letter-spacing:2px;font-weight:700}
+.sub{font-size:12px;color:#cbb6dc;margin-bottom:10px}
+#stage{width:100%;height:auto;display:block;border:1px solid rgba(212,175,55,.45);border-radius:6px;background:#fff}
+.ctl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:12px 0;font-size:14px}
+button{font-family:inherit;background:#6B3A8C;color:#f3ead6;border:1px solid #D4AF37;border-radius:4px;padding:5px 12px;font-size:14px;cursor:pointer}
+label{cursor:pointer;user-select:none}
+input[type=checkbox]{accent-color:#D4AF37}
+input[type=range]{accent-color:#D4AF37;width:140px}
+.note{font-size:12px;color:#cbb6dc;line-height:1.75}
+body.video .wrap{max-width:none;padding:0}
+body.video h1,body.video .sub,body.video .ctl,body.video .note{display:none}
+body.video #stage{border:0;border-radius:0;width:100vw}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1 id="h1"></h1>
+<div class="sub" id="subt"></div>
+<svg id="stage" xmlns="http://www.w3.org/2000/svg">
+<defs>
+ <filter id="glowU" filterUnits="userSpaceOnUse" x="-50" y="-50" width="4000" height="4000"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <filter id="glowS" filterUnits="userSpaceOnUse" x="-50" y="-50" width="4000" height="4000"><feGaussianBlur stdDeviation="1.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <filter id="glowBig" filterUnits="userSpaceOnUse" x="-50" y="-50" width="4000" height="4000"><feGaussianBlur stdDeviation="3.5"/></filter>
+ <radialGradient id="spark"><stop offset="0" stop-color="#fffbe6"/><stop offset=".35" stop-color="#ffe27a" stop-opacity=".9"/><stop offset="1" stop-color="#D4AF37" stop-opacity="0"/></radialGradient>
+ <radialGradient id="sparkW"><stop offset="0" stop-color="#ffffff"/><stop offset=".4" stop-color="#fff3c4" stop-opacity=".85"/><stop offset="1" stop-color="#ffd34d" stop-opacity="0"/></radialGradient>
+<filter id="lineflow" filterUnits="userSpaceOnUse" x="-10" y="-10" width="620" height="830" color-interpolation-filters="sRGB">
+  <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 0 0 0 0" result="ph"/>
+  <feComponentTransfer in="ph" result="dash"><feFuncA id="lfA" type="table" tableValues="0 1"/></feComponentTransfer>
+  <feComposite in="dash" in2="SourceAlpha" operator="in" result="dm"/>
+  <feFlood flood-color="#ffd84a" result="fl"/>
+  <feComposite in="fl" in2="dm" operator="in" result="gold"/>
+  <feGaussianBlur in="gold" stdDeviation="1.1" result="gb"/>
+  <feMerge><feMergeNode in="gb"/><feMergeNode in="gold"/></feMerge>
+ </filter>
+ <filter id="glowP" filterUnits="userSpaceOnUse" x="-50" y="-50" width="700" height="900"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <filter id="brandGlow" filterUnits="userSpaceOnUse" x="-50" y="-50" width="4000" height="4000"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<g id="hdr"></g>
+<g id="main">
+ <image id="bg" href="__IMG__" x="0" y="0" preserveAspectRatio="none"/>
+ <g id="L_cap"></g>
+ <g id="L_lines"><image id="lfimg" href="__LF__" x="0" y="0" preserveAspectRatio="none" filter="url(#lineflow)"/></g>
+ <g id="L_flow"></g>
+ <g id="L_front"></g>
+ <g id="L_yuan"></g>
+ <g id="L_wx"></g>
+ <g id="circG"></g>
+ <g id="L_lines2"></g>
+ <g id="L_pulse"></g>
+ <g id="L_dots"></g>
+ <g id="lblG"></g>
+</g>
+<g id="caption"></g>
+</svg>
+<div class="ctl">
+ <button id="btnPlay">⏸ 暂停</button>
+ <label>速度 <input id="sp" type="range" min="0.2" max="3" step="0.1" value="1"> <span id="spV">1.0×</span></label>
+ <label>进度 <input id="scrub" type="range" min="0" max="1" step="0.001" value="0"></label>
+</div>
+<div class="ctl" id="toggles"></div>
+<div class="note" id="note"></div>
+</div>
+<script>
+const CFG=__CFG__;
+const NS='http://www.w3.org/2000/svg';const lineDash=[],dotEls=[];
+const $=id=>document.getElementById(id);
+function el(tag,a,p){const e=document.createElementNS(NS,tag);for(const k in a)if(a[k]!=null)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
+function txt(s,a,p){const t=el('text',Object.assign({'text-anchor':'middle','dominant-baseline':'central'},a),p);t.textContent=s;return t;}
+const W=CFG.W,H=CFG.H,CAP=CFG.CAP,HDR=CFG.HDR,CYC=CFG.cycle;
+$('stage').setAttribute('viewBox',`0 0 ${W} ${HDR+H+CAP}`);
+$('main').setAttribute('transform',`translate(0,${HDR})`);
+$('bg').setAttribute('width',W);$('bg').setAttribute('height',H);$('lfimg').setAttribute('width',W);$('lfimg').setAttribute('height',H);
+$('h1').textContent=CFG.title;$('subt').textContent=CFG.sub;$('note').innerHTML=CFG.note;document.title=CFG.title;
+const DEFS=$('stage').querySelector('defs');
+function poly(p){return 'M'+p.map(q=>q[0]+','+q[1]).join('L');}
+function ease(x){return x<0?0:x>1?1:x*x*(3-2*x);}
+// ---------- layer toggles ----------
+CFG.layers.forEach(l=>{const lab=document.createElement('label');lab.innerHTML=`<input type="checkbox" checked> ${l.label}`;
+  lab.querySelector('input').onchange=e=>{l.ids.forEach(id=>$(id).style.display=e.target.checked?'':'none');};$('toggles').appendChild(lab);});
+// ---------- timeline ----------
+const ST=CFG.steps;const starts=[];{let a=0;ST.forEach(s=>{starts.push(a);a+=s.dur;});}
+const MOVE=CFG.moveFrac; // fraction of each step used for moving the front
+function stepAt(t){let si=0;for(let i=0;i<ST.length;i++)if(t>=starts[i])si=i;return [si,(t-starts[si])/ST[si].dur];}
+function frontFrac(F,t){const [si,lt]=stepAt(t);const m=MOVE[si];return F[si]+(F[si+1]-F[si])*Math.min(1,lt/m);}
+const LAST=ST.length-1;
+function globalFade(t){const [si,lt]=stepAt(t);if(si<LAST)return 1;const a=CFG.fadeStart;return 1-ease((lt-a)/(1-a-0.02));}
+// ---------- caption-block highlight ----------
+const capHL=CFG.blocks.map(b=>{const g=el('g',{opacity:0},$('L_cap'));
+  el('rect',{x:b.rect[0],y:b.rect[1],width:b.rect[2],height:b.rect[3],rx:5,fill:'#ffe9a8','fill-opacity':0.55,stroke:'#D4AF37','stroke-width':1.2},g);
+  el('rect',{x:b.rect[0]-1,y:b.rect[1]+3,width:3,height:b.rect[3]-6,rx:1.5,fill:'#e0a400'},g);return g;});
+// ---------- bands: particles + front ----------
+const bands=CFG.bands.map(b=>{const o={b};
+  // clip particles strictly inside this colour pipe
+  if(b.clip&&b.clip.length){const cid='clip_'+b.key;const cp=el('clipPath',{id:cid},DEFS);el('polygon',{points:b.clip.map(p=>p[0]+','+p[1]).join(' ')},cp);o.clip=`url(#${cid})`;}
+  const fid='pf'+b.key;const fl=el('filter',{id:fid,filterUnits:'userSpaceOnUse',x:-50,y:-50,width:700,height:900},DEFS);
+  el('feGaussianBlur',{in:'SourceAlpha',stdDeviation:1.4,result:'b'},fl);el('feFlood',{'flood-color':b.color,result:'c'},fl);el('feComposite',{in:'c',in2:'b',operator:'in',result:'h'},fl);
+  const fm=el('feMerge',{},fl);['h','h','SourceGraphic'].forEach(x=>el('feMergeNode',{in:x},fm));
+  const pg=el('g',{filter:`url(#${fid})`,'clip-path':o.clip||null},$('L_flow'));
+  o.parts=b.P.map(pp=>({pp,c:el('circle',{r:1.0,fill:b.pc},pg)}));
+  return o;});
+// --- U-ring leads: one bright lead per colour, cycling the FULL closed U of its ring ---
+const rings=(CFG.rings||[]).map(R=>{const o={R};
+  if(R.clip&&R.clip.length){const cid='clip_ring_'+R.id;const cp=el('clipPath',{id:cid},DEFS);el('polygon',{points:R.clip.map(p=>p[0]+','+p[1]).join(' ')},cp);o.clip=`url(#${cid})`;}
+  const d=poly(R.pts);o.path=el('path',{d,fill:'none',stroke:'none'},$('L_front'));o.len=o.path.getTotalLength();
+  o.leads=R.leads.map(L=>{
+    const gid='bd'+L.key;const rg=el('radialGradient',{id:gid},DEFS);el('stop',{offset:0,'stop-color':'#ffffff'},rg);el('stop',{offset:0.4,'stop-color':L.glow},rg);el('stop',{offset:1,'stop-color':L.color,'stop-opacity':0},rg);
+    // clip to the full U-ring pipe (both colour halves) — never into blank paper between rings
+    const g=el('g',{'clip-path':o.clip||null},$('L_front'));
+    const tail=[];for(let j=1;j<=10;j++)tail.push(el('circle',{r:4.0*(1-j/12),fill:L.glow,opacity:0},g));
+    const halo=el('circle',{r:15,fill:L.color,opacity:0,filter:'url(#glowBig)'},g);
+    const head=el('circle',{r:8.5,fill:`url(#${gid})`,opacity:0},g);const headC=el('circle',{r:3.2,fill:'#ffffff',stroke:L.glow,'stroke-width':1.1,opacity:0},g);
+    return {L,g,tail,halo,head,headC};
+  });
+  return o;});
+function tab(T,u){const M=T.length-1;const x=u*M;const i=Math.min(M-1,Math.floor(x)),f=x-i;const a=T[i],c=T[i+1];return a.map((v,k)=>v+(c[k]-v)*f);}
+// ---------- five-phase discs (vector) ----------
+const WX=CFG.wxStyle;const discO={};
+CFG.discs.forEach((d,i)=>{const g=el('g',{},$('L_wx'));
+  let clip=null;
+  if(d.clip){const cid='dc'+i;const cp=el('clipPath',{id:cid},DEFS);const [side,xc]=d.clip;
+    el('rect',side<0?{x:-50,y:-50,width:xc+50,height:H+100}:{x:xc,y:-50,width:W+100,height:H+100},cp);clip=`url(#${cid})`;}
+  const s=WX[d.el]||{};const gid='wg'+i;
+  const rg=el('radialGradient',{id:gid,cx:0.38,cy:0.34,r:0.75},DEFS);el('stop',{offset:0,'stop-color':s.light},rg);el('stop',{offset:1,'stop-color':s.dark},rg);
+  const gg=el('g',{'clip-path':clip},g);
+  el('circle',{cx:d.x,cy:d.y,r:d.r+1.3,fill:'#151515'},gg);
+  el('circle',{cx:d.x,cy:d.y,r:d.r,fill:`url(#${gid})`},gg);
+  el('circle',{cx:d.x,cy:d.y,r:d.r-2.2,fill:'none',stroke:'rgba(255,255,255,.45)','stroke-width':1},gg);
+  lineDash.push(el('circle',{cx:d.x,cy:d.y,r:d.r+0.6,fill:'none',stroke:'#ffd84a','stroke-width':1.0,pathLength:96,'stroke-dasharray':'4 8',opacity:0.8,'clip-path':clip,filter:'url(#glowS)'},$('L_lines2')));
+  const o={d,g};
+  o.halo=el('circle',{cx:d.x,cy:d.y,r:d.r+4,fill:'none',stroke:s.glow,'stroke-width':6,opacity:0,filter:'url(#glowBig)','clip-path':clip},g);
+  o.ring=el('circle',{cx:d.x,cy:d.y,r:d.r+1.5,fill:'none',stroke:s.glow,'stroke-width':2.2,opacity:0,'clip-path':clip},g);
+  if(d.t){const fs=d.fs||d.r*1.05;txt(d.t,{x:d.lx??d.x,y:d.ly??d.y,'font-size':fs,'font-weight':700,fill:s.text||'#111',stroke:s.textHalo||'#ffffff','stroke-width':fs*0.13,'paint-order':'stroke','stroke-linejoin':'round'},g);}
+  discO[d.id]=o;});
+// ---------- left 源泉/原 diagram ----------
+const Y=CFG.yuan;const yuanEl={};
+Y.glows.forEach(gw=>{let e;
+  if(gw.shape==='ell')e=el('ellipse',{cx:gw.x,cy:gw.y,rx:gw.rx,ry:gw.ry,fill:'none',stroke:gw.color,'stroke-width':gw.w||5,opacity:0,filter:'url(#glowBig)'},$('L_yuan'));
+  else e=el('circle',{cx:gw.x,cy:gw.y,r:gw.r,fill:gw.fill||'none',stroke:gw.color,'stroke-width':gw.w||5,opacity:0,filter:'url(#glowBig)'},$('L_yuan'));
+  yuanEl[gw.id]=e;});
+const swirl=el('g',{transform:`translate(${Y.spiral.x},${Y.spiral.y})`},$('L_yuan'));
+const swirlR=el('g',{},swirl);
+el('path',{d:poly(Y.spiral.pts),fill:'none',stroke:'#fff1b8','stroke-width':2.4,'stroke-linecap':'round','stroke-dasharray':'5 7',opacity:0.9,filter:'url(#glowS)'},swirlR);
+const yParts=Y.paths.map(P=>{const arr=[];for(let i=0;i<Y.N;i++){const g=el('g',{},$('L_yuan'));el('circle',{r:4.5,fill:'url(#sparkW)'},g);el('circle',{r:1.5,fill:'#ffffff'},g);arr.push(g);}return {P,arr};});
+// ---------- acupoint circles (vector, standard font) ----------
+const CG=$('circG');const pulses=[];
+CFG.circles.forEach(c=>{const g=el('g',{transform:`translate(${c.x},${c.y})`},CG);
+  el('circle',{r:c.r,fill:'#ffffff',stroke:'#161616','stroke-width':1.45},g);
+  c.dots.forEach(q=>el('circle',{cx:q.x-c.x,cy:q.y-c.y,r:q.r,fill:q.c,stroke:'rgba(0,0,0,.55)','stroke-width':0.5},g));
+  const n=[...c.n].length;const fs=n===2?10.6:(c.tx?7.6:8.4);
+  txt(c.n,{x:c.tx||0,y:c.ty,'font-size':fs,fill:'#111','font-weight':500,textLength:(fs*n*0.98).toFixed(2),lengthAdjust:'spacingAndGlyphs'},g);
+  lineDash.push(el('circle',{cx:c.x,cy:c.y,r:c.r,fill:'none',stroke:'#ffd84a','stroke-width':1.0,pathLength:96,'stroke-dasharray':'4 8',opacity:0.8,filter:'url(#glowS)'},$('L_lines2')));
+  c.dots.forEach((q,j)=>{const h=el('circle',{cx:q.x,cy:q.y,r:q.r*1.3,fill:q.g,filter:'url(#glowS)',opacity:0},$('L_dots'));const cc=el('circle',{cx:q.x,cy:q.y,r:q.r,fill:q.g,opacity:0},$('L_dots'));
+    dotEls.push({h,c:cc,r:q.r,ta:c.ta,phi:((c.x*0.37+c.y*0.13+j*0.5)%1)});});
+  const p={c};p.ring=el('circle',{cx:c.x,cy:c.y,r:c.r+1.2,fill:'none',stroke:c.bc||'#ffd34d','stroke-width':2.4,opacity:0,filter:'url(#glowS)'},$('L_pulse'));
+  p.wave=el('circle',{cx:c.x,cy:c.y,r:c.r,fill:'none',stroke:'#ffe9a0','stroke-width':1.6,opacity:0},$('L_pulse'));pulses.push(p);});
+// ---------- vector labels ----------
+CFG.labels.forEach(p=>{const g=el('g',{transform:`translate(${p.x},${p.y}) rotate(${p.rot||0})`},$('lblG'));
+  if(p.plate)el('rect',{x:-p.plate[0]/2,y:-p.plate[1]/2,width:p.plate[0],height:p.plate[1],rx:p.prx??3,fill:p.pfill||'#fff',stroke:p.pstroke||'none','stroke-width':p.psw||0},g);
+  if(p.circle){el('circle',{r:p.circle,fill:'#fff',stroke:'#161616','stroke-width':1.5},g);lineDash.push(el('circle',{cx:p.x,cy:p.y,r:p.circle,fill:'none',stroke:'#ffd84a','stroke-width':1.3,pathLength:96,'stroke-dasharray':'4 8',filter:'url(#glowS)'},$('L_lines2')));}
+  if(p.dot)el('circle',{cx:p.dot[0],cy:p.dot[1],r:p.dot[2],fill:p.dot[3],stroke:'rgba(0,0,0,.55)','stroke-width':0.5},g);
+  const a={y:p.dy||0,'font-size':p.fs,'font-weight':p.fw||400,fill:p.color||'#111','font-style':p.it?'italic':null,'text-anchor':p.anchor||'middle'};
+  if(p.halo){a.stroke=p.haloColor||'#ffffff';a['stroke-width']=p.halo;a['paint-order']='stroke';a['stroke-linejoin']='round';}
+  if(p.tl){a.textLength=p.tl;a.lengthAdjust='spacingAndGlyphs';}
+  txt(p.t,a,g);});
+(CFG.lines||[]).forEach(L=>{el('path',{d:poly(L),stroke:'#2a2a2a','stroke-width':1.1,fill:'none'},$('lblG'));lineDash.push(el('path',{d:poly(L),stroke:'#ffd84a','stroke-width':1.3,fill:'none',pathLength:96,'stroke-dasharray':'4 8',filter:'url(#glowS)'},$('L_lines2')));});
+// ---------- header with legend ----------
+const hd=$('hdr');el('rect',{x:0,y:0,width:W,height:HDR,fill:'#3a1a52'},hd);el('rect',{x:0,y:HDR-2,width:W,height:2,fill:'#D4AF37'},hd);
+txt(CFG.hdrTitle,{x:14,y:17,'text-anchor':'start','font-size':16,'font-weight':700,fill:'#D4AF37','letter-spacing':1},hd);
+txt(CFG.hdrSub,{x:14,y:35,'text-anchor':'start','font-size':10.5,'font-weight':700,fill:'#ffe9b0'},hd);
+txt(CFG.hdrSub2,{x:14,y:48,'text-anchor':'start','font-size':6.6,fill:'#cbb6dc'},hd);
+{const colW=CFG.legendColW,rowH=15,cols=2,x0=W-8-cols*colW,y0=9;const LEG=el('g',{},hd);
+ el('rect',{x:x0-6,y:3,width:cols*colW+8,height:HDR-8,rx:4,fill:'rgba(255,255,255,.07)',stroke:'rgba(212,175,55,.5)','stroke-width':0.7},LEG);
+ CFG.legend.forEach((L,i)=>{const cx=x0+(i%cols)*colW,cy=y0+Math.floor(i/cols)*rowH+3;const g=el('g',{transform:`translate(${cx},${cy})`},LEG);
+  if(L.kind==='band'){const gr=el('linearGradient',{id:'lgb',x1:0,x2:1,y1:0,y2:0},DEFS);CFG.bands.forEach((b,j)=>el('stop',{offset:j/5,'stop-color':b.color},gr));
+    el('rect',{x:0,y:-4.5,width:20,height:9,rx:4.5,fill:'url(#lgb)'},g);[4,10,16].forEach(x=>el('circle',{cx:x,cy:0,r:1.6,fill:'#fff8dc',stroke:'#7a5a00','stroke-width':0.4},g));}
+  else if(L.kind==='front'){[['#e0392b',4],['#f2d81c',10],['#5aaee0',16]].forEach(([c,x])=>{el('circle',{cx:x,cy:0,r:4,fill:c,filter:'url(#glowS)'},g);el('circle',{cx:x,cy:0,r:1.6,fill:'#fff'},g);});}
+  else if(L.kind==='pulse'){el('circle',{cx:10,cy:0,r:5.5,fill:'#fff',stroke:'#161616','stroke-width':0.8},g);el('circle',{cx:10,cy:0,r:7,fill:'none',stroke:'#ffd34d','stroke-width':1.6},g);}
+  else if(L.kind==='wx'){['木','火','土','金','水'].forEach((k,j)=>el('circle',{cx:2+j*4.4,cy:0,r:3.2,fill:WX[k].dark,stroke:'#111','stroke-width':0.4},g));}
+  else if(L.kind==='yuan'){el('circle',{cx:10,cy:0,r:5,fill:'#d8452e'},g);el('circle',{cx:10,cy:0,r:5,fill:'url(#sparkW)'},g);}
+  else if(L.kind==='cap'){el('path',{d:'M0,0L20,0',stroke:'#111','stroke-width':1.6},g);el('path',{d:'M0,0L20,0',stroke:'#ffd84a','stroke-width':1.6,'stroke-dasharray':'3 3'},g);}
+  txt(L.label,{x:25,y:0.5,'text-anchor':'start','font-size':8.4,fill:'#f3ead6'},g);});}
+// ---------- caption bar ----------
+const cap=$('caption');const cy0=HDR+H;
+el('rect',{x:0,y:cy0,width:W,height:CAP,fill:'#4a2366'},cap);el('rect',{x:0,y:cy0,width:W,height:2,fill:'#D4AF37'},cap);
+const cg=el('g',{transform:`translate(0,${cy0})`},cap);
+const capMain=txt('',{x:16,y:22,'text-anchor':'start','font-size':17,fill:'#D4AF37','font-weight':700,'letter-spacing':1},cg);
+const capSub=txt('',{x:16,y:43,'text-anchor':'start','font-size':10.6,fill:'#f3ead6'},cg);
+const capPts=txt('',{x:16,y:60,'text-anchor':'start','font-size':9.6,fill:'#ffd9a0'},cg);
+const stepDots=ST.map((s,i)=>el('circle',{cx:W-16-(ST.length-1-i)*13,cy:20,r:4,fill:'#cbb6dc',opacity:0.5},cg));
+txt(CFG.credit,{x:W-12,y:CFG.creditY||CAP-9,'text-anchor':'end','font-size':8.2,fill:'#cbb6dc'},cg);
+const BR=CFG.brand;let brHalo=null,brTxt=null;
+if(BR){el('rect',{x:0,y:BR.y-BR.h/2,width:W,height:BR.h,fill:'#2e1342'},cg);
+  el('rect',{x:W/2-BR.lineW/2,y:BR.y-BR.h/2,width:BR.lineW,height:0.8,fill:'rgba(212,175,55,.55)'},cg);
+  const brG=el('g',{},cg);
+  brHalo=txt(BR.text,{x:W/2,y:BR.y,'font-size':BR.fs,'font-weight':700,fill:'#D4AF37',stroke:'#ffd34d','stroke-width':3,'letter-spacing':BR.ls,filter:'url(#brandGlow)',opacity:0},brG);
+  brTxt=txt(BR.text,{x:W/2,y:BR.y,'font-size':BR.fs,'font-weight':700,fill:'#D4AF37','letter-spacing':BR.ls},brG);}
+function renderBrand(tw){if(!BR)return;const phb=(((tw%BR.period)+BR.period)%BR.period)/BR.period;const a=0.5-0.5*Math.cos(2*Math.PI*phb);
+  brTxt.setAttribute('opacity',(BR.min+(1-BR.min)*a).toFixed(3));brTxt.setAttribute('fill',a>0.5?'#ffe27a':'#D4AF37');brHalo.setAttribute('opacity',(0.9*a).toFixed(3));}
+
+// ---------- render ----------
+function render(tm){
+  renderBrand(tm);const t=((tm%CYC)+CYC)%CYC;const ph=t/CYC;const [si,lt]=stepAt(t);const st=ST[si];const gf=globalFade(t);
+  capMain.textContent=st.main;capSub.textContent=st.sub;capPts.textContent=st.pts||'';
+  stepDots.forEach((d,i)=>{d.setAttribute('fill',i===si?'#ffe27a':'#cbb6dc');d.setAttribute('opacity',i===si?1:0.45);d.setAttribute('r',i===si?5:4);});
+  // caption block highlight
+  capHL.forEach((g,i)=>{let a=0;if(st.block===i){a=ease(lt/0.12)*(1-ease((lt-0.9)/0.1));}g.setAttribute('opacity',a.toFixed(3));});
+  // particles
+  bands.forEach(o=>{const b=o.b;
+    o.parts.forEach(P=>{const [k,ph0,A,phh,m]=P.pp;const u=((k*ph+ph0)%1+1)%1;const q=tab(b.tab,u);
+      const th=2*Math.PI*(m*u+phh);const z=Math.cos(th);const off=A*Math.sin(th);const nx=q[3],ny=q[4];
+      const op=Math.min(1,u/0.02,(1-u)/0.03)*(0.55+0.45*(z+1)/2);
+      P.c.setAttribute('cx',(q[0]+nx*off).toFixed(1));P.c.setAttribute('cy',(q[1]+ny*off).toFixed(1));
+      P.c.setAttribute('r',((1.0+1.0*(z+1)/2)*q[2]).toFixed(2));P.c.setAttribute('opacity',op.toFixed(3));});
+  });
+  // bright leads cycle full U (1 lap per CYC); each clipped to its ring pipe (never into blank)
+  const laps=CFG.leadLaps||1;
+  rings.forEach(o=>{
+    o.leads.forEach(ld=>{
+      const u=((laps*ph+ld.L.phase)%1+1)%1;const L=u*o.len;
+      const q=o.path.getPointAtLength(Math.max(0.1,L));
+      const fl=0.85+0.15*Math.sin(t*2*Math.PI*2);
+      // match the colour of the half currently occupied (各自颜色的管道)
+      const on0=u<o.R.fSplit;const col=on0?o.R.colors[0]:o.R.colors[1];const gl=on0?o.R.glows[0]:o.R.glows[1];
+      ld.halo.setAttribute('fill',col);ld.tail.forEach(e=>e.setAttribute('fill',gl));
+      [ld.halo,ld.head,ld.headC].forEach(e=>{e.setAttribute('cx',q.x.toFixed(1));e.setAttribute('cy',q.y.toFixed(1));e.setAttribute('opacity','1');});
+      ld.halo.setAttribute('opacity',(0.8*fl).toFixed(3));
+      ld.tail.forEach((e,j)=>{const p2=o.path.getPointAtLength(Math.max(0.1,(L-(j+1)*3.2+o.len)%o.len));e.setAttribute('cx',p2.x.toFixed(1));e.setAttribute('cy',p2.y.toFixed(1));e.setAttribute('opacity',(0.8*(1-(j+1)/11)).toFixed(3));});
+    });
+  });
+  // flowing light on all black lines
+  {const N=40,s=(CFG.lineLaps*ph)%1,v=[];for(let j=0;j<N;j++){let x=((j/(N-1)-s)%1+1)%1;v.push(x<0.32?Math.sin(Math.PI*x/0.32).toFixed(3):0);}$('lfA').setAttribute('tableValues',v.join(' '));}
+  lineDash.forEach(e=>e.setAttribute('stroke-dashoffset',(-(CFG.dashLaps*12*ph)%12).toFixed(2)));
+  dotEls.forEach(D=>{const dt=t-D.ta;let burst=0;if(dt>=0)burst=Math.exp(-dt/0.9);
+    const amp=0.18+0.82*(dt>=0?gf:0);const tw=0.5+0.5*Math.sin(2*Math.PI*(CFG.twN*ph+D.phi));
+    const a=Math.min(1,amp*(0.25+0.75*tw)*0.9+burst);
+    D.h.setAttribute('opacity',a.toFixed(3));D.h.setAttribute('r',(D.r*(1.1+0.25*tw*amp+0.4*burst)).toFixed(2));
+    D.c.setAttribute('opacity',(0.35+0.65*a).toFixed(3));D.c.setAttribute('r',(D.r*(1+0.35*burst)).toFixed(2));});
+  // acupoint pulses
+  pulses.forEach(p=>{const dt=t-p.c.ta;let ring=0,wo=0,wr=p.c.r;
+    if(dt>=0){ring=(0.38+0.62*Math.exp(-dt/0.6))*gf;if(dt<1.1){wo=0.95*(1-dt/1.1);wr=p.c.r+dt*13;}}
+    p.ring.setAttribute('opacity',ring.toFixed(3));p.wave.setAttribute('opacity',wo.toFixed(3));p.wave.setAttribute('r',wr.toFixed(2));});
+  // five-phase discs
+  for(const id in discO){const o=discO[id];const d=o.d;let a=0;
+    if(d.ta!=null){const dt=t-d.ta;if(dt>=0)a=(0.35+0.65*Math.exp(-dt/0.9))*gf;
+      if(d.ta2!=null){const d2=t-d.ta2;if(d2>=0&&d2<1.2)a=Math.max(a,1-d2/1.2);} // bottom nodes glow again just before the loop restarts
+      if(d.node==='bottom'){a=Math.max(0,1-t/1.6);const d2=t-(CYC-1.2);if(d2>0)a=Math.max(a,d2/1.2);}
+    }
+    const pul=a*(0.82+0.18*Math.sin(t*Math.PI*2));
+    o.halo.setAttribute('opacity',(0.9*pul).toFixed(3));o.ring.setAttribute('opacity',(pul).toFixed(3));}
+  // left diagram
+  const gl={};Y.glows.forEach(gw=>{let a=0.12;
+    if(gw.step===si)a=0.12+0.88*Math.pow(Math.sin(Math.PI*Math.min(1,lt*1.05)),0.6);
+    if(gw.step2===si)a=Math.max(a,0.12+0.88*Math.pow(Math.sin(Math.PI*Math.min(1,lt*1.05)),0.6));
+    gl[gw.id]=a;yuanEl[gw.id].setAttribute('opacity',a.toFixed(3));});
+  swirlR.setAttribute('transform',`rotate(${(Y.spiral.dir*360*Y.spiral.turns*ph).toFixed(2)})`);
+  swirl.setAttribute('opacity',(0.35+0.65*(gl.spiral||0)).toFixed(3));
+  yParts.forEach(Q=>Q.arr.forEach((g,i)=>{const u=((Y.k*ph+i/Y.N)%1+1)%1;const q=tab(Q.P,u);const op=Math.min(1,u/0.05,(1-u)/0.05)*0.95;
+    g.setAttribute('transform',`translate(${q[0].toFixed(1)},${q[1].toFixed(1)})`);g.setAttribute('opacity',op.toFixed(3));}));
+}
+window.renderAt=t=>render(t);window.CYC=CYC;
+let Tm=0,playing=true,sp=1,last=null;
+const video=/[?&]video=1/.test(location.search);
+if(video)document.body.classList.add('video');
+function loop(ts){if(last!==null&&playing){Tm+=(ts-last)/1000*sp;}last=ts;render(Tm);$('scrub').value=((Tm%CYC+CYC)%CYC/CYC).toFixed(3);requestAnimationFrame(loop);}
+if(!video)requestAnimationFrame(loop);else render(0);
+$('btnPlay').onclick=()=>{playing=!playing;$('btnPlay').textContent=playing?'⏸ 暂停':'▶ 播放';};
+$('sp').oninput=e=>{sp=+e.target.value;$('spV').textContent=sp.toFixed(1)+'×';};
+$('scrub').oninput=e=>{Tm=+e.target.value*CYC;render(Tm);};
+</script>
+</body>
+</html>
