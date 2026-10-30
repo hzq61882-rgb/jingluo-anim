@@ -10,5 +10,6 @@ fi
 ffmpeg -y -loglevel error -i "$1" -vf "fps=$4,scale=$3:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=$5:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle" -loop 0 "$2"
 python3 - "$2" << 'PY'
 import os, sys
-print(f"{os.path.getsize(sys.argv[1]) / 1048576:.2f} MB")
+# 十进制 MB，与 scripts/record.py 的上限同一把尺子（1 MB = 10^6 字节）。
+print(f"{os.path.getsize(sys.argv[1]) / 1000000:.2f} MB")
 PY
