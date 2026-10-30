@@ -122,6 +122,22 @@ python scripts/build.py --config template/config.json --image clean.jpg --out ou
 
 `build.py` 把底图压成 JPEG（或保留 PNG），嵌进模板，并写入字体子集。`--skip-fonts` 改用系统字体，只适合本地预览。
 
+底图像素和 config 的 `W`/`H` 不一致时：
+
+- 图片正好是 config 的整数倍（B/24 的 `clean.jpg` 是 595×808 的 2 倍，1190×1616）：自动保留 config 的 W/H。坐标仍是扫描图像素，SVG 把大图缩进画面。不必再传 `--keep-size`。
+- 尺寸不同、又不是整数倍：默认把 W/H 改成图片尺寸，并在 stderr 警告。坐标若是按原来的 W/H 描的，加 `--keep-size`。
+- 确实要把画面改成图片像素：`--use-image-size`。
+
+专用模板里的 `__LF__` 是黑线流光相位图（B/24 的黑线）。把 `lineflow.png` 放在 config 或底图同目录，或者写 `--lineflow 某.png`。模板需要它、又找不到文件时，`build.py` 直接退出，不会把 `__LF__` 留在 HTML 里。相位图用 `scripts/lineflow.py` 从干净底图生成。
+
+改循环秒数不要手改每一项：
+
+```bash
+python scripts/rescale_cycle.py --config examples/b24-bamai-yuanli/config.json --cycle 30 --out out/b24-30s.json
+```
+
+`rescale_cycle.py` 按新秒数除以旧秒数，改 `steps.dur` 和圈数（`lineLaps`、`dashLaps`、`twN`、粒子 `k`、`turns`、`leadLaps`、`TAIJI_REV`）。圈数取整数，这样 `t = cycle` 时相位回到 `t = 0`。取整改了速度时在 stderr 警告。`brand.period` 仍是真实秒数，必须整除新的 cycle；整除不了就改成最近的可整除周期。`TU_SWITCH` 这类循环内的时刻按比例挪。`items` 里的 `v` 是速度，页面自己取整圈，这里不改。
+
 `config.json` 里页面会读的字段：
 
 | 字段 | 作用 |
@@ -186,9 +202,10 @@ python scripts/record.py \
 
 体积上限：
 
-- MP4：libx264，CRF 从 18 往上加，直到不超过 `--mp4-max-mb`（默认 15）。
-- GIF：依次试更窄的宽度和更少的调色板颜色，直到不超过 `--gif-max-mb`（默认 9.9）。`--gif-fps` 默认 10。
-- `--still-time` 再出一张 PNG 静帧。
+- MP4：libx264，CRF 从 18 试到 36，直到不超过 `--mp4-max-mb`（默认 15）。上限是十进制 MB（1 MB = 10^6 字节）。终端打印的数用同一把尺子，不按 1024² 的 MiB。
+- GIF：宽度从 540 降到 160，调色板颜色一起降，直到不超过 `--gif-max-mb`（默认 9.9，同样是十进制 MB）。`--gif-fps` 默认 10。还要更小就再传 `--gif-widths`。
+- 截帧和编码会立刻打印进度，管道里也能看到走到哪一帧。
+- `--still-time` 再出一张 PNG 静帧。`--limit-frames` 只画前 N 帧，用来试脚本。
 
 已有 MP4、只想重压 GIF：
 
@@ -297,7 +314,51 @@ B/24 品牌条周期 2 秒，循环 60 秒。B/28 品牌条同样 2 秒，循环
 
 ### B/24 把脈的原理
 
-目录 `examples/b24-bamai-yuanli`。成片 `把脈的原理動畫.html`，专用模板 `template.html`。循环 60 秒。`clips.json` 的 `bands` 和 `rings` 是裁剪多边形；`config.json` 里有中线、粒子表和领头点。
+目录 `examples/b24-bamai-yuanli`。成片 `把脈的原理動畫.html`，专用模板 `template.html`。循环 60 秒。`config.json` 里有中线、粒子表、领头点和裁剪多边形（`bands[].clip`、`rings[].clip`）。模板只读 config。
+
+底图 `clean.jpg` 是去手写之后的 2 倍图（1190×1616）。通用 `scripts/inpaint.py` 在这张图上会留残字，也会把色带涂糊；同目录的 `inpaint_b24.py` 是当时的专用擦法。原扫描和 boxes 不在仓库里，重建直接用 `clean.jpg`。`lineflow.png` 是黑线流光相位图，从成片抽出。`scripts/lineflow.py` 按同一算法重算，JPEG 底图上会有少量差别，要对上成片就用仓库里的这份。
+
+从仓库重做 60 秒，再改成 30 秒：
+
+```bash
+python scripts/build.py \
+  --config examples/b24-bamai-yuanli/config.json \
+  --template examples/b24-bamai-yuanli/template.html \
+  --image examples/b24-bamai-yuanli/clean.jpg \
+  --out out/b24.html
+
+python scripts/verify_loop.py --html out/b24.html
+
+python scripts/rescale_cycle.py \
+  --config examples/b24-bamai-yuanli/config.json \
+  --cycle 30 \
+  --out out/b24-30s.json
+
+python scripts/build.py \
+  --config out/b24-30s.json \
+  --template examples/b24-bamai-yuanli/template.html \
+  --image examples/b24-bamai-yuanli/clean.jpg \
+  --lineflow examples/b24-bamai-yuanli/lineflow.png \
+  --out out/b24-30s.html
+
+python scripts/verify_loop.py --html out/b24-30s.html
+```
+
+第一条 `build.py` 可以不写 `--lineflow`：config 旁边有 `lineflow.png` 就会自动填进 `__LF__`。底图是 config 的 2 倍，W/H 自动留在 595×808，不用 `--keep-size`。输出里不应再有 `__LF__`。
+
+30 秒那份：步长减半，`lineLaps` 12→6，`dashLaps` 24→12，`twN` 30→15，粒子圈数 k 为 2、4 的收到 1、2。k = 3 按比例是 1.5，取整为 2，速度会变，脚本会警告。`leadLaps` 按比例是 0.5，保持 1，领头亮点在 30 秒里仍走一整圈，比 60 秒时快一倍。`yuan.k` 和螺旋 `turns` 从 2 收到 1，每秒圈数不变。`brand.period` 仍是 2 秒，2 能整除 30。
+
+只想确认录制脚本能跑通时，画几帧即可：
+
+```bash
+python scripts/record.py \
+  --html out/b24.html \
+  --out-dir out/b24-smoke \
+  --name b24 \
+  --fps 10 \
+  --width 640 \
+  --limit-frames 4
+```
 
 六条色带两两合成三环 U 形管：
 
