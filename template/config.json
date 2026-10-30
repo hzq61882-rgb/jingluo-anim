@@ -1,0 +1,38 @@
+{
+  "title": "新图（替换标题）",
+  "sub": "原图：J. Martin-Hartz / Fondation Cornelius Celsus。动画为示意，非原作者制作。",
+  "hdrTitle": "新图",
+  "hdrSub": "流动示意",
+  "hdrSub2": "原图 J. Martin-Hartz / Fondation Cornelius Celsus",
+  "credit": "原图 J. Martin-Hartz / Fondation Cornelius Celsus · 动画示意",
+  "assumption": "原图若无箭头，把流向假定写在这一句里，录制时它留在画面页脚。",
+  "note": "原图若无箭头，把流向假定写在这一段。本段在播放器下方，?video=1 时隐藏，所以同一句也要放进 assumption。",
+  "cycle": 24,
+  "W": 595,
+  "H": 808,
+  "HDR": 58,
+  "CAP": 96,
+  "maxw": 820,
+  "legendColW": 150,
+  "layers": [
+    {"id": "main", "label": "主流"}
+  ],
+  "legend": [
+    {"kind": "gold", "label": "主流"},
+    {"kind": "band", "color": "#e0392b", "label": "色带"},
+    {"kind": "solid", "label": "黑实线"},
+    {"kind": "dashed", "label": "黑虚线"}
+  ],
+  "items": [],
+  "steps": [
+    {
+      "dur": 24,
+      "main": "整图循环",
+      "sub": "各段 dur 之和要等于 cycle",
+      "on": []
+    }
+  ],
+  "plates": [],
+  "labels": [],
+  "brand": null
+}

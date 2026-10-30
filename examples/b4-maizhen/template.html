@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>经络流注动画 · 气口人迎图（J. Martin-Hartz）</title>
+<style>
+/*__FONTS__*/
+  html,body{margin:0;background:#2a1338;color:#f3ead6;font-family:"NotoTC","Microsoft YaHei","SimHei","PingFang SC",sans-serif}
+  #stage text{font-family:"NotoTC","Microsoft YaHei","SimHei",sans-serif}
+  .sublbl{margin-left:-6px;font-size:13px;color:#e6d8f2}
+  .lg{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#e6d8f2;margin-right:12px}
+  .wrap{max-width:760px;margin:0 auto;padding:14px}
+  h1{font-size:20px;color:#D4AF37;margin:6px 0 4px;letter-spacing:2px}
+  .sub{font-size:12px;color:#cbb6dc;margin-bottom:10px}
+  #stage{width:100%;height:auto;display:block;border:1px solid rgba(212,175,55,.45);border-radius:6px;background:#fff}
+  .ctl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:12px 0;font-size:14px}
+  button,select{background:#6B3A8C;color:#f3ead6;border:1px solid #D4AF37;border-radius:4px;padding:5px 12px;font-size:14px;cursor:pointer}
+  label{cursor:pointer;user-select:none}
+  input[type=checkbox]{accent-color:#D4AF37}
+  input[type=range]{accent-color:#D4AF37;width:160px}
+  .note{font-size:12px;color:#cbb6dc;line-height:1.7}
+  body.video .wrap{max-width:none;padding:0}
+  body.video h1,body.video .sub,body.video .ctl,body.video .note{display:none}
+  body.video #stage{border:0;border-radius:0;width:100vw}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>气口 · 人迎 —— 经络流注动画</h1>
+<div class="sub">原图：J. Martin-Hartz / Fondation Cornelius Celsus（B/4）。动画按图中节点与线条示意，非原作者制作。</div>
+<svg id="stage" viewBox="0 0 595 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowBig" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <radialGradient id="spark"><stop offset="0" stop-color="#fffbe6"/><stop offset=".35" stop-color="#ffe27a"/><stop offset="1" stop-color="#D4AF37" stop-opacity="0"/></radialGradient>
+  </defs>
+  <image href="__IMG__" x="0" y="0" width="595" height="808"/>
+  <rect x="0" y="0" width="595" height="808" fill="#3a1a50" opacity="0.06"/>
+  <g id="L_wx"></g>
+  <g id="L_yy"></g>
+  <g id="L_blk"></g>
+  <g id="L_qj"></g>
+  <g id="L_arc"></g>
+  <g id="L_mer"></g>
+  <g id="L_nodes"></g>
+  <g id="L_txt"></g>
+  <g id="legend"></g>
+  <g id="caption">
+    <rect x="0" y="808" width="595" height="92" fill="#4a2366"/>
+    <rect x="0" y="808" width="595" height="2" fill="#D4AF37"/>
+    <g id="dial" transform="translate(52,854)"></g>
+    <text id="capMain" x="102" y="846" font-size="24" fill="#D4AF37" font-weight="bold" letter-spacing="2"></text>
+    <text id="capSub" x="102" y="872" font-size="13" fill="#f3ead6"></text>
+    <text x="102" y="891" font-size="9.5" fill="#cbb6dc">十二经子午流注 · 原图 J. Martin-Hartz / Fondation Cornelius Celsus · 动画示意</text>
+  </g>
+</svg>
+<div class="ctl">
+  <button id="btnPlay">⏸ 暂停</button>
+  <label>速度 <select id="selSpeed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
+  <label>时辰 <input id="scrub" type="range" min="0" max="23.99" step="0.01" value="0"></label>
+</div>
+<div class="ctl">
+  <label><input type="checkbox" id="tg_mer" checked> 十二经流注</label>
+  <label><input type="checkbox" id="tg_arc" checked> 图中弧线</label>
+  <label><input type="checkbox" id="tg_wx" checked> 五行相生</label>
+  <label><input type="checkbox" id="tg_qj" checked> 奇经八脉</label>
+  <label><input type="checkbox" id="tg_yy" checked> 阴阳深浅</label>
+</div>
+<div class="ctl">
+  <label><input type="checkbox" id="tg_blk" checked> 黑线流动</label>
+  <label class="sublbl"><input type="checkbox" id="tg_bs" checked> 实线</label>
+  <label class="sublbl"><input type="checkbox" id="tg_bd" checked> 虚线</label>
+  <label>黑线速度 <input id="bspeed" type="range" min="0" max="3" step="0.1" value="1"> <span id="bspeedV">1.0×</span></label>
+</div>
+<div class="note">
+图层说明：金色光点按子午流注顺序（肺→大肠→胃→脾→心→小肠→膀胱→肾→心包→三焦→胆→肝→肺）走过图中十二个脏腑小圆，到达处小圆脉动，下方显示时辰；“图中弧线”沿原图橙褐色大弧线流动；五行大圆按 木→火→土→金→水 依次点亮；任脉、督脉自下而上流动，其余奇经线淡淡流向所连小圆；顶部“深层 阴 / 阳 表层”小圆交替呼吸。<br>
+“黑线流动”：原图黑色实线（竖/横辅助线、三角形与方框线、脏腑之间带箭头的小弧线、顶部阴阳小圆引向脏腑的曲线、下方两道 U 形细线）以银白色细光点＋深色描边流动；黑色虚线以淡蓝白长段＋彗星光点流动。有箭头者按箭头方向，无箭头者默认：竖线自上而下、横线自左向右、斜线自上而下。可单独调节黑线速度，或只看实线／虚线。图中文字已由手写体替换为标准字体（繁体原字保留）。<br>
+注：原图橙色弧线本身未画箭头，流动方向取与子午流注一致的方向；图中虚线、三角形辅助线及“母女父主客妻子夫”的含义未作演绎。
+</div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+const deg=Math.PI/180;
+// ---- measured node centres (image px, 595x808) ----
+const N={
+ 肺:[170,584],大腸:[210,622],胃:[208,442],脾:[172,404],心:[386,586],小腸:[424,622],
+ 膀胱:[422,261],腎:[384,224],心包:[170,224],三焦:[208,264],膽:[422,442],肝:[384,402]};
+const ORDER=['肺','大腸','胃','脾','心','小腸','膀胱','腎','心包','三焦','膽','肝'];
+const INFO={
+ 肺:['寅时','03–05','手太阴肺经'],大腸:['卯时','05–07','手阳明大肠经'],胃:['辰时','07–09','足阳明胃经'],
+ 脾:['巳时','09–11','足太阴脾经'],心:['午时','11–13','手少阴心经'],小腸:['未时','13–15','手太阳小肠经'],
+ 膀胱:['申时','15–17','足太阳膀胱经'],腎:['酉时','17–19','足少阴肾经'],心包:['戌时','19–21','手厥阴心包经'],
+ 三焦:['亥时','21–23','手少阳三焦经'],膽:['子时','23–01','足少阳胆经'],肝:['丑时','01–03','足厥阴肝经']};
+const R=14; // node radius
+const SIMP={肺:'肺',大腸:'大肠',胃:'胃',脾:'脾',心:'心',小腸:'小肠',膀胱:'膀胱',腎:'肾',心包:'心包',三焦:'三焦',膽:'胆',肝:'肝'};
+// ---- geometry helpers ----
+function arcPts(c,r0,r1,a0,a1,n=80){const p=[];for(let i=0;i<=n;i++){const t=i/n,a=(a0+(a1-a0)*t)*deg,r=r0+(r1-r0)*t+((r0+r1)/2*0)+0;p.push([c[0]+r*Math.cos(a),c[1]+r*Math.sin(a)]);}return p;}
+function bulgeArc(c,rEnd,rMid,a0,a1,n=80){const p=[];for(let i=0;i<=n;i++){const t=i/n,a=(a0+(a1-a0)*t)*deg,r=rEnd+(rMid-rEnd)*Math.sin(Math.PI*t);p.push([c[0]+r*Math.cos(a),c[1]+r*Math.sin(a)]);}return p;}
+function poly(p){return 'M'+p.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join('L');}
+function quad(a,c,b){return `M${a[0]},${a[1]}Q${c[0]},${c[1]} ${b[0]},${b[1]}`;}
+function line(a,b){return `M${a[0]},${a[1]}L${b[0]},${b[1]}`;}
+function angOf(c,p){return Math.atan2(p[1]-c[1],p[0]-c[0])/deg;}
+// Arcs fitted to the orange/brown strokes of the original drawing
+const C_OUT=[246,382];        // outer big arc  r≈216 : 肺 … top … 膀胱
+const C_RIGHT=[292.5,441.7];  // right arc r≈223–231 : 膀胱 … 小腸
+const C_IR=[247.1,443.1];     // inner arc r≈180 : 三焦 … 膽
+const C_IL=[169,315.6];       // inner left arc r≈88 : 心包 … 脾
+function arcBetween(c,A,B,dir,bulge){ // dir:+1 increasing angle
+  let a0=angOf(c,A),a1=angOf(c,B);
+  if(dir>0){while(a1<=a0)a1+=360;}else{while(a1>=a0)a1-=360;}
+  const r0=Math.hypot(A[0]-c[0],A[1]-c[1]),r1=Math.hypot(B[0]-c[0],B[1]-c[1]);
+  const p=[];const n=90;
+  for(let i=0;i<=n;i++){const t=i/n,a=(a0+(a1-a0)*t)*deg,r=r0+(r1-r0)*t+(bulge||0)*Math.sin(Math.PI*t);p.push([c[0]+r*Math.cos(a),c[1]+r*Math.sin(a)]);}
+  return poly(p);
+}
+// ---- 12 meridian hand-off segments (node i -> node i+1) ----
+const SEG=[
+ quad(N.肺,[206,578],N.大腸),            // 肺→大腸 (small arrow drawn 肺→大腸)
+ line(N.大腸,N.胃),                       // 大腸→胃 (same column)
+ quad(N.胃,[204,404],N.脾),              // 胃→脾 (small arrow pair 脾/胃)
+ line(N.脾,N.心),                         // 脾→心 (along the long dashed diagonal)
+ quad(N.心,[420,582],N.小腸),            // 心→小腸 (arrow 「夫」)
+ arcBetween(C_RIGHT,N.小腸,N.膀胱,-1,7.5), // 小腸→膀胱 along right orange arc
+ quad(N.膀胱,[420,222],N.腎),            // 膀胱→腎 (arrow pair 腎/膀胱)
+ quad(N.腎,[277,200],N.心包),            // 腎→心包 across the top (尺)
+ quad(N.心包,[206,224],N.三焦),          // 心包→三焦 (arrow 母→女)
+ arcBetween(C_IR,N.三焦,N.膽,+1,0),      // 三焦→膽 along inner orange arc
+ quad(N.膽,[420,402],N.肝),              // 膽→肝 (arrow pair 肝/膽)
+ line(N.肝,N.肺)                          // 肝→肺 back to start
+];
+// ---- author's orange arcs (gold trace) ----
+const ARCS=[
+ arcBetween(C_RIGHT,N.小腸,N.膀胱,-1,7.5),
+ arcBetween(C_OUT,N.膀胱,N.肺,-1,0),
+ arcBetween(C_IR,N.三焦,N.膽,+1,0),
+ arcBetween(C_IL,N.心包,N.脾,-1,0)
+];
+// ---- extraordinary vessel lines (double lines in drawing) ----
+function toward(a,b,stop){const d=Math.hypot(b[0]-a[0],b[1]-a[1]);return [b[0]-(b[0]-a[0])/d*stop,b[1]-(b[1]-a[1])/d*stop];}
+const QJ=[
+ {n:'任脈',a:[57,735],b:N.肺,main:1},
+ {n:'督脈',a:[557,698],b:N.小腸,main:1},
+ {n:'陰維脈',a:[40,175],b:N.心包},
+ {n:'陽維脈',a:[70,343],b:N.三焦},
+ {n:'陰蹻脈',a:[531,102],b:N.腎},
+ {n:'陽蹻脈',a:[539,110],b:N.膀胱},
+ {n:'帶脈',a:[554,277],b:N.膽},
+ {n:'衝脈',a:[68,566],b:N.脾}];
+// ---- five phases big circles ----
+const WX={木:[502,422],火:[502,602],土:[92,426],金:[92,602],水:[502,242]};
+const WXO=['木','火','土','金','水'];
+const WXR=44;
+// ---------------- build ----------------
+const L={mer:$('L_mer'),arc:$('L_arc'),wx:$('L_wx'),qj:$('L_qj'),yy:$('L_yy'),nodes:$('L_nodes')};
+function flowPath(d,parent,o){
+  const g=el('g',{},parent);
+  const under=el('path',{d,fill:'none',stroke:o.under||'#6B3A8C','stroke-width':o.uw||4,'stroke-opacity':o.uo??0.35,'stroke-linecap':'round'},g);
+  const dash=el('path',{d,fill:'none',stroke:o.color||'#D4AF37','stroke-width':o.w||2.4,'stroke-linecap':'round','stroke-dasharray':o.dash||'5 9',filter:o.noglow?null:'url(#glow)','stroke-opacity':o.op??1},g);
+  if(o.noglow)dash.removeAttribute('filter');
+  const L_=dash.getTotalLength();
+  return {g,under,dash,len:L_,path:dash};
+}
+// meridian segments
+const segObjs=SEG.map(d=>{
+  const f=flowPath(d,L.mer,{w:2.2,dash:'4 8',op:0.55,uo:0.25});
+  f.trail=el('path',{d,fill:'none',stroke:'#ffe27a','stroke-width':4,'stroke-linecap':'round',filter:'url(#glow)'},L.mer);
+  return f;});
+const spark=el('circle',{r:9,fill:'url(#spark)'},L.mer);
+const sparkCore=el('circle',{r:2.6,fill:'#fffdf2'},L.mer);
+// arcs
+const arcObjs=ARCS.map(d=>{const f=flowPath(d,L.arc,{w:2.2,dash:'14 16',color:'#ffd34d',uw:5,uo:0.18,op:0.85});
+  f.p=el('circle',{r:4.2,fill:'#fff6c8',filter:'url(#glow)'},L.arc);return f;});
+// five phases
+const wxRings={};
+WXO.forEach(k=>{const c=WX[k];
+  wxRings[k]={halo:el('circle',{cx:c[0],cy:c[1],r:WXR+3,fill:'none',stroke:'#D4AF37','stroke-width':5,opacity:0,filter:'url(#glowBig)'},L.wx),
+   ring:el('circle',{cx:c[0],cy:c[1],r:WXR,fill:'none',stroke:'#D4AF37','stroke-width':2,opacity:0.0,'stroke-dasharray':'3 5'},L.wx)};});
+function wxCurve(a,b){const A=WX[a],B=WX[b];const d=Math.hypot(B[0]-A[0],B[1]-A[1]);
+  const s=toward(B,A,WXR+2),e=toward(A,B,WXR+2);
+  const mid=[(s[0]+e[0])/2,(s[1]+e[1])/2],cx=297,cy=430;
+  let c;
+  if(d<200){ // neighbours on the same side: bulge outward
+    const out=A[0]>300?1:-1; c=[mid[0]+out*38,mid[1]];
+  } else { c=[mid[0]+(cx-mid[0])*0.35,mid[1]+(cy-mid[1])*0.35]; }
+  return quad(s,c,e);}
+const wxSegs=WXO.map((k,i)=>{const f=flowPath(wxCurve(k,WXO[(i+1)%5]),L.wx,{w:1.8,dash:'2 7',color:'#b07cd6',under:'#D4AF37',uw:3,uo:0.0,op:0.55,noglow:1});
+  f.p=el('circle',{r:3.2,fill:'#e2c7ff',stroke:'#6B3A8C','stroke-width':1},L.wx);return f;});
+// qi jing
+const qjObjs=QJ.map(q=>{const e=toward(q.a,q.b,R+2);const d=line(q.a,e);
+  const f=flowPath(d,L.qj,q.main?{w:3,dash:'6 7',color:'#e8b923',uw:6,uo:0.3}:{w:1.6,dash:'3 7',color:'#c9a3e6',uw:3,uo:0.15,op:0.8,noglow:1});
+  f.main=q.main;if(q.main)f.p=el('circle',{r:4,fill:'#fff3b0',filter:'url(#glow)'},L.qj);return f;});
+// yin-yang
+const YY=[{c:[170,146],col:'#2e6b3a',yin:1},{c:[208,144],col:'#e0392b',yin:0},{c:[384,144],col:'#2e6b3a',yin:1},{c:[422,144],col:'#e0392b',yin:0}];
+const OUTER=[[158,132],[224,134],[372,132],[434,132]];
+const yyObjs=YY.map((y,i)=>({halo:el('circle',{cx:y.c[0],cy:y.c[1],r:16,fill:y.col,opacity:0.3,filter:'url(#glowBig)'},L.yy),
+  ring:el('circle',{cx:OUTER[i][0],cy:OUTER[i][1],r:29,fill:'none',stroke:y.yin?'#6B3A8C':'#D4AF37','stroke-width':2,opacity:0.3},L.yy),y}));
+// nodes
+const nodeObjs={};
+ORDER.forEach(k=>{const c=N[k];
+  nodeObjs[k]={wave:el('circle',{cx:c[0],cy:c[1],r:R,fill:'none',stroke:'#D4AF37','stroke-width':2,opacity:0},L.nodes),
+    ring:el('circle',{cx:c[0],cy:c[1],r:R+2,fill:'none',stroke:'#ffe27a','stroke-width':2.5,opacity:0,filter:'url(#glow)'},L.nodes)};});
+// dial
+const dial=$('dial');
+el('circle',{r:34,fill:'#5e3080',stroke:'#D4AF37','stroke-width':1.2},dial);
+const dialTicks=ORDER.map((k,i)=>{const a=((i-10)*30-90)*deg;
+  const t=el('text',{x:(25*Math.cos(a)).toFixed(1),y:(25*Math.sin(a)+3.5).toFixed(1),'font-size':9.5,'text-anchor':'middle',fill:'#cbb6dc'},dial);
+  t.textContent=INFO[k][0][0];return t;});
+const dialHand=el('line',{x1:0,y1:0,x2:0,y2:-15,stroke:'#D4AF37','stroke-width':2,'stroke-linecap':'round'},dial);
+el('circle',{r:3,fill:'#D4AF37'},dial);
+
+// ---- standard-font labels (replacing the handwriting; original traditional characters kept) ----
+const LBL=__LABELS__;
+const TXT=$('L_txt');
+LBL.forEach(([x,y,s,r,w,t,k])=>{
+  const a={x,y,'font-size':s,'font-weight':w,'text-anchor':'middle','dominant-baseline':'central',fill:'#161616'};
+  if(r)a.transform=`rotate(${r} ${x} ${y})`;
+  if(k==='italic'){a['font-style']='italic';a.fill='#222';}
+  if(t.startsWith('©')){a.fill='#555';}
+  if(k==='latin'&&!t.startsWith('©'))a['font-weight']=400;
+  el('text',a,TXT).textContent=t;});
+// ---- black lines of the drawing: each flows along its own path ----
+const BL=__BLINES__;
+const BLK=$('L_blk'); const gS=el('g',{},BLK), gD=el('g',{},BLK);
+function blkLine(d,parent,dashed,i){
+  const g=el('g',{},parent);
+  el('path',{d,fill:'none',stroke:'#140a1c','stroke-width':dashed?3.6:3.0,'stroke-opacity':0.0,'stroke-linecap':'round'},g);
+  const halo=el('path',{d,fill:'none',stroke:'#140a1c','stroke-width':dashed?3.8:3.2,'stroke-linecap':'round','stroke-dasharray':dashed?'9 15':'3 9','stroke-opacity':0.55},g);
+  const core=el('path',{d,fill:'none',stroke:dashed?'#d8ecff':'#f6f7fb','stroke-width':dashed?1.9:1.3,'stroke-linecap':'round','stroke-dasharray':dashed?'9 15':'3 9'},g);
+  const len=core.getTotalLength();
+  const p=el('circle',{r:dashed?2.8:2.1,fill:dashed?'#eaf5ff':'#ffffff',stroke:'#140a1c','stroke-width':1},g);
+  return {g,halo,core,len,p,dashed,ph:(i*0.37)%1,path:core};}
+const blS=BL.solid.map((b,i)=>blkLine(b.d,gS,false,i));
+const blD=BL.dashed.map((b,i)=>blkLine(b.d,gD,true,i+3));
+// legend (top-right white space of the drawing)
+(function(){const lg=$('legend');
+  el('rect',{x:452,y:38,width:122,height:56,rx:5,fill:'#ffffff','fill-opacity':0.82,stroke:'#6B3A8C','stroke-width':0.8},lg);
+  const rows=[['#D4AF37',null,'十二经流注（金）'],['#f6f7fb','3 4','黑实线流动'],['#d8ecff','8 5','黑虚线流动']];
+  rows.forEach((r,i)=>{const y=52+i*15;
+    el('line',{x1:460,y1:y,x2:486,y2:y,stroke:'#140a1c','stroke-width':3.4,'stroke-linecap':'round',...(r[1]?{'stroke-dasharray':r[1]}:{} ),'stroke-opacity':r[1]?0.7:0},lg);
+    el('line',{x1:460,y1:y,x2:486,y2:y,stroke:r[0],'stroke-width':r[1]?1.6:2.6,'stroke-linecap':'round',...(r[1]?{'stroke-dasharray':r[1]}:{})},lg);
+    const tx=el('text',{x:492,y:y+3.5,'font-size':9.5,fill:'#2a1338'},lg);tx.textContent=r[2];});})();
+// ---------------- render ----------------
+const SLOT=2.0, CYCLE=SLOT*12;
+const vis={mer:1,arc:1,wx:1,qj:1,yy:1};
+function ease(x){return x<0?0:x>1?1:x*x*(3-2*x);}
+function renderAt(t,tb){
+  if(tb===undefined)tb=t;
+  t=((t%CYCLE)+CYCLE)%CYCLE; tb=((tb%CYCLE)+CYCLE)%CYCLE;
+  // black lines (dash pattern 12 / 24 px; speeds chosen so the 24 s loop is seamless)
+  blS.forEach(b=>{const o=(-tb*12).toFixed(2);b.halo.setAttribute('stroke-dashoffset',o);b.core.setAttribute('stroke-dashoffset',o);
+    const p=((tb/(b.len>200?6:3))+b.ph)%1;const q=b.path.getPointAtLength(p*b.len);b.p.setAttribute('cx',q.x);b.p.setAttribute('cy',q.y);b.p.setAttribute('opacity',Math.sin(Math.PI*p).toFixed(3));});
+  blD.forEach(b=>{const o=(-tb*24).toFixed(2);b.halo.setAttribute('stroke-dashoffset',o);b.core.setAttribute('stroke-dashoffset',o);
+    const p=((tb/4)+b.ph)%1;const q=b.path.getPointAtLength(p*b.len);b.p.setAttribute('cx',q.x);b.p.setAttribute('cy',q.y);b.p.setAttribute('opacity',Math.sin(Math.PI*p).toFixed(3));});
+  const slot=Math.floor(t/SLOT), lt=(t-slot*SLOT)/SLOT;
+  // meridians
+  segObjs.forEach((s,i)=>{
+    s.dash.setAttribute('stroke-dashoffset',(-t*10).toFixed(2));
+    let age=(slot-i+12)%12; // 0 = active
+    const L_=s.len;
+    if(age===0){const p=ease(lt/0.85);const tr=Math.min(60,L_);
+      s.trail.setAttribute('stroke-dasharray',`${Math.min(p*L_,9999).toFixed(1)} ${L_*2+10}`);
+      s.trail.setAttribute('stroke-dashoffset','0');s.trail.setAttribute('opacity',1);
+      const q=s.path.getPointAtLength(p*L_);
+      spark.setAttribute('cx',q.x);spark.setAttribute('cy',q.y);sparkCore.setAttribute('cx',q.x);sparkCore.setAttribute('cy',q.y);
+    } else {
+      // completed earlier in cycle: fading trail
+      const fade=Math.max(0,1-(age-1+lt)/3);
+      s.trail.setAttribute('stroke-dasharray',`${L_+1} 0`);s.trail.setAttribute('opacity',(0.4*fade).toFixed(3));
+    }
+  });
+  ORDER.forEach((k,i)=>{const o=nodeObjs[k];
+    if(i===slot){const pul=0.6+0.4*Math.sin(lt*Math.PI*4);
+      o.ring.setAttribute('opacity',pul.toFixed(3));o.ring.setAttribute('r',(R+2+2*pul).toFixed(2));
+      const w=(lt*1.6)%1;o.wave.setAttribute('r',(R+w*18).toFixed(2));o.wave.setAttribute('opacity',(1-w).toFixed(3));}
+    else if(i===(slot+1)%12 && lt>0.8){const a=(lt-0.8)/0.2;o.ring.setAttribute('opacity',(a*0.7).toFixed(3));o.ring.setAttribute('r',R+2);o.wave.setAttribute('opacity',0);}
+    else{o.ring.setAttribute('opacity',0);o.wave.setAttribute('opacity',0);}
+  });
+  const k=ORDER[slot],inf=INFO[k];
+  $('capMain').textContent=`${inf[0]} ${inf[2]}`;
+  $('capSub').textContent=`${inf[1]} 时 · 气血流注于「${SIMP[k]}」 → 下一站「${SIMP[ORDER[(slot+1)%12]]}」（${INFO[ORDER[(slot+1)%12]][2]}）`;
+  dialHand.setAttribute('transform',`rotate(${(slot+lt-10)*30})`);
+  dialTicks.forEach((tk,i)=>tk.setAttribute('fill',i===slot?'#ffe27a':'#cbb6dc'));
+  // arcs
+  arcObjs.forEach((a,i)=>{a.dash.setAttribute('stroke-dashoffset',(-t*18).toFixed(2));
+    const p=((t/6)+i*0.25)%1;const q=a.path.getPointAtLength(p*a.len);a.p.setAttribute('cx',q.x);a.p.setAttribute('cy',q.y);
+    a.p.setAttribute('opacity',Math.sin(Math.PI*p).toFixed(3));});
+  // five phases: one phase per 4.8s
+  const WXS=CYCLE/5, wi=Math.floor(t/WXS), wl=(t-wi*WXS)/WXS;
+  WXO.forEach((kk,i)=>{const r=wxRings[kk];
+    let v=i===wi?Math.sin(Math.PI*Math.min(1,wl*1.25)):0;
+    if(i===(wi+1)%5&&wl>0.6)v=Math.max(v,(wl-0.6)/0.4*0.6);
+    r.halo.setAttribute('opacity',(0.55*v).toFixed(3));r.ring.setAttribute('opacity',(0.9*v).toFixed(3));
+    r.ring.setAttribute('stroke-dashoffset',(-t*6).toFixed(2));});
+  wxSegs.forEach((s,i)=>{s.dash.setAttribute('stroke-dashoffset',(-t*5).toFixed(2));
+    const act=i===wi?ease((wl-0.35)/0.65):0;
+    s.dash.setAttribute('stroke-opacity',(0.35+0.5*(i===wi?1:0)).toFixed(2));
+    const q=s.path.getPointAtLength(act*s.len);s.p.setAttribute('cx',q.x);s.p.setAttribute('cy',q.y);
+    s.p.setAttribute('opacity',i===wi&&wl>0.35?Math.sin(Math.PI*act).toFixed(3):0);});
+  // qi jing
+  qjObjs.forEach((q,i)=>{q.dash.setAttribute('stroke-dashoffset',(-t*(q.main?14:6)).toFixed(2));
+    if(q.p){const p=((t/3)+i*0.5)%1;const pt=q.path.getPointAtLength(p*q.len);q.p.setAttribute('cx',pt.x);q.p.setAttribute('cy',pt.y);q.p.setAttribute('opacity',Math.sin(Math.PI*p).toFixed(3));}});
+  // yin-yang breathing (period 6s, yin & yang alternate)
+  const br=Math.sin(t/6*2*Math.PI);
+  yyObjs.forEach(o=>{const v=o.y.yin?(0.5+0.5*br):(0.5-0.5*br);
+    o.halo.setAttribute('r',(12+9*v).toFixed(2));o.halo.setAttribute('opacity',(0.15+0.6*v).toFixed(3));
+    o.ring.setAttribute('opacity',(0.1+0.7*v).toFixed(3));o.ring.setAttribute('stroke-width',(1+2.5*v).toFixed(2));});
+}
+window.renderAt=renderAt;window.CYC=CYCLE;
+// ---------------- controls ----------------
+let T=0,TB=0,playing=true,speed=1,bspeed=1,last=null;
+const video=/[?&]video=1/.test(location.search);
+if(video)document.body.classList.add('video');
+function loop(ts){if(last!==null&&playing){const dt=(ts-last)/1000*speed;T+=dt;TB+=dt*bspeed;}last=ts;
+  if(!video){renderAt(T,TB);$('scrub').value=(T%CYCLE).toFixed(2);} requestAnimationFrame(loop);}
+if(!video)requestAnimationFrame(loop); else renderAt(0);
+$('btnPlay').onclick=()=>{playing=!playing;$('btnPlay').textContent=playing?'⏸ 暂停':'▶ 播放';};
+$('selSpeed').onchange=e=>speed=parseFloat(e.target.value);
+$('scrub').oninput=e=>{T=parseFloat(e.target.value);renderAt(T,TB);};
+$('bspeed').oninput=e=>{bspeed=parseFloat(e.target.value);$('bspeedV').textContent=bspeed.toFixed(1)+'×';};
+function blkVis(){const on=$('tg_blk').checked;BLK.style.display=on?'':'none';gS.style.display=$('tg_bs').checked?'':'none';gD.style.display=$('tg_bd').checked?'':'none';$('tg_bs').disabled=!on;$('tg_bd').disabled=!on;}
+['tg_blk','tg_bs','tg_bd'].forEach(id=>$(id).onchange=blkVis);
+['mer','arc','wx','qj','yy'].forEach(k=>{$('tg_'+k).onchange=e=>{L[k].style.display=e.target.checked?'':'none';if(k==='mer')L.nodes.style.display=e.target.checked?'':'none';};});
+</script>
+</body>
+</html>
