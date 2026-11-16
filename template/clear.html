@@ -41,6 +41,7 @@ body.hc .note,body.hc .sub{color:#f6efe2}
  <g id="ink"></g>
  <g id="pipes"></g>
  <g id="flows"></g>
+ <g id="nodesBack"></g>
  <g id="taiji"></g>
  <g id="nodes"></g>
  <g id="labels"></g>
@@ -132,7 +133,7 @@ const flows=(CFG.flows||[]).map((it,idx)=>{
   return {it,guide,len,dots,lead,laps,mode:it.closed?'loop':'fade',amp:Math.min(1.1,Math.max(0,it.width*0.28))};
 });
 const nodes=(CFG.nodes||[]).map((n,ni)=>{
-  const g=el('g',{'data-node':n.id},$('nodes'));
+  const g=el('g',{'data-node':n.id}, n.behind?$('nodesBack'):$('nodes'));
   let body=g;
   if(n.clip){
     const id='nc'+ni; const cp=el('clipPath',{id},defs);

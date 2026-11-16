@@ -158,6 +158,11 @@ def add_generic(doc, cfg):
 
 def add_b28(doc, cfg):
     add_generic(doc, cfg)
+    # 五行脉动白底留在太极后面，只让带穴名的小圆盖在阴阳图案上。
+    for n in doc['nodes']:
+        if not n.get('t') and n['r'] >= 40:
+            n['behind'] = True
+            n['fill'] = 'none'
     for L in cfg.get('staticLines') or []:
         doc['flows'].append({
             'id': 'static%d' % len(doc['flows']),
