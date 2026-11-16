@@ -1,0 +1,14 @@
+{
+  "id": "b39",
+  "cycle": 24,
+  "texts": 0,
+  "paths": 18,
+  "rings": 30,
+  "uncertain": [
+    "外圈 1–24 的序号字和圆内其余穴名不在 config 的文字字段里，未逐字誊写。",
+    "同心细弧、四角奇经表没有单独的路径表，未冒充已经重绘。"
+  ],
+  "html": "氣的循環奇經八脈圖_流动动画_清晰重绘版.html",
+  "bytes": 1064544,
+  "source_sha": "d0490d844cbf32dbaceadbf603edc571c6b52a694a7e791f5e63b09ad26f8de9"
+}

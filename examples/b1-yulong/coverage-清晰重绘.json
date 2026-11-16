@@ -1,0 +1,14 @@
+{
+  "id": "b1",
+  "cycle": 24,
+  "texts": 0,
+  "paths": 19,
+  "rings": 6,
+  "uncertain": [
+    "花形、柱内网格和斜轴旁的小字没有坐标级标签，未猜写。",
+    "只重绘 config.items 里已有的中轴、彩线、弧和黑线。"
+  ],
+  "html": "玉龍_流动动画_清晰重绘版.html",
+  "bytes": 455755,
+  "source_sha": "e8c24329ba58aba2256c3bf95d436a42fbda0bd105c4e6db062d4f30aa9aac80"
+}

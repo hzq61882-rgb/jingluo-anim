@@ -1,0 +1,14 @@
+{
+  "id": "b24",
+  "cycle": 60.0,
+  "texts": 131,
+  "paths": 21,
+  "rings": 94,
+  "uncertain": [
+    "清晰层用 config 的 bands、rings、circles、labels、discs、lines、yuan。",
+    "扫描图上若还有未进入这些字段的小字，没有另猜。"
+  ],
+  "html": "把脈的原理動畫_清晰重绘版.html",
+  "bytes": 1042088,
+  "source_sha": "8bdd3a3a2b8607b06844efbcbdeb0d8301d4d8771189039209e454dcea2e3b01"
+}

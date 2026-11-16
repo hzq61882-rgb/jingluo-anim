@@ -1,0 +1,14 @@
+{
+  "id": "b36",
+  "cycle": 24,
+  "texts": 0,
+  "paths": 22,
+  "rings": 3,
+  "uncertain": [
+    "方格里的穴名、经名和左右密排小字没有 labels 表，未从扫描图猜写。",
+    "只重绘 config 里的上部 8 列、下部 6 列和左侧编号竖线，格子横线未描。"
+  ],
+  "html": "神應經穴法圖_流动动画_清晰重绘版.html",
+  "bytes": 697571,
+  "source_sha": "ff59bc136948e2a2a5b32985fdaa3af54bcdfe5c826a81959fd5b634708ea582"
+}

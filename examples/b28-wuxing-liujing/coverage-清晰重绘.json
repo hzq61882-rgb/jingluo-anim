@@ -1,0 +1,14 @@
+{
+  "id": "b28",
+  "cycle": 24,
+  "texts": 54,
+  "paths": 31,
+  "rings": 39,
+  "uncertain": [
+    "色带上更细的分支墨迹如果不在 items、chain 或 staticLines 里，就没有重绘。",
+    "圆内穴名只用 circles / plates 里已有的字。"
+  ],
+  "html": "五行六经图动画_清晰重绘版.html",
+  "bytes": 886065,
+  "source_sha": "63752f61cd5ef7981299757aeb0ac4c211ecc58f9256fe6f9f3fe870b1740193"
+}
