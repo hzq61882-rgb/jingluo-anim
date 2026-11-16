@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""从已核对的 config 生成清晰重绘 HTML。不改原成片。
+"""从原图核对过的文字和已有路径生成清晰重绘 HTML。不改原成片。
 
-默认不显示扫描图。文字和线只来自该图 config / 模板里已经写明的字段。
-没有坐标的手写字不猜，写进 coverage 的 uncertain。
+核对完的页默认只显示矢量。还在逐区誊写的页是工作稿，原图对照默认打开。
+单个认不出的字才标待核；没有核对完的整页不把文字清成空白。
 """
 from __future__ import annotations
 
@@ -23,35 +23,40 @@ FLOW = ROOT / 'template' / 'flow.js'
 GLOW = {'木': '#3fdc5a', '火': '#ff3b30', '土': '#ffd60a', '金': '#ffffff', '水': '#2f80ff'}
 DARK = {'木': '#2f8a3c', '火': '#c0201c', '土': '#caa005', '金': '#5c6370', '水': '#1e5bb8'}
 
-# 看过扫描图、但没有逐字坐标表，不能当成已经誊清。
-UNCERTAIN = {
+# 已经逐区看过原图、可以当成成品的页。其余是工作稿。
+FINISHED = {'b24'}
+
+# 工作稿里尚未钉死坐标的区块。不是「整页没有字」。
+ZONES = {
     'b31': [
-        '轮心九层色环以外的穴名、表里框、四季和左右腕旁注没有逐字坐标，未誊写。',
-        '轮辐之间更密的细线多于 config 里的 14 条黑实线和 4 条虚线，多出来的墨迹未重绘。',
+        {'id': 'wheel', 'status': 'lines', 'note': '九层色环、轮辐和序号链沿已描路径重绘。'},
+        {'id': 'side-tables', 'status': 'reading', 'note': '左右表里、四季和腕部小字还在按原图逐格誊写，原图对照开着。'},
     ],
     'b45': [
-        '椭圆内的多层细线和交会穴下方的穴名没有标签表，未逐字誊写。',
-        'config 只含已描的色带、外环、横线和少数脉动点，不是全图墨迹。',
+        {'id': 'bands', 'status': 'lines', 'note': '色带、外环和横线沿已描路径重绘。'},
+        {'id': 'labels', 'status': 'reading', 'note': '椭圆内和交会穴旁的穴名还在逐区誊写，原图对照开着。'},
     ],
     'b1': [
-        '花形、柱内网格和斜轴旁的小字没有坐标级标签，未猜写。',
-        '只重绘 config.items 里已有的中轴、彩线、弧和黑线。',
+        {'id': 'axis', 'status': 'lines', 'note': '中轴、彩线和弧沿已描路径重绘。'},
+        {'id': 'labels', 'status': 'reading', 'note': '花形、柱内和斜轴旁的小字还在逐区誊写，原图对照开着。'},
     ],
     'b39': [
-        '外圈 1–24 的序号字和圆内其余穴名不在 config 的文字字段里，未逐字誊写。',
-        '同心细弧、四角奇经表没有单独的路径表，未冒充已经重绘。',
+        {'id': 'title', 'status': 'done', 'note': '标题和三行题记按题头位置写入。题记作 Neboget、德·莫朗，与放大后的印刷字一致。'},
+        {'id': 'ring-numbers', 'status': 'done', 'note': '外圈 1–24 写在原序号圆心里。'},
+        {'id': 'organs', 'status': 'done', 'note': '十二脏腑写在对应偶数序号内侧：24 膽、2 肝、4 肺、6 大腸、8 胃、10 脾、12 心、14 小腸、16 膀胱、18 腎、20 心包、22 三焦。大腸对准序号 6 已对照放大图。'},
+        {'id': 'interior', 'status': 'reading', 'note': '圆内各经穴列、四角奇经表和更密的细弧还在逐区钉坐标。这些字留在原图上，不整页标成待核。'},
     ],
     'b36': [
-        '方格里的穴名、经名和左右密排小字没有 labels 表，未从扫描图猜写。',
-        '只重绘 config 里的上部 8 列、下部 6 列和左侧编号竖线，格子横线未描。',
+        {'id': 'columns', 'status': 'lines', 'note': '上部 8 列、下部 6 列和左侧编号竖线沿已描路径重绘。'},
+        {'id': 'cells', 'status': 'reading', 'note': '方格里的穴名和格子横线还在逐格誊写，原图对照开着。'},
     ],
     'b28': [
-        '色带上更细的分支墨迹如果不在 items、chain 或 staticLines 里，就没有重绘。',
-        '圆内穴名只用 circles / plates 里已有的字。',
+        {'id': 'plates', 'status': 'done', 'note': '色块、穴圈和太极字用这张图已有的坐标文字。'},
+        {'id': 'branches', 'status': 'reading', 'note': '色带上更细的分支墨迹还在对照原图，原图对照开着。'},
     ],
     'b24': [
-        '清晰层用 config 的 bands、rings、circles、labels、discs、lines、yuan。',
-        '扫描图上若还有未进入这些字段的小字，没有另猜。',
+        {'id': 'body', 'status': 'done', 'note': '穴圈、色带、圆环、圆盘和原有标签都在矢量层。'},
+        {'id': 'quotes', 'status': 'done', 'note': '「有如流量加大」和「有如湧自源泉」改为左对齐后向右移开，不再压住土、木两枚圆。'},
     ],
 }
 
@@ -107,12 +112,21 @@ def flow_item(it, idx):
 
 
 def base_doc(cfg, image, key):
+    draft = key not in FINISHED
+    zones = ZONES[key]
+    open_zones = [z for z in zones if z['status'] != 'done']
+    if draft:
+        lead = '这一页是工作稿。原图对照默认打开。已经核对的字写在矢量层上，还在誊写的区块仍看原图。'
+    else:
+        lead = '这一页默认只显示矢量。原图对照可以再打开。'
+    zone_note = ''.join('<br>' + z['id'] + '：' + z['note'] for z in zones)
     return {
         'id': key,
+        'draft': draft,
         'title': cfg.get('title') or key,
         'sub': cfg.get('sub') or '',
-        'note': (cfg.get('note') or '') + '<br>清晰重绘默认不叠扫描图。原图对照可打开。' + ''.join('<br>待核：' + u for u in UNCERTAIN[key]),
-        'assumption': '已重绘的线沿原描线点序流动。没有新箭头的地方不另作往返。未进入矢量表的墨迹和小字见待核，不猜。',
+        'note': lead + '<br>' + (cfg.get('note') or '') + zone_note,
+        'assumption': '已重绘的线沿原描线点序流动。没有新箭头的地方不另作往返。单个认不出的字才标待核。',
         'credit': cfg.get('credit') or '',
         'cycle': cfg.get('cycle'),
         'W': cfg['W'],
@@ -121,7 +135,8 @@ def base_doc(cfg, image, key):
         'flows': [],
         'nodes': [],
         'labels': [],
-        'uncertain': UNCERTAIN[key],
+        'zones': zones,
+        'uncertain': [z['note'] for z in open_zones],
         'image': image,
     }
 
@@ -180,6 +195,44 @@ def xy(pts):
     return [[float(p[0]), float(p[1])] for p in pts]
 
 
+# 外圈偶数序号上的脏腑名。位置是该序号向圆心收 40 像素，字保持水平。
+# 序号 6 旁的「大腸」对照过放大图。
+B39_ORGANS = {
+    24: '膽', 2: '肝', 4: '肺', 6: '大腸', 8: '胃', 10: '脾',
+    12: '心', 14: '小腸', 16: '膀胱', 18: '腎', 20: '心包', 22: '三焦',
+}
+B39_CX, B39_CY, B39_R = 598.0, 808.0, 488.0
+
+
+def add_b39(doc, cfg):
+    add_generic(doc, cfg)
+    for n in doc['nodes']:
+        ident = str(n.get('id') or '')
+        if ident.startswith('n') and ident[1:].isdigit():
+            num = int(ident[1:])
+            n['t'] = str(num)
+            n['fs'] = 15
+            if num not in B39_ORGANS:
+                continue
+            vx, vy = n['x'] - B39_CX, n['y'] - B39_CY
+            dist = (vx * vx + vy * vy) ** 0.5 or 1
+            inward = (B39_R - 22) / dist
+            doc['labels'].append({
+                't': B39_ORGANS[num],
+                'x': round(B39_CX + vx * inward, 1),
+                'y': round(B39_CY + vy * inward, 1),
+                'fs': 14, 'fw': 700, 'color': '#1a1a1a', 'halo': 2,
+            })
+    # 题头墨迹范围：标题 y 196–214、x 268–560；三行题记从 x 269 起。
+    doc['labels'].extend([
+        {'t': '氣的循環對應奇經八脈圖', 'x': 268, 'y': 205, 'fs': 17, 'fw': 700, 'anchor': 'start', 'tl': 292, 'halo': 3},
+        {'t': '編自 J.E.H. Neboget 博士的著作「針灸的實踐論述」', 'x': 269, 'y': 227, 'fs': 13, 'anchor': 'start', 'tl': 321, 'halo': 2},
+        {'t': '採用德·莫朗的拼音法', 'x': 269, 'y': 247, 'fs': 13, 'anchor': 'start', 'tl': 158, 'halo': 2},
+        {'t': '於古波瓦 1954年5月6日', 'x': 268, 'y': 265, 'fs': 13, 'anchor': 'start', 'tl': 151, 'halo': 2},
+        {'t': 'Jacques Hartz', 'x': 250, 'y': 284, 'fs': 14, 'anchor': 'start', 'tl': 150, 'halo': 2},
+    ])
+
+
 def add_b24(doc, cfg):
     wx = cfg.get('wxStyle') or {}
     for b in cfg['bands']:
@@ -225,7 +278,18 @@ def add_b24(doc, cfg):
     doc['flows'].append({'id': 'spiral', 'pts': xy(sp['pts']), 'closed': False, 'ring': False, 'track': '#8a6a12', 'flow': '#ffd34d', 'width': 2.2, 'group': 'main', 'v': 16})
     for p in cfg.get('labels') or []:
         if p.get('t'):
-            doc['labels'].append({'t': p['t'], 'x': p['x'], 'y': p['y'], 'fs': p.get('fs') or 14, 'rot': p.get('rot') or 0, 'fw': p.get('fw') or 500, 'color': p.get('color') or '#111'})
+            x, y = p['x'], p['y']
+            text = p['t']
+            # 这两句原来从圆的右缘起笔，字压进土、木两枚圆。左对齐后再让开圆边。
+            if text.startswith('“有如流量加大'):
+                x += 22
+            elif text.startswith('“有如湧自源泉'):
+                x += 20
+            doc['labels'].append({
+                't': text, 'x': x, 'y': y, 'fs': p.get('fs') or 14, 'rot': p.get('rot') or 0,
+                'fw': p.get('fw') or 500, 'color': p.get('color') or '#111',
+                'anchor': p.get('anchor') or 'middle', 'halo': 3,
+            })
     if cfg.get('brand'):
         doc['labels'].append({'t': cfg['brand']['text'], 'x': cfg['W'] / 2, 'y': cfg['H'] - 28, 'fs': 18, 'fw': 700, 'color': '#6b3a12'})
 
@@ -234,7 +298,7 @@ CHARTS = [
     ('b31', 'examples/b31-cunguan-siji', '寸关尺四季表里图_流动动画.html', 'config.json', add_generic),
     ('b45', 'examples/b45-yulong-bafa', '玉龍八法_流动动画.html', 'config.json', add_generic),
     ('b1', 'examples/b1-yulong', '玉龍_流动动画.html', 'config.json', add_generic),
-    ('b39', 'examples/b39-qi-qijing', '氣的循環奇經八脈圖_流动动画.html', 'config.json', add_generic),
+    ('b39', 'examples/b39-qi-qijing', '氣的循環奇經八脈圖_流动动画.html', 'config.json', add_b39),
     ('b36', 'examples/b36-shenying', '神應經穴法圖_流动动画.html', 'config.json', add_generic),
     ('b28', 'examples/b28-wuxing-liujing', '五行六经图动画.html', 'config.json', add_b28),
     ('b24', 'examples/b24-bamai-yuanli', '把脈的原理動畫.html', 'config.json', add_b24),
@@ -289,6 +353,8 @@ def main():
             'texts': len(doc['labels']) + sum(1 for n in doc['nodes'] if n.get('t')) + (len(doc['taiji']['order']) if doc.get('taiji') else 0),
             'paths': len(doc['flows']),
             'rings': rings,
+            'draft': doc['draft'],
+            'zones': doc['zones'],
             'uncertain': doc['uncertain'],
             'html': out.name,
             'bytes': out.stat().st_size,

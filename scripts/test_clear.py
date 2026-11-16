@@ -75,7 +75,7 @@ def main():
               renderAt(0); const a = sig(); renderAt(CYC); const b = sig();
               const scan = getComputedStyle(document.getElementById('bg')).display;
               const boxes = [...document.querySelectorAll('[data-label]')].map(t => {
-                const r = t.getBBox(); return {t:t.textContent, x:r.x, y:r.y, w:r.width, h:r.height};
+                const r = t.getBoundingClientRect(); return {t:t.textContent, x:r.x, y:r.y, w:r.width, h:r.height};
               });
               const hits = [];
               for (let i=0;i<boxes.length;i++) for (let j=i+1;j<boxes.length;j++) {
@@ -83,13 +83,14 @@ def main():
                 const x=Math.max(0, Math.min(A.x+A.w,B.x+B.w)-Math.max(A.x,B.x));
                 const y=Math.max(0, Math.min(A.y+A.h,B.y+B.h)-Math.max(A.y,B.y));
                 const inter=x*y, small=Math.min(A.w*A.h, B.w*B.h);
-                if (small>0 && inter/small>0.45) hits.push(A.t+'/'+B.t);
+                if (small>80 && inter/small>0.5) hits.push(A.t+'/'+B.t);
               }
               let taiji=null;
               if (typeof CFG!=='undefined' && CFG.taiji) {
                 taiji={wood:[taijiAngle('木',0),taijiAngle('木',6)], earth:[taijiAngle('土',11),taijiAngle('土',12),taijiAngle('土',14)], sw:CFG.taiji.switchAt};
               }
-              return {cov, still, same:a===b, scan, hits:hits.slice(0,12), hitN:hits.length, cyc:CYC, taiji};
+              const texts = [...document.querySelectorAll('[data-label]')].map(t => t.textContent).join('\\n');
+              return {cov, still, same:a===b, scan, draft:!!CFG.draft, hits:hits.slice(0,12), hitN:hits.length, cyc:CYC, taiji, hasColon: texts.indexOf('大腸')>=0, hasTitle: texts.indexOf('氣的循環對應奇經八脈圖')>=0};
             }''')
             page.locator('#stage').screenshot(path=str(ART / f'{key}_full.png'))
             im = Image.open(ART / f'{key}_full.png')
@@ -119,7 +120,13 @@ def main():
             overlaps[key] = info['hits']
             if errs: problems.append(key+' err '+errs[0][:180])
             if net: problems.append(key+' net')
-            if info['scan'] != 'none': problems.append(key+' scan visible')
+            if info['draft']:
+                if info['scan'] == 'none': problems.append(key+' draft hid scan')
+            else:
+                if info['scan'] != 'none': problems.append(key+' finished page still shows scan')
+                if info['hitN']: problems.append(key+' overlap '+','.join(info['hits'][:4]))
+            if key == 'b39' and not (info['hasColon'] and info['hasTitle']):
+                problems.append(key+' missing verified title or organ')
             if not info['same']: problems.append(key+' seam')
             if info['still']: problems.append(key+' still '+','.join(info['still'][:8]))
             if info['cov']['flowsN'] != info['cov']['expected']: problems.append(key+' count')

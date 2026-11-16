@@ -37,7 +37,7 @@ body.hc .note,body.hc .sub{color:#f6efe2}
  <filter id="glowS" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 </defs>
 <g id="main">
- <image id="bg" href="__IMG__" x="0" y="0" preserveAspectRatio="none" style="display:none"/>
+ <image id="bg" href="__IMG__" x="0" y="0" preserveAspectRatio="none"/>
  <g id="pipes"></g>
  <g id="flows"></g>
  <g id="nodes"></g>
@@ -74,7 +74,11 @@ function txt(s,a,p){const t=el('text',Object.assign({'text-anchor':'middle','dom
 const W=CFG.W,H=CFG.H,CYC=CFG.cycle;
 $('stage').setAttribute('viewBox',`0 0 ${W} ${H+78}`);
 $('bg').setAttribute('width',W);$('bg').setAttribute('height',H);
-$('h1').textContent=CFG.title||'';$('subt').textContent=CFG.sub||'';$('note').innerHTML=CFG.note||'';document.title=CFG.title||'';
+const draft=!!CFG.draft;
+$('h1').textContent=(CFG.title||'')+(draft?' · 工作稿':'');
+$('subt').textContent=(draft?'工作稿。原图对照默认打开，没核对完的小字仍看原图。':'')+(CFG.sub||'');
+$('note').innerHTML=CFG.note||'';document.title=(CFG.title||'')+(draft?' · 工作稿':'');
+if(!draft){$('bg').style.display='none';} else {$('tgScan').checked=true;}
 function poly(pts){return 'M'+pts.map(q=>q[0]+','+q[1]).join('L');}
 const defs=$('stage').querySelector('defs');
 const grads={};
@@ -132,7 +136,10 @@ const nodes=(CFG.nodes||[]).map(n=>{
 });
 const labels=(CFG.labels||[]).map((p,i)=>{
   const g=el('g',{transform:`translate(${p.x},${p.y}) rotate(${p.rot||0})`},$('labels'));
-  return txt(p.t,{y:0,'font-size':p.fs||14,'font-weight':p.fw||500,fill:p.color||'#111','text-anchor':p.anchor||'middle','data-label':'L'+i},g);
+  const t=txt(p.t,{y:0,'font-size':p.fs||14,'font-weight':p.fw||500,fill:p.color||'#111','text-anchor':p.anchor||'middle','data-label':'L'+i},g);
+  if(p.halo){t.setAttribute('stroke','#fff');t.setAttribute('stroke-width',p.halo);t.setAttribute('paint-order','stroke');}
+  if(p.tl){t.setAttribute('textLength',p.tl);t.setAttribute('lengthAdjust','spacingAndGlyphs');}
+  return t;
 });
 const TJ=CFG.taiji;
 let TU_TAB=null;

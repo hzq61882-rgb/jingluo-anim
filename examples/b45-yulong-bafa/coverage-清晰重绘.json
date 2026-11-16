@@ -4,11 +4,24 @@
   "texts": 0,
   "paths": 12,
   "rings": 17,
+  "draft": true,
+  "zones": [
+    {
+      "id": "bands",
+      "status": "lines",
+      "note": "色带、外环和横线沿已描路径重绘。"
+    },
+    {
+      "id": "labels",
+      "status": "reading",
+      "note": "椭圆内和交会穴旁的穴名还在逐区誊写，原图对照开着。"
+    }
+  ],
   "uncertain": [
-    "椭圆内的多层细线和交会穴下方的穴名没有标签表，未逐字誊写。",
-    "config 只含已描的色带、外环、横线和少数脉动点，不是全图墨迹。"
+    "色带、外环和横线沿已描路径重绘。",
+    "椭圆内和交会穴旁的穴名还在逐区誊写，原图对照开着。"
   ],
   "html": "玉龍八法_流动动画_清晰重绘版.html",
-  "bytes": 527845,
+  "bytes": 523457,
   "source_sha": "2c50d836e1209fd0b5afc3575518dd4c1bcc516b6b87cb70b9f0bcfe7acf4a25"
 }
