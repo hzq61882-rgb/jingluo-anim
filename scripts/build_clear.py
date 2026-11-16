@@ -44,7 +44,7 @@ ZONES = {
         {'id': 'title', 'status': 'done', 'note': '标题和三行题记按题头位置写入。题记作 Neboget、德·莫朗，与放大后的印刷字一致。'},
         {'id': 'ring-numbers', 'status': 'done', 'note': '外圈 1–24 写在原序号圆心里。'},
         {'id': 'organs', 'status': 'done', 'note': '十二脏腑写在对应偶数序号内侧：24 膽、2 肝、4 肺、6 大腸、8 胃、10 脾、12 心、14 小腸、16 膀胱、18 腎、20 心包、22 三焦。大腸对准序号 6 已对照放大图。'},
-        {'id': 'interior', 'status': 'reading', 'note': '圆内各经穴列、四角奇经表和更密的细弧还在逐区钉坐标。这些字留在原图上，不整页标成待核。'},
+        {'id': 'interior', 'status': 'partial', 'note': '圆内和四角里，从原图单字块读清的穴名、脉名已按该字块的坐标写入。读不清的没有用常见穴名补。弯曲的穴间细线和没有形成整圈的弧还没有全部重描。原图对照因此仍然开着。这一页还不能算誊完。'},
     ],
     'b36': [
         {'id': 'columns', 'status': 'lines', 'note': '上部 8 列、下部 6 列和左侧编号竖线沿已描路径重绘。'},
@@ -204,6 +204,81 @@ B39_ORGANS = {
 B39_CX, B39_CY, B39_R = 598.0, 808.0, 488.0
 
 
+def _add_b39_reads(doc):
+    """把从原图单字块里读清的字放到该字块中心。读成两可的不写。"""
+    box_path = ROOT / 'examples/b39-qi-qijing/word-boxes.json'
+    text_path = ROOT / 'examples/b39-qi-qijing/read-words.json'
+    if not box_path.is_file() or not text_path.is_file():
+        return
+    boxes = {str(b['i']): b for b in json.loads(box_path.read_text(encoding='utf-8'))}
+    reads = json.loads(text_path.read_text(encoding='utf-8'))
+    placed = [(p['x'], p['y'], p['t']) for p in doc['labels']]
+    fresh = []
+    for key, text in reads.items():
+        box = boxes.get(str(key))
+        if not box or not text:
+            continue
+        x, y = float(box['cx']), float(box['cy'])
+        if any(abs(x - px) < 28 and abs(y - py) < 22 for px, py, t in placed):
+            continue
+        fs = max(9, min(16, float(box['h']) * 0.92))
+        fresh.append({'t': text, 'x': round(x, 1), 'y': round(y, 1), 'fs': round(fs, 1), 'fw': 700, 'halo': 2, 'w': box['w'], 'h': box['h']})
+    kept = []
+    for lab in fresh:
+        hit = False
+        for prev in kept:
+            dx = abs(lab['x'] - prev['x'])
+            dy = abs(lab['y'] - prev['y'])
+            if dx < (lab['w'] + prev['w']) * 0.35 and dy < (lab['h'] + prev['h']) * 0.55:
+                hit = True
+                break
+        if not hit:
+            kept.append(lab)
+    for lab in kept:
+        lab.pop('w', None)
+        lab.pop('h', None)
+        doc['labels'].append(lab)
+
+
+def _add_b39_lines(doc, cfg):
+    path = ROOT / 'examples/b39-qi-qijing/extra-lines.json'
+    if not path.is_file():
+        return
+    data = json.loads(path.read_text(encoding='utf-8'))
+    x0, y0, x1, y1 = data['frame']
+    doc.setdefault('ink', []).append({
+        'pts': [[x0, y0], [x1, y0], [x1, y1], [x0, y1]],
+        'closed': True, 'track': '#1a1a1a', 'width': 1.4,
+    })
+    cx, cy = B39_CX, B39_CY
+    for i, seg in enumerate(data['segs']):
+        (ax, ay), (bx, by) = seg
+        mx, my = (ax + bx) / 2, (ay + by) / 2
+        horizontal = abs(ay - by) < 8
+        in_table = (my > 1280 and mx < 420) or (mx > 900 and my < 230)
+        if horizontal and in_table:
+            doc['ink'].append({'pts': [[ax, ay], [bx, by]], 'closed': False, 'track': '#1a1a1a', 'width': 1.1})
+            continue
+        # 已有的六条轮辐不再叠一条。
+        if any(_near_flow(doc, ax, ay) and _near_flow(doc, bx, by) for _ in (0,)):
+            continue
+        doc['flows'].append({
+            'id': 'ink%d' % i,
+            'pts': [[ax, ay], [bx, by]],
+            'closed': False, 'ring': False,
+            'track': '#243044', 'flow': '#7cc0ff',
+            'width': 1.6, 'group': 'black', 'v': 22,
+        })
+
+
+def _near_flow(doc, x, y):
+    for flow in doc['flows']:
+        for px, py in flow['pts'][:: max(1, len(flow['pts']) // 8)]:
+            if abs(px - x) < 10 and abs(py - y) < 10:
+                return True
+    return False
+
+
 def add_b39(doc, cfg):
     add_generic(doc, cfg)
     for n in doc['nodes']:
@@ -231,6 +306,8 @@ def add_b39(doc, cfg):
         {'t': '於古波瓦 1954年5月6日', 'x': 268, 'y': 265, 'fs': 13, 'anchor': 'start', 'tl': 151, 'halo': 2},
         {'t': 'Jacques Hartz', 'x': 250, 'y': 284, 'fs': 14, 'anchor': 'start', 'tl': 150, 'halo': 2},
     ])
+    _add_b39_reads(doc)
+    _add_b39_lines(doc, cfg)
 
 
 def add_b24(doc, cfg):

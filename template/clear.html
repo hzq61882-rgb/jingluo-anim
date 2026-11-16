@@ -38,6 +38,7 @@ body.hc .note,body.hc .sub{color:#f6efe2}
 </defs>
 <g id="main">
  <image id="bg" href="__IMG__" x="0" y="0" preserveAspectRatio="none"/>
+ <g id="ink"></g>
  <g id="pipes"></g>
  <g id="flows"></g>
  <g id="nodes"></g>
@@ -97,6 +98,10 @@ function paint(node,color){
   if(light){node.setAttribute('fill','#fff');node.setAttribute('stroke','#222');node.setAttribute('stroke-width','0.45');}
   else node.setAttribute('fill',grad(color));
 }
+(CFG.ink||[]).forEach(it=>{
+  const d=it.closed?poly(it.pts)+'Z':poly(it.pts);
+  el('path',{d,fill:'none',stroke:it.track||'#222','stroke-width':it.width||1.2,'stroke-linejoin':'round'},$('ink'));
+});
 const flows=(CFG.flows||[]).map((it,idx)=>{
   const d=it.closed?poly(it.pts)+'Z':poly(it.pts);
   const parent=$('flows');
