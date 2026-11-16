@@ -16,7 +16,11 @@
 | [greensock/gsap-skills](https://github.com/greensock/gsap-skills)（fork [hzq61882-rgb/gsap-skills](https://github.com/hzq61882-rgb/gsap-skills)） | `aed9cfd3277740755f6bfc1155c7aa645403b760` | MIT | `skills/gsap-timeline/SKILL.md`「Controlling Playback」 | 暂停、跳到某一秒、跳到进度。页面里没有打包 GSAP。 |
 | [oil-oil/oil-motion](https://github.com/oil-oil/oil-motion)（fork [hzq61882-rgb/oil-motion](https://github.com/hzq61882-rgb/oil-motion)） | `07e31f2265f80caa8f2c1df825d85ac24a46307c` | MIT | `SKILL.md`，`references/runtime.md` 的 frame-scrub | 拖动把输入映射到时间，松手停在那一帧。进度拖动用同一套 `seek`。 |
 
-对应实现：`template/flow.js`。通用模板 `template/template.html` 用 `__FLOW__` 嵌进去，`scripts/build.py` 负责替换。B/4 圆环增强版由 `scripts/ring_enhance.py` 把同一份脚本和 `template/ring-pipes.js` 嵌进圆环版页面。
+对应实现：`template/flow.js`。通用模板 `template/template.html` 用 `__FLOW__` 嵌进去，`scripts/build.py` 负责替换。页面不安装上表里的框架。
+
+代码从提交 `6b703d2eb035e2495d6b4d6e2ece5ffc95e03fc2` 起，在分支 `cursor/b4-pipe-particles-6d38`。`main` 的 `6dbeadd` 还没有这些文件。合并进 `main` 之前读这个分支；合并之后以 `main` 为准。
+
+通用模板的主流时间和黑线时间仍然是两路。`seek` 和进度条对两路加同一段差值；`renderAt(秒)` 把这一帧的两路都画在这个秒数上。八张旧成片没有改成这个播放器。B/4 圆环增强页用同一份 `flow.js` 里的 `FlowClock`，黑线粒子走黑线时间，其余走主时间。用法和限制写在 `SKILL.md` 的「新图默认」。
 
 ## 看过但没有搬进来
 

@@ -7,7 +7,9 @@ description: 把 Martin-Hartz 经络与脉诊扫描图做成可循环的单文�
 
 把一张 J. Martin-Hartz / Fondation Cornelius Celsus 的扫描图做成循环播放的单文件 HTML，再导出视频。坐标始终是扫描图的像素。八张已完成的图在 `examples/`，每张的线型、颜色、标签和流向见文末「参考案例」。
 
-新图从 `template/config.json` 和 `template/template.html` 起头。通用页面能画色带、金色流线、银白实线光点、淡蓝虚线、脉动圆、矢量标签，图例在画面右上。B/28 的太极串联和 B/24 的管内粒子是专用模板，成片目录里各有一份 `template.html`。
+新图从 `template/config.json` 和 `template/template.html` 起头。通用页面能画色带、金色流线、银白实线光点、淡蓝虚线、脉动圆、矢量标签，图例在画面右上。需要同色粒子沿笔划走时，用下面「新图默认」里的 `type: "pipe"`。B/28 的太极串联和 B/24 的管内粒子是专用模板，成片目录里各有一份 `template.html`，周期仍以各自的 `config.json` 为准（B/24 是 60 秒，不是 24 秒）。
+
+本文件所在分支是 `cursor/b4-pipe-particles-6d38`。管内粒子的代码从提交 `6b703d2` 起。合并进 `main` 之前，`main`（`6dbeadd`）没有 `template/flow.js`。合并之后改跟 `main` 上的 `SKILL.md`。改这段说明之前的原文在 `docs/backup/`。
 
 ## 1. 描成矢量
 
@@ -176,18 +178,38 @@ python scripts/rescale_cycle.py --config examples/b24-bamai-yuanli/config.json -
 
 `style`：`band` 色带上的浅色虚线，`gold` 金色流线，`faint` 相克淡线，`solid` 黑实线上的银白光点，`dashed` 黑虚线上的淡蓝彗星。`group` 为 `black` 时走「黑线速度」滑杆。`closed: true` 表示环。`cs` / `ce` 是这一拍里彗星扫过的路径比例。`type: "pulse"` 用 `c: [x, y]`、`r`、`color`，这一拍的 `on` 含它的 id 时脉动。
 
-页面行为：
+页面行为（通用模板 `template/template.html`，合成后烘进单文件）：
 
-- 播放 / 暂停，主流速度，黑线速度，进度条。
-- 每个 layer 一个开关。
-- 图例在顶栏右侧（`legendColW` 控制列宽）。
-- `?video=1` 隐藏标题、控件和 `note`，只留 SVG。录制脚本调用 `renderAt(秒)`，周期读 `CYC`。
+- 播放 / 暂停，主流速度，黑线速度，进度条。每个 layer 一个开关。图例在顶栏右侧（`legendColW` 控制列宽）。
+- 另外两个开关是模板自己加上的：「减弱动效」（`#tgQuiet`）、「高对比」（`#tgContrast`）。系统开了 `prefers-reduced-motion: reduce` 时，减弱动效默认勾上，只藏 class 为 `fx-crowd` 的密集粒子，领头（`fx-lead`）还在。高对比只加深页面底和控件，不改扫描图。视口窄于 720px 时控件换行，滑杆不超过栏宽。
+- `?video=1` 隐藏标题、控件和 `note`，只留 SVG，并且不启动播放循环。录制脚本调用 `renderAt(秒)`，周期读 `CYC`，`CYC` 来自该图的 `config.cycle`。
 - 虚线位移用 `k = round(v * cycle / 周期)`。`k` 是整数，所以 `t = cycle` 时图案回到 `t = 0`。
-- `template/flow.js` 在合成时嵌进模板的 `__FLOW__`。播放、暂停、拖动进度和 `renderAt` / `seek` 用同一套时间：位置只由秒数决定，不靠逐帧累加速度，也不用 `Math.random`。`?video=1` 走同一个 `renderAt`。
-- `type: "pipe"`（或 `style: "pipe"`）在折线上铺同色粒子。粒子画进笔划遮罩，法线偏移不超过半个管宽。`closed: true` 沿环循环；开口的线用 `mode: "fade"`，两端淡出，避免从终点跳回起点时穿过空白。`mode: "ping"` 沿开口的线往返，用在原图没有箭头、又必须留在线上的 U 形。`laps` 取整数。领头点是白芯加一串尾迹。`group: "black"` 跟黑线速度。
-- 页面有「减弱动效」和「高对比」。系统开了「减少动态效果」时，减弱动效默认勾上。窄屏上按钮和滑杆换行，不靠横向滚动才能点到。
+- 时钟有两路，没有收成一路。见下一节。
 
-一条管内粒子：
+B/4、B/28、B/24 的旧成片是专用页面，逻辑已经烘进 HTML，没有改成通用模板。改那三张的旧页时，以对应目录里的 `template.html` 为准。B/24 的模板不含 `__FLOW__`，`build.py` 不会往里塞 `flow.js`。不要拿空模板去套太极或 U 形管，也不要把某一张图的秒数或圆的个数写成所有图的默认。
+
+## 新图默认：时间轴与管内粒子
+
+新图优先走通用模板。旧的八张成片、它们的秒数和备份策略保持原样。这一节不要求安装 GSAP、HyperFrames 或 givemotion；页面里只有本仓库的 `template/flow.js`。出处和许可证在 `docs/flow-sources.md`。
+
+`scripts/build.py` 看到模板里的 `__FLOW__`，就把 `template/flow.js` 嵌进去。嵌不进去会退出，不会把占位符留在 HTML 里。底图压成 data URL，Noto Sans CJK 按页面实际用字切成 woff2（繁体字面索引 3）一并嵌上。成品不靠网络。`--skip-fonts` 只适合本机预览。
+
+```bash
+python scripts/build.py \
+  --config template/config.json \
+  --image path/to/clean.jpg \
+  --out out/新图.html
+
+python scripts/test_flow.py
+python scripts/test_pipe_template.py
+python scripts/verify_loop.py --html out/新图.html
+```
+
+要视频时再跑 `scripts/record.py`。没有人要视频，就停在 HTML 和接缝检查。
+
+### 一条管内粒子
+
+`type` 或 `style` 写成 `pipe`。折线的点序就是流向。`cycle` 用该图 config 里的秒数，不要写死。
 
 ```json
 {
@@ -196,7 +218,7 @@ python scripts/rescale_cycle.py --config examples/b24-bamai-yuanli/config.json -
   "layer": "main",
   "color": "火",
   "width": 10,
-  "pts": [[40, 80], [200, 80]],
+  "pts": [[40, 120], [220, 120]],
   "laps": 2,
   "amp": 2,
   "count": 24,
@@ -204,11 +226,87 @@ python scripts/rescale_cycle.py --config examples/b24-bamai-yuanli/config.json -
 }
 ```
 
-`color` 可以写木、火、土、金、水，粒子用该行的亮色。这是图示，不要写成疗效。
+没有箭头、又是一条开口曲线、必须留在线上往返时，才把 `mode` 设为 `ping`，并在 `assumption` 和 `note` 里写明这是示意：
 
-B/4、B/28、B/24 的成片是专用页面，逻辑已经烘进 HTML。改那三张时，以对应目录里的 `template.html` 为准，不要拿空模板去套太极或 U 形管。
+```json
+{
+  "id": "open-u",
+  "type": "pipe",
+  "layer": "main",
+  "group": "black",
+  "color": "金",
+  "mode": "ping",
+  "width": 6,
+  "pts": [[80, 200], [80, 280], [160, 280], [160, 200]],
+  "laps": 1,
+  "lead": true
+}
+```
+
+模板里的默认（没写的字段才用）：
+
+| 字段 | 默认 | 作用 |
+| --- | --- | --- |
+| `width` | 8 | 遮罩笔划宽度，也是淡色底纹的依据 |
+| `mode` | 闭合用 `loop`，开口用 `fade` | 见下。`ping` 必须自己写 |
+| `count` | 路径长度除以 16，再夹在 8 和 48 之间 | 同色小粒子个数 |
+| `pr` | 1.45 | 粒子半径 |
+| `amp` | 不超过 `width` 的 0.28 倍，并且小于半宽减半径 | 沿法线的偏移，出不了遮罩 |
+| `v` | 30 | 没写 `laps` 时，用来算整数圈 |
+| `laps` | `max(1, round(v * cycle / 路径长))` | 一个 `cycle` 里走几圈，取整后 `t = cycle` 与 `t = 0` 重合 |
+| `lead` | 开 | 关掉写 `false` |
+| `leadLaps` | 跟 `laps` | 领头自己的整数圈 |
+| `group` | 主流 | `black` 时粒子跟黑线时钟，不跟主流时钟 |
+
+`color` 写木、火、土、金、水时，粒子用该行的亮色（`glow`），淡底纹用暗色（`dark`）。也可以写一个 CSS 颜色。金是白，白粒子在浅底上靠领头的描边才能看见。这是图示，不要写成疗效。
+
+领头是径向渐变的头、一颗白芯（半径 1.35），后面 6 颗沿路径退开约 7 像素一颗的尾迹。尾迹在闭合线上绕回路径，在开口线上停在端点，不画到空白里。
+
+三种走法：
+
+- 图上有箭头：点序按箭头。开口线用 `fade`（默认）。粒子走到两端时透明度降到 0，再从起点淡入，避免从终点跳回起点时穿过空白。
+- 闭合环：`closed: true`，`mode` 为 `loop`，相位取模，位置在接缝处连续。
+- 原图没有箭头的一条开口曲线，又要沿同一条线来回：`mode` 为 `ping`。位置连续，到端点反向。这是假定，必须写进 `assumption`（录制时仍在画面上）和 `note`。不要为了做成环去添一条穿越空白的新路径。
+
+通用模板的矢量字画在粒子图层之后，字盖在粒子上面。它不会按字框把粒子透明度改成 0。B/4 圆环增强页另外做了字框避让，那是那一页的 `template/ring-pipes.js`，不是所有图的默认。
+
+### 两路时钟，以及它们并没有合成一路
+
+通用模板用两个累加时间：`Tm` 乘主流速度，`Tb` 乘黑线速度。暂停时不再累加，下一帧也不会把暂停的那段时间补进去。改速度只影响之后的增量，不把已经走到的位置跳开。
+
+拖动进度条和 `seek(秒)` 用同一段差值同时加到 `Tm` 和 `Tb` 上。黑线如果已经比主流慢一截，跳转之后仍然慢那一截。
+
+`renderAt(秒)` 调用的是 `render(秒, 秒)`：这一帧里主流和黑线都画在同一个秒数上，也就是黑线速度为 1 的导出画面。它不改正在播放的 `Tm` / `Tb`。`?video=1` 不跑播放循环，所以录制逐帧调用 `renderAt` 时，画面不会被播放循环盖掉。普通播放中若只调 `renderAt` 而不 `seek`，下一帧仍回到 `Tm` / `Tb`。
+
+`group` 不是 `black` 的粒子用 `Tm` 那一路。`group: "black"` 的粒子用 `Tb`。旧式 `gold` / `solid` / `dashed` 也是这样分的。
+
+这不是「所有旧成片的黑线时钟都已经统一」。八张旧 HTML 仍用各自烘进去的时钟。B/24 是单时钟 `render(tm)`，周期 60 秒。B/4 原来的 `经络流注动画.html` 没有改。只有通用模板，以及 B/4 圆环增强页，使用上面这套两路时间。
+
+B/4 圆环增强页（`template/ring-pipes.js`）用 `flow.js` 里的 `FlowClock`：主速度乘 `t`，黑线速度乘 `tb`，`seek` 同样是两路一起加差值。`renderAt(t)` 不传第二参数时，这一帧两路都用 `t`。黑线粒子和原来的黑线虚线位移走 `tb`；弧线、十二经、圆环和脏腑余闪走 `t`。播放中下一帧会再用时钟盖掉单独的一次 `renderAt`。
+
+### 穴位余闪只在用了它的那一页
+
+`flow.js` 的 `glowAmp(t, index, slot, n)` 按该图自己的拍长和条数算。流过之后保持闪，在下一轮到来前的那一拍淡掉，好让 `t = 0` 和 `t = cycle` 对得上。循环起点上、序号为 0 的那一拍会从淡出变成点亮，这是新一轮的开始，不是接缝算错。
+
+通用模板的 `type: "pulse"` 仍然只在当前拍的 `on` 里脉动，不会自动余闪。B/4 圆环增强页把余闪用在十二个脏腑小圆上，拍长 2 秒、共 12 拍，因为那一页的周期是 24 秒。换一张图就要换成那张图的拍长和条数。
+
+### 旧页备份
+
+不要用增强页覆盖旧 HTML。先把旧文件按日期拷进该图目录的 `backup/`，再写一个新文件名。B/4 圆环版的备份在 `examples/b4-maizhen/backup/2026-11-16-圆环版/`，增强页是同目录的 `经络流注动画_圆环版_增强版.html`，由 `scripts/ring_enhance.py` 从备份生成。那支脚本只服务这一页（38 个圆、页脚假定、圆环遮罩都是这张图的），不要拿去批量改八张样例。
+
+### 回归
+
+```bash
+python scripts/test_flow.py
+python scripts/test_pipe_template.py
+python scripts/test_b4_enhanced.py
+```
+
+前两条不依赖某张经络图的秒数。第三条只检查 B/4 圆环增强页。`verify_loop.py` 对比的是 `renderAt(0)` 和 `renderAt(cycle)`，两路都被设成同一个秒数。它不能证明「黑线速度不是 1 的时候，播放中的画面和导出一致」。
 
 ## 6. 录成 MP4、GIF、PNG
+
+默认交付是单文件 HTML，加上一节的回归和 `verify_loop.py`。只有明确要视频时才录。
 
 ```bash
 python scripts/record.py \
@@ -246,7 +344,7 @@ python scripts/verify_loop.py --mp4 out/新图.mp4 --cycle 24
 
 HTML 检查截两张图：`renderAt(0)` 和 `renderAt(cycle)`。平均绝对差应接近 0（默认允许 2，抗锯齿范围内）。MP4 检查片长是否等于 `cycle`，并抽出第 0 帧和最后一帧。最后一帧是回绕前的一帧，差一个运动步长是正常的；差得很大就是接缝跳变，把两帧打开看。
 
-B/24 品牌条周期 2 秒，循环 60 秒。B/28 品牌条同样 2 秒，循环 24 秒。土太极在 12 秒反向，到 24 秒转回，角速度积成闭合，所以接缝处角度连续。
+B/24 品牌条周期 2 秒，循环 60 秒。B/28 品牌条同样 2 秒，循环 24 秒。土太极在 12 秒反向，到 24 秒转回，角速度积成闭合，所以接缝处角度连续。这两张的秒数是各自 config 里的，不要改成别的图的周期。B/24 模板没有 `__FLOW__`，接缝检查仍走它自己的 `render(tm)`。
 
 ## 参考案例
 
@@ -271,7 +369,7 @@ B/24 品牌条周期 2 秒，循环 60 秒。B/28 品牌条同样 2 秒，循环
 
 圆环版在 `backup/2026-11-16-圆环版/经络流注动画_圆环版.html`，38 个圆的拟合在 `circles.json`。来源是仍打开的 [PR #3](https://github.com/hzq61882-rgb/jingluo-anim/pull/3)（`b4-circle-flow`，`07303fc`），没有合并。增强版是另存的 `经络流注动画_圆环版_增强版.html`，用 `scripts/ring_enhance.py` 从备份生成。原来的 `经络流注动画.html` 不动。
 
-增强版在原有图层、38 圆的圆周和中心放射、黑线、弧线和五行之外，沿这些已经描好的路径加同色粒子和 U 形领头（白芯加尾迹）。U 形细线原图没有箭头，领头沿描线往返，页脚写明这是示意。圆周和中心放射也写明不是疗效。粒子用遮罩留在笔划或圆环里，经过矢量标签时不盖字。脏腑小圆在流注走过之后继续闪，闪的次数整除 24 秒。橙弧、奇经和五行连线的虚线位移改成整数圈，避免 24 秒接缝错一截。这张图不加「君宝学中医」。做法和许可来源写在 `docs/flow-sources.md`。
+增强版在原有图层、38 圆的圆周和中心放射、黑线、弧线和五行之外，沿这些已经描好的路径加同色粒子和 U 形领头（白芯加尾迹）。U 形细线原图没有箭头，领头沿描线往返，页脚写明这是示意。有箭头的路径仍按箭头，不改成往返。圆周和中心放射也写明不是疗效。粒子用遮罩留在笔划或圆环里，经过矢量标签时不盖字。脏腑小圆在流注走过之后继续闪，闪的次数整除这一页的 24 秒。橙弧、奇经和五行连线的虚线位移改成整数圈，避免接缝错一截；原来的黑线虚线位移本来就能整除，没有改成另一套时钟。这张图不加「君宝学中医」。38 个圆和 24 秒只属于这一页。做法和许可来源写在 `docs/flow-sources.md`。
 
 ### B/28 五行六经图
 

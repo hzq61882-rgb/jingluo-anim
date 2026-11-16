@@ -20,11 +20,14 @@ python scripts/build.py \
   --image path/to/clean.jpg \
   --out out/新图.html
 
-python scripts/record.py --html out/新图.html --out-dir out --name 新图 --still-time 0
+python scripts/test_flow.py
+python scripts/test_pipe_template.py
 python scripts/verify_loop.py --html out/新图.html
 ```
 
-`template/config.json` 是空起点：周期、图层、右上图例、页脚里的流向假定都留好了，`items` 为空。描完线之后把折线和圆填进去。页面自带播放/暂停、两档速度、图层开关；地址栏加 `?video=1` 只留画面，给录制用。`items` 里可以写 `type: "pipe"`，同色粒子沿折线走，并被限制在笔划宽度里。播放、拖动和 `renderAt` 共用 `template/flow.js` 的时间轴。窄屏、减弱动效和高对比在模板里。细节和许可来源见 [SKILL.md](SKILL.md) 与 [docs/flow-sources.md](docs/flow-sources.md)。
+要 MP4 或 GIF 时再跑 `scripts/record.py`。默认停在单文件 HTML 和接缝检查。
+
+`template/config.json` 是空起点：周期、图层、右上图例、页脚里的流向假定都留好了，`items` 为空。描完线之后把折线和圆填进去。页面自带播放/暂停、主流和黑线两档速度、图层开关；地址栏加 `?video=1` 只留画面，给录制用。`items` 里可以写 `type: "pipe"`，同色粒子沿折线走，并被限制在笔划宽度里。主流和黑线仍是两路时间：拖动时一起平移，`renderAt` 导出时画成同一秒。窄屏、减弱动效和高对比在模板里。细节、时钟限制和许可来源见 [SKILL.md](SKILL.md) 与 [docs/flow-sources.md](docs/flow-sources.md)。
 
 B/4 圆环版的增强成片是 `examples/b4-maizhen/经络流注动画_圆环版_增强版.html`。2026-11-16 的圆环版备份在同目录 `backup/2026-11-16-圆环版/`。原来的 `经络流注动画.html` 没有改。
 
