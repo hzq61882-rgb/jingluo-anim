@@ -6,7 +6,9 @@
 """
 from __future__ import annotations
 
+import base64
 import hashlib
+import io
 import json
 import re
 import sys
@@ -29,9 +31,9 @@ FINISHED = {'b24', 'b28'}
 # 工作稿里尚未钉死坐标的区块。不是「整页没有字」。
 ZONES = {
     'b31': [
-        {'id': 'wheel', 'status': 'lines', 'note': '九层色环、轮辐和序号链沿已描路径重绘。轮内小字本轮没有另猜。'},
-        {'id': 'right-table', 'status': 'done', 'note': '右侧表里、四季和腕下左腕、陰、小海少海按原格中心写入。红圆压住的三处没有补字。'},
-        {'id': 'left-table', 'status': 'reading', 'note': '左侧表的小字还没有逐格钉上，原图对照开着。'},
+        {'id': 'wheel', 'status': 'lines', 'note': '九层色环、轮辐和序号链沿已描路径重绘。轮内图例按约 14 像素高的横条逐条裁过，单字只有 6 到 8 像素，对不成一个词，没有写入。序号圆里的数字同样没有写入。'},
+        {'id': 'right-table', 'status': 'partial', 'note': '右侧能单独看清的字按该字墨迹框对齐，并只盖住这些旧笔画。红圆压住和裁开后不成字的格子没有补。'},
+        {'id': 'left-table', 'status': 'partial', 'note': '左侧逐格裁过。能读成一个词的按墨迹框写入并盖住旧笔画。红圆里的字和裁不开的格子没有补。'},
     ],
     'b45': [
         {'id': 'bands', 'status': 'lines', 'note': '左侧六经色带、右椭圆、交会穴横线、玉龍色条和六条奇经横线沿已描路径流动。'},
@@ -158,39 +160,135 @@ def add_generic(doc, cfg):
             doc['flows'].append(row)
 
 
+def cover_glyphs(data_uri: str, boxes: list) -> str:
+    """只把已誊字的深色笔画涂成周围纸色或圆色。长线和色条不涂。"""
+    import numpy as np
+    from PIL import Image
+
+    head, b64 = data_uri.split(',', 1)
+    im = Image.open(io.BytesIO(base64.b64decode(b64))).convert('RGB')
+    arr = np.array(im)
+    bch, gch, rch = arr[:, :, 2], arr[:, :, 1], arr[:, :, 0]
+    gray = arr.mean(axis=2)
+    mx = np.maximum(np.maximum(rch, gch), bch).astype(np.int16)
+    mn = np.minimum(np.minimum(rch, gch), bch).astype(np.int16)
+    ink = ((gray < 145) & ((mx - mn) < 58)).astype(np.uint8) * 255
+    import cv2
+    hker = cv2.getStructuringElement(cv2.MORPH_RECT, (16, 1))
+    vker = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 14))
+    lines = cv2.bitwise_or(cv2.morphologyEx(ink, cv2.MORPH_OPEN, hker), cv2.morphologyEx(ink, cv2.MORPH_OPEN, vker))
+    text = (cv2.subtract(ink, lines) > 0)
+    # 扩 1 像素，把笔画边缘的灰边也盖住，但不扩到长线上
+    text = cv2.dilate(text.astype(np.uint8), np.ones((3, 3), np.uint8), iterations=1) > 0
+    text = text & (lines == 0)
+    H, W = gray.shape
+    for x0, y0, x1, y1 in boxes:
+        x0, y0 = max(0, int(x0) - 1), max(0, int(y0) - 1)
+        x1, y1 = min(W, int(x1) + 1), min(H, int(y1) + 1)
+        if x1 <= x0 or y1 <= y0:
+            continue
+        region = arr[y0:y1, x0:x1]
+        local = gray[y0:y1, x0:x1]
+        # 比本格纸色或圆色更暗的像素才是字。色条和圆本身接近本格中位色，不涂。
+        level = float(np.percentile(local, 68))
+        dark = local < (level - 22)
+        mask = dark & (lines[y0:y1, x0:x1] == 0)
+        mask = cv2.dilate(mask.astype(np.uint8), np.ones((2, 2), np.uint8), iterations=1) > 0
+        mask = mask & (lines[y0:y1, x0:x1] == 0)
+        if int(mask.sum()) < 6:
+            continue
+        paper_px = region[~mask]
+        if len(paper_px) < 4:
+            continue
+        paper = np.median(paper_px, axis=0)
+        region[mask] = paper
+    out = Image.fromarray(arr)
+    buf = io.BytesIO()
+    out.save(buf, format='JPEG', quality=92)
+    return 'data:image/jpeg;base64,' + base64.b64encode(buf.getvalue()).decode('ascii')
+
+
 def add_b31(doc, cfg):
     add_generic(doc, cfg)
-    # 坐标是原图墨迹的中心。红圆盖住、看不全的字不写。
-    labels = [
-        ('表層', 655, 64, 15), ('冬', 722, 58, 16), ('裡層', 770, 64, 15),
-        ('膀胱', 650, 86, 13), ('志', 692, 106, 16), ('水', 740, 106, 16), ('腎', 772, 96, 14),
-        ('至陰', 675, 116, 12), ('湧泉', 724, 104, 12),
-        ('束骨', 679, 146, 12), ('然谷', 723, 138, 12),
-        ('京骨', 688, 174, 12), ('太谿', 725, 174, 12),
-        ('崑崙', 690, 192, 12), ('復溜', 734, 192, 12),
-        ('委中', 692, 210, 12),
-        ('足太陽', 652, 146, 12), ('足少陰', 788, 166, 11),
-        ('春', 710, 222, 16),
-        ('膽', 648, 236, 14), ('魂', 683, 244, 16), ('木', 730, 244, 16), ('肝', 772, 240, 14),
-        ('足厥陰', 622, 258, 12),
-        ('俠谿', 687, 270, 12), ('行間', 734, 272, 12),
-        ('足少陽', 600, 310, 12),
-        ('丘墟', 686, 318, 12), ('太衝', 726, 320, 12),
-        ('陽輔', 687, 344, 12), ('中封', 725, 346, 12),
-        ('陽陵泉', 682, 374, 11), ('曲泉', 723, 370, 12),
-        ('小腸', 662, 396, 13), ('神', 693, 390, 16), ('夏', 712, 372, 15),
-        ('火', 733, 394, 16), ('心', 768, 396, 14),
-        ('少澤', 690, 428, 12), ('少衝', 733, 430, 12),
-        ('神門', 724, 476, 12), ('靈道', 762, 476, 12),
-        ('小海', 718, 508, 12), ('少海', 756, 512, 12),
-        ('左腕', 424, 494, 16), ('陰', 778, 530, 16),
-        ('J. Martin-Hartz', 700.0, 575.0, 11),
+    # 色环轨道宽 8 像素的淡色描边会整圈盖住印刷色环、环上序号和太极。
+    # 能量点仍沿原路径走，轨道本身不铺色。
+    for row in doc['flows']:
+        if row.get('width', 0) >= 6:
+            row['strokeOpacity'] = 0
+    # 每个框是单独裁图后能读成一个词的墨迹范围，不是整列猜测。
+    # (字, x0, y0, x1, y1)
+    reads = [
+        ('表層', 630, 52, 679, 67), ('冬', 698, 46, 722, 61), ('裡層', 746, 50, 780, 70),
+        ('志', 688, 63, 700, 79), ('水', 710, 65, 726, 80), ('腎', 744, 74, 755, 83),
+        ('至陰', 681, 93, 701, 102), ('湧泉', 709, 92, 731, 102),
+        ('然谷', 709, 113, 732, 123), ('束骨', 682, 133, 702, 143),
+        ('京骨', 680, 150, 702, 163),
+        ('崑崙', 682, 171, 702, 182), ('復溜', 712, 169, 734, 179),
+        ('委中', 683, 189, 701, 200),
+        ('木', 711, 214, 728, 228),
+        ('膽', 656, 229, 668, 238), ('魂', 688, 224, 700, 234), ('肝', 741, 228, 750, 236),
+        ('足厥陰', 673, 248, 704, 258),
+        ('俠谿', 683, 267, 706, 277), ('行間', 711, 267, 733, 277),
+        ('丘墟', 687, 304, 705, 314),
+        ('陽陵泉', 676, 342, 709, 356), ('曲泉', 714, 342, 736, 353),
+        ('少澤', 687, 409, 706, 419), ('少衝', 716, 408, 737, 419),
+        ('前谷', 686, 427, 708, 437),
+        ('靈道', 717, 481, 739, 492),
+        ('少海', 717, 501, 739, 511),
+        ('左腕', 697, 520, 729, 535),
+        ('表層', 44, 50, 97, 65), ('裡層', 157, 50, 185, 63),
+        ('神', 96, 68, 112, 86), ('火', 120, 68, 136, 86),
+        ('關衝', 89, 97, 112, 108), ('中衝', 120, 97, 140, 112),
+        ('液門', 89, 115, 111, 125),
+        ('中渚', 92, 135, 111, 146),
+        ('陽池', 89, 154, 111, 165),
+        ('厥陰', 164, 162, 188, 173),
+        ('間使', 118, 173, 139, 184),
+        ('天井', 90, 192, 111, 202), ('曲澤', 118, 192, 139, 202),
+        ('足臨泣', 46, 215, 75, 224),
+        ('長夏', 100, 205, 140, 218),
+        ('意', 97, 223, 111, 237), ('土', 120, 223, 134, 237),
+        ('金', 120, 387, 133, 401),
+        ('內庭', 91, 272, 111, 282), ('大都', 118, 272, 139, 282),
+        ('陷谷', 91, 291, 112, 300),
+        ('解谿', 91, 310, 111, 320),
+        ('解谿', 88, 329, 114, 340),
+        ('商丘', 120, 328, 141, 338),
+        ('陰陵泉', 113, 347, 145, 360),
+        ('秋', 107, 366, 123, 380),
+        ('少商', 120, 412, 140, 424),
+        ('太陰', 161, 432, 184, 443), ('商陽', 117, 433, 132, 445),
+        ('合谷', 90, 469, 111, 479), ('列缺', 198, 470, 217, 480),
+        ('陽明', 42, 481, 65, 493), ('陽谿', 90, 489, 112, 499),
+        ('曲池', 90, 508, 111, 518), ('尺澤', 120, 508, 141, 517),
+        ('右脇', 97, 528, 129, 543),
     ]
-    for t, x, y, fs in labels:
-        doc['labels'].append({'t': t, 'x': x, 'y': y, 'fs': fs, 'fw': 700, 'halo': 3})
+    boxes = []
+    for t, x0, y0, x1, y1 in reads:
+        w, h = x1 - x0, y1 - y0
+        # 字号略小于墨迹框，避免笔画加白边后压到邻格或圈线。
+        fs = max(8, min(14, round(h * 0.78)))
+        row = {
+            't': t,
+            'x': round((x0 + x1) / 2, 1),
+            'y': round((y0 + y1) / 2, 1),
+            'fs': fs, 'fw': 700, 'halo': 0.6,
+        }
+        if len(t) > 1 and 7 * len(t) <= w <= 20 * len(t):
+            row['tl'] = w
+        doc['labels'].append(row)
+        boxes.append([x0, y0, x1, y1])
+    doc['cover'] = boxes
+    doc['scanPair'] = True
     doc['uncertain'] = [
-        '右表红圆压住的字没有补：束骨左侧约 (648,125)、復溜右侧约 (755,200)、小海上方约 (680,470)。',
-        '左侧表和轮内细字本轮没有写入。',
+        '右表京骨右侧同一格单独裁开后不是完整的太谿，没有写。',
+        '右表红圆盖住的字没有写：约 (666,118)、(744,194)、(743,253)、(669,293)、(748,428)、(672,484)。',
+        '右表陽輔、中封、神門、膀胱、三焦、春，以及跨过竖线的腕骨框，没有写。',
+        '左表外關和右下另一处合谷的裁图没有落在格子里，没有写。',
+        '左表心包这一格（约 148,80–167,87）10 倍裁开后第二字不是完整的包，没有写。',
+        '左表红圆盖住的字没有写：约 (153,114)、(74,173)、(150,295)、(76,352)、(75,420)、(153,493)。',
+        '轮内图例按约 14 像素高的横条逐条裁过，单字 6 到 8 像素，对不成一个词，没有写。环上序号同样没有写，清晰层里仍是原印。',
+        '左表魄、胃、脾、大腸、肺和三焦，右表春、膀胱，单独放大后不是一个完整的字，没有写。原印留在原位。',
     ]
 
 
@@ -486,9 +584,16 @@ def main():
         doc = base_doc(cfg, image_from(html_path), key)
         adder(doc, cfg)
         image = doc.pop('image')
+        cover = doc.pop('cover', None)
+        raw_token = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+        if cover:
+            raw_token = image
+            image = cover_glyphs(image, cover)
+            if key == 'b31':
+                Path('/tmp/b31_clean.jpg').write_bytes(base64.b64decode(image.split(',', 1)[1]))
         out_cfg = directory / 'clear-data.json'
         out_cfg.write_text(json.dumps(doc, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
-        page = tpl.replace('__TITLE__', doc['title']).replace('__CFG__', json.dumps(doc, ensure_ascii=False).replace('<', '\\u003c')).replace('__IMG__', image)
+        page = tpl.replace('__TITLE__', doc['title']).replace('__CFG__', json.dumps(doc, ensure_ascii=False).replace('<', '\\u003c')).replace('__IMG__', image).replace('__RAW__', raw_token)
         chars = ''.join(sorted({c for c in page if ord(c) >= 32}))
         subset = Path('/tmp') / f'_clear_{key}.woff2'
         subset_woff2(chars, FONT, subset, None)

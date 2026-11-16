@@ -38,6 +38,7 @@ body.hc .note,body.hc .sub{color:#f6efe2}
 </defs>
 <g id="main">
  <image id="bg" href="__IMG__" x="0" y="0" preserveAspectRatio="none"/>
+ <image id="raw" href="__RAW__" x="0" y="0" preserveAspectRatio="none" style="display:none"/>
  <g id="ink"></g>
  <g id="pipes"></g>
  <g id="flows"></g>
@@ -76,11 +77,15 @@ function txt(s,a,p){const t=el('text',Object.assign({'text-anchor':'middle','dom
 const W=CFG.W,H=CFG.H,CYC=CFG.cycle;
 $('stage').setAttribute('viewBox',`0 0 ${W} ${H+78}`);
 $('bg').setAttribute('width',W);$('bg').setAttribute('height',H);
+$('raw').setAttribute('width',W);$('raw').setAttribute('height',H);
 const draft=!!CFG.draft;
+const scanPair=!!CFG.scanPair;
 $('h1').textContent=(CFG.title||'')+(draft?' · 工作稿':'');
-$('subt').textContent=(draft?'工作稿。原图对照默认打开，没核对完的小字仍看原图。':'')+(CFG.sub||'');
+$('subt').textContent=(draft?(scanPair?'工作稿。清晰层默认打开：已誊的字盖住旧笔画，没誊的仍留在原位。原图对照可再打开。':'工作稿。原图对照默认打开，没核对完的小字仍看原图。'):'')+(CFG.sub||'');
 $('note').innerHTML=CFG.note||'';document.title=(CFG.title||'')+(draft?' · 工作稿':'');
-if(!draft){$('bg').style.display='none';} else {$('tgScan').checked=true;}
+if(scanPair){$('tgScan').checked=false;$('bg').style.display='';$('raw').style.display='none';}
+else if(!draft){$('bg').style.display='none';}
+else {$('tgScan').checked=true;}
 function poly(pts){return 'M'+pts.map(q=>q[0]+','+q[1]).join('L');}
 const defs=$('stage').querySelector('defs');
 const grads={};
@@ -115,6 +120,7 @@ const flows=(CFG.flows||[]).map((it,idx)=>{
   }
   const g=el('g',{'data-flow':it.id,'data-ring':it.ring?1:0,'pointer-events':'none',mask:maskUrl},parent);
   const track=el('path',{d,fill:'none',stroke:it.track,'stroke-width':it.width,'stroke-linecap':'round','stroke-linejoin':'round'}, it.clip?$('pipes'):g);
+  if(it.strokeOpacity!=null) track.setAttribute('stroke-opacity', it.strokeOpacity);
   if(!it.clip) track.setAttribute('data-track','1');
   const guide=el('path',{d,fill:'none',stroke:'none'},g);
   const len=guide.getTotalLength()||1;
@@ -262,7 +268,13 @@ $('spMain').oninput=e=>{sm=+e.target.value;$('spMainV').textContent=sm.toFixed(1
 $('spBlack').oninput=e=>{sb=+e.target.value;$('spBlackV').textContent=sb.toFixed(1)+'×';};
 window.seek=function(sec){const nt=JingluoFlow.wrap(+sec,CYC);const cur=JingluoFlow.wrap(Tm,CYC);const d=nt-cur;Tm+=d;Tb+=d;render(Tm,Tb);$('scrub').value=(nt/CYC).toFixed(3);};
 $('scrub').oninput=e=>window.seek(+e.target.value*CYC);
-$('tgScan').onchange=e=>{ $('bg').style.display=e.target.checked?'':'none'; };
+$('tgScan').onchange=e=>{
+  if(scanPair){
+    $('bg').style.display=e.target.checked?'none':'';
+    $('raw').style.display=e.target.checked?'':'none';
+    $('labels').style.display=e.target.checked?'none':($('tgText').checked?'':'none');
+  } else $('bg').style.display=e.target.checked?'':'none';
+};
 $('tgFlow').onchange=e=>{ $('flows').style.display=e.target.checked?'':'none'; };
 $('tgText').onchange=e=>{ $('labels').style.display=e.target.checked?'':'none'; };
 $('tgQuiet').onchange=e=>document.body.classList.toggle('quiet',e.target.checked);
