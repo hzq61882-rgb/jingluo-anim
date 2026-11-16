@@ -133,6 +133,11 @@ def main(argv=None):
     import json
     cfg_text = json.dumps(cfg, ensure_ascii=False).replace('<', '\\u003c')
     template = Path(args.template).read_text(encoding='utf-8')
+    if '__FLOW__' in template:
+        flow = ROOT / 'template' / 'flow.js'
+        if not flow.is_file():
+            raise SystemExit('模板含 __FLOW__，但没有 template/flow.js')
+        template = template.replace('__FLOW__', flow.read_text(encoding='utf-8'))
     needs_lineflow = '__LF__' in template
     lineflow = None
     if needs_lineflow:
@@ -190,6 +195,8 @@ def main(argv=None):
             .replace('__CFG__', cfg_text))
     if '__LF__' in html:
         raise SystemExit('输出里仍有 __LF__，流光图没有替换干净。')
+    if '__FLOW__' in html:
+        raise SystemExit('输出里仍有 __FLOW__，时间轴脚本没有嵌进去。')
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, encoding='utf-8')
