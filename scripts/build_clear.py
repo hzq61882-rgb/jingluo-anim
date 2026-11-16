@@ -396,7 +396,10 @@ def main():
     flow = FLOW.read_text(encoding='utf-8')
     tpl = tpl.replace('__FLOW__', flow)
     reports = []
+    only = set(sys.argv[1:])
     for key, folder, html_name, cfg_name, adder in CHARTS:
+        if only and key not in only:
+            continue
         directory = ROOT / folder
         html_path = directory / html_name
         cfg_path = directory / cfg_name
