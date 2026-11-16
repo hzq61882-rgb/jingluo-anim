@@ -33,8 +33,9 @@ ZONES = {
         {'id': 'side-tables', 'status': 'reading', 'note': '左右表里、四季和腕部小字还在按原图逐格誊写，原图对照开着。'},
     ],
     'b45': [
-        {'id': 'bands', 'status': 'lines', 'note': '色带、外环和横线沿已描路径重绘。'},
-        {'id': 'labels', 'status': 'reading', 'note': '椭圆内和交会穴旁的穴名还在逐区誊写，原图对照开着。'},
+        {'id': 'bands', 'status': 'lines', 'note': '左侧六经色带、右椭圆、交会穴横线、玉龍色条和六条奇经横线沿已描路径流动。'},
+        {'id': 'titles', 'status': 'done', 'note': '五行、六经名、交會穴、母、子、神應經、玉龍按原图大字位置写入。'},
+        {'id': 'grid', 'status': 'reading', 'note': '交会穴下方的络穴小字和椭圆内细字还在逐区钉坐标，原图对照开着。'},
     ],
     'b1': [
         {'id': 'axis', 'status': 'lines', 'note': '中轴、彩线和弧沿已描路径重绘。'},
@@ -154,6 +155,30 @@ def add_generic(doc, cfg):
         row = flow_item(it, i)
         if row:
             doc['flows'].append(row)
+
+
+def add_b45(doc, cfg):
+    add_generic(doc, cfg)
+    # 放大后能读清的大字。坐标按原图像素。
+    for lab in (
+        {'t': '五行', 'x': 74, 'y': 90, 'fs': 18},
+        {'t': '氣穴', 'x': 46, 'y': 128, 'fs': 13},
+        {'t': '傷寒論', 'x': 72, 'y': 146, 'fs': 13},
+        {'t': '66個五輸穴', 'x': 112, 'y': 124, 'fs': 11},
+        {'t': '太陽', 'x': 78, 'y': 186, 'fs': 13},
+        {'t': '陽明', 'x': 78, 'y': 220, 'fs': 13},
+        {'t': '少陽', 'x': 78, 'y': 254, 'fs': 13},
+        {'t': '太陰', 'x': 78, 'y': 288, 'fs': 13},
+        {'t': '少陰', 'x': 78, 'y': 322, 'fs': 13},
+        {'t': '厥陰', 'x': 78, 'y': 354, 'fs': 13},
+        {'t': '交會穴', 'x': 52, 'y': 408, 'fs': 14},
+        {'t': '母', 'x': 155, 'y': 392, 'fs': 14},
+        {'t': '子', 'x': 200, 'y': 392, 'fs': 14},
+        {'t': '神應經', 'x': 520, 'y': 378, 'fs': 15},
+        {'t': '玉龍', 'x': 298, 'y': 706, 'fs': 22},
+        {'t': 'J. Martin-Hartz', 'x': 500, 'y': 786, 'fs': 11},
+    ):
+        doc['labels'].append({**lab, 'fw': 700, 'halo': 3})
 
 
 def add_b28(doc, cfg):
@@ -385,7 +410,7 @@ def add_b24(doc, cfg):
 
 CHARTS = [
     ('b31', 'examples/b31-cunguan-siji', '寸关尺四季表里图_流动动画.html', 'config.json', add_generic),
-    ('b45', 'examples/b45-yulong-bafa', '玉龍八法_流动动画.html', 'config.json', add_generic),
+    ('b45', 'examples/b45-yulong-bafa', '玉龍八法_流动动画.html', 'config.json', add_b45),
     ('b1', 'examples/b1-yulong', '玉龍_流动动画.html', 'config.json', add_generic),
     ('b39', 'examples/b39-qi-qijing', '氣的循環奇經八脈圖_流动动画.html', 'config.json', add_b39),
     ('b36', 'examples/b36-shenying', '神應經穴法圖_流动动画.html', 'config.json', add_generic),
