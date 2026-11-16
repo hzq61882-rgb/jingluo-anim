@@ -24,7 +24,7 @@ GLOW = {'木': '#3fdc5a', '火': '#ff3b30', '土': '#ffd60a', '金': '#ffffff', 
 DARK = {'木': '#2f8a3c', '火': '#c0201c', '土': '#caa005', '金': '#5c6370', '水': '#1e5bb8'}
 
 # 已经逐区看过原图、可以当成成品的页。其余是工作稿。
-FINISHED = {'b24'}
+FINISHED = {'b24', 'b28'}
 
 # 工作稿里尚未钉死坐标的区块。不是「整页没有字」。
 ZONES = {
@@ -51,12 +51,12 @@ ZONES = {
         {'id': 'cells', 'status': 'reading', 'note': '方格里的穴名和格子横线还在逐格誊写，原图对照开着。'},
     ],
     'b28': [
-        {'id': 'plates', 'status': 'done', 'note': '色块、穴圈和太极字用这张图已有的坐标文字。'},
-        {'id': 'branches', 'status': 'reading', 'note': '色带上更细的分支墨迹还在对照原图，原图对照开着。'},
+        {'id': 'labels', 'status': 'done', 'note': '28 个穴圈、六经名、魂志神魄意和 1–6 号与原图能读清的字一致。没有另补看不清的小字。'},
+        {'id': 'paths', 'status': 'done', 'note': '六条色带、相生相克链和四条黑线沿已核对的路径。这张图的结构是六经环和太极，不是另一组同心圆，没有另加圆。'},
     ],
     'b24': [
         {'id': 'body', 'status': 'done', 'note': '穴圈、色带、圆环、圆盘和原有标签都在矢量层。'},
-        {'id': 'quotes', 'status': 'done', 'note': '「有如流量加大」和「有如湧自源泉」改为左对齐后向右移开，不再压住土、木两枚圆。'},
+        {'id': 'quotes', 'status': 'done', 'note': '右侧五段说明保持原来的坐标和行宽。五行大圆按原图只画出外侧半圆，内侧穴圈和穴名画在圆上面。'},
     ],
 }
 
@@ -329,23 +329,36 @@ def add_b24(doc, cfg):
         clip = xy(r['clip']) if r.get('clip') else None
         doc['flows'].append({'id': r['id'] + '-a', 'pts': pts[:i + 1], 'closed': False, 'ring': True, 'track': colors[0], 'flow': colors[0], 'width': 12, 'group': 'main', 'v': 18, 'clip': clip})
         doc['flows'].append({'id': r['id'] + '-b', 'pts': pts[i:], 'closed': False, 'ring': True, 'track': colors[1], 'flow': colors[1], 'width': 12, 'group': 'main', 'v': 18, 'clip': clip})
-    for c in cfg['circles']:
-        doc['nodes'].append({'id': 'ac-' + c['n'], 'x': c['x'], 'y': c['y'], 'r': c['r'], 't': c['n'], 'fill': '#fff', 'flow': c.get('bc') or '#c0201c', 'fs': max(9, c['r'] * 0.55)})
     placed = [(p['x'], p['y'], p.get('t')) for p in cfg.get('labels') or [] if p.get('t')]
     def duplicated(x, y, text):
         return any(text == t and abs(x - px) < 42 and abs(y - py) < 42 for px, py, t in placed)
+    # 大圆先画，并按原图的半圆裁切，避免整圆盖住内侧穴圈。穴圈后画，字留在圆上面。
     for d in cfg.get('discs') or []:
         style = wx.get(d.get('el')) or {}
         text = d.get('t') or d.get('el')
         if text and duplicated(d['x'], d['y'], text):
             text = None
-        doc['nodes'].append({
+        node = {
             'id': d.get('id') or 'disc',
             'x': d['x'], 'y': d['y'], 'r': d['r'],
             't': text,
+            'tx': d.get('lx') if d.get('lx') is not None else d['x'],
+            'ty': d.get('ly') if d.get('ly') is not None else d['y'],
             'fill': style.get('dark', '#ddd'),
             'flow': style.get('glow', '#ffd34d'),
             'fs': d.get('fs') or max(12, d['r'] * 0.4),
+            'halo': 2,
+        }
+        if d.get('clip'):
+            node['clip'] = d['clip']
+        doc['nodes'].append(node)
+    for c in cfg['circles']:
+        nch = len(c['n'])
+        fs = 10.6 if nch == 2 else 8.4
+        doc['nodes'].append({
+            'id': 'ac-' + c['n'], 'x': c['x'], 'y': c['y'], 'r': c['r'], 't': c['n'],
+            'fill': '#fff', 'flow': c.get('bc') or '#c0201c', 'fs': fs,
+            'tl': round(fs * nch * 0.98, 2), 'halo': 2,
         })
     for i, line in enumerate(cfg.get('lines') or []):
         doc['flows'].append({'id': 'ln%d' % i, 'pts': xy(line), 'closed': False, 'ring': False, 'track': '#1a1a1a', 'flow': '#d6e6ff', 'width': 1.8, 'group': 'black', 'v': 20})
@@ -355,17 +368,11 @@ def add_b24(doc, cfg):
     doc['flows'].append({'id': 'spiral', 'pts': xy(sp['pts']), 'closed': False, 'ring': False, 'track': '#8a6a12', 'flow': '#ffd34d', 'width': 2.2, 'group': 'main', 'v': 16})
     for p in cfg.get('labels') or []:
         if p.get('t'):
-            x, y = p['x'], p['y']
-            text = p['t']
-            # 这两句原来从圆的右缘起笔，字压进土、木两枚圆。左对齐后再让开圆边。
-            if text.startswith('“有如流量加大'):
-                x += 22
-            elif text.startswith('“有如湧自源泉'):
-                x += 20
             doc['labels'].append({
-                't': text, 'x': x, 'y': y, 'fs': p.get('fs') or 14, 'rot': p.get('rot') or 0,
+                't': p['t'], 'x': p['x'], 'y': p['y'], 'fs': p.get('fs') or 14, 'rot': p.get('rot') or 0,
                 'fw': p.get('fw') or 500, 'color': p.get('color') or '#111',
                 'anchor': p.get('anchor') or 'middle', 'halo': 3,
+                'tl': p.get('tl'),
             })
     if cfg.get('brand'):
         doc['labels'].append({'t': cfg['brand']['text'], 'x': cfg['W'] / 2, 'y': cfg['H'] - 28, 'fs': 18, 'fw': 700, 'color': '#6b3a12'})

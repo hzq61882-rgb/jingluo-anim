@@ -4,23 +4,21 @@
   "texts": 54,
   "paths": 31,
   "rings": 39,
-  "draft": true,
+  "draft": false,
   "zones": [
     {
-      "id": "plates",
+      "id": "labels",
       "status": "done",
-      "note": "色块、穴圈和太极字用这张图已有的坐标文字。"
+      "note": "28 个穴圈、六经名、魂志神魄意和 1–6 号与原图能读清的字一致。没有另补看不清的小字。"
     },
     {
-      "id": "branches",
-      "status": "reading",
-      "note": "色带上更细的分支墨迹还在对照原图，原图对照开着。"
+      "id": "paths",
+      "status": "done",
+      "note": "六条色带、相生相克链和四条黑线沿已核对的路径。这张图的结构是六经环和太极，不是另一组同心圆，没有另加圆。"
     }
   ],
-  "uncertain": [
-    "色带上更细的分支墨迹还在对照原图，原图对照开着。"
-  ],
+  "uncertain": [],
   "html": "五行六经图动画_清晰重绘版.html",
-  "bytes": 884062,
+  "bytes": 887947,
   "source_sha": "63752f61cd5ef7981299757aeb0ac4c211ecc58f9256fe6f9f3fe870b1740193"
 }
