@@ -1,0 +1,24 @@
+{
+  "id": "b24",
+  "cycle": 60.0,
+  "texts": 131,
+  "paths": 21,
+  "rings": 94,
+  "draft": false,
+  "zones": [
+    {
+      "id": "body",
+      "status": "done",
+      "note": "穴圈、色带、圆环、圆盘和原有标签都在矢量层。"
+    },
+    {
+      "id": "quotes",
+      "status": "done",
+      "note": "右侧五段说明保持原来的坐标和行宽。五行大圆按原图只画出外侧半圆，内侧穴圈和穴名画在圆上面。"
+    }
+  ],
+  "uncertain": [],
+  "html": "把脈的原理動畫_清晰重绘版.html",
+  "bytes": 1048905,
+  "source_sha": "8bdd3a3a2b8607b06844efbcbdeb0d8301d4d8771189039209e454dcea2e3b01"
+}

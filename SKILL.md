@@ -352,6 +352,8 @@ B/24 品牌条周期 2 秒，循环 60 秒。B/28 品牌条同样 2 秒，循环
 
 B/4 以外的七张，各有一份不覆盖原件的 `*_增强版.html`，旧文件在该目录 `backup/2026-11-17-增强前/`。用 `python scripts/enhance_charts.py` 从原成片生成，粒子走 `template/baked-pipes.js` 和 `template/flow.js`。每张仍用自己的 `cycle`。B/28 的阳顺阴逆、太极串联和土在 `TU_SWITCH`（12 秒）换向留在原来的 `taijiAngle`。B/24 仍是 60 秒，领头留在原来的 U 形裁剪里，没有套用无箭头细线的往返。
 
+`python scripts/build_clear.py` 另存 `*_清晰重绘版.html`。默认关掉扫描图，只画 config 里已有的路径、圆环和文字；没有坐标的手写字写入 `coverage-清晰重绘.json` 的 `uncertain`，不猜。B/24 的 U 形仍按 `fSplit` 分成两色，不改成往返，周期仍是 60 秒。
+
 ### B/4 脉诊图
 
 目录 `examples/b4-maizhen`。成片 `经络流注动画.html`，画面 595×808，循环 24 秒，十二经每经 2 秒。图例画在图面右上的空白里（约 x=452, y=38）。页面提供 `renderAt`，并带 `CYC`（24），共用的 `scripts/record.py` 可以直接录。

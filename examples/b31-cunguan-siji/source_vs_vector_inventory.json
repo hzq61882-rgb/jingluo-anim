@@ -1,0 +1,5445 @@
+{
+  "coord": "809x596 source jpg",
+  "shapes": [
+    {
+      "id": "frame",
+      "type": "rect",
+      "redrawn": true,
+      "new_id": "frame",
+      "box": [
+        35,
+        26,
+        778,
+        572
+      ],
+      "source": "M35 26 H778 V572 H35 Z"
+    },
+    {
+      "id": "node-ring-outer",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "node-ring-outer",
+      "cx": 404,
+      "cy": 296,
+      "r": 229
+    },
+    {
+      "id": "node-ring-inner",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "node-ring-inner",
+      "cx": 404,
+      "cy": 296,
+      "r": 203
+    },
+    {
+      "id": "sector-ring",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "sector-ring",
+      "cx": 404,
+      "cy": 296,
+      "r": 170
+    },
+    {
+      "id": "spoke-0",
+      "type": "double-line",
+      "redrawn": true,
+      "new_id": "spoke-0",
+      "theta": 0,
+      "r0": 84,
+      "r1": 170,
+      "offset": 1.1
+    },
+    {
+      "id": "spoke-1",
+      "type": "double-line",
+      "redrawn": true,
+      "new_id": "spoke-1",
+      "theta": 30,
+      "r0": 84,
+      "r1": 170,
+      "offset": 1.1
+    },
+    {
+      "id": "spoke-2",
+      "type": "double-line",
+      "redrawn": true,
+      "new_id": "spoke-2",
+      "theta": 60,
+      "r0": 84,
+      "r1": 170,
+      "offset": 1.1
+    },
+    {
+      "id": "spoke-3",
+      "type": "double-line",
+      "redrawn": true,
+      "new_id": "spoke-3",
+      "theta": 90,
+      "r0": 84,
+      "r1": 170,
+      "offset": 1.1
+    },
+    {
+      "id": "spoke-4",
+      "type": "double-line",
+      "redrawn": true,
+      "new_id": "spoke-4",
+      "theta": 120,
+      "r0": 84,
+      "r1": 170,
+      "offset": 1.1
+    },
+    {
+      "id": "spoke-5",
+      "type": "double-line",
+      "redrawn": true,
+      "new_id": "spoke-5",
+      "theta": 150,
+      "r0": 84,
+      "r1": 170,
+      "offset": 1.1
+    },
+    {
+      "id": "spoke-6",
+      "type": "double-line",
+      "redrawn": true,
+      "new_id": "spoke-6",
+      "theta": 180,
+      "r0": 84,
+      "r1": 170,
+      "offset": 1.1
+    },
+    {
+      "id": "spoke-7",
+      "type": "double-line",
+      "redrawn": true,
+      "new_id": "spoke-7",
+      "theta": 210,
+      "r0": 84,
+      "r1": 170,
+      "offset": 1.1
+    },
+    {
+      "id": "spoke-8",
+      "type": "double-line",
+      "redrawn": true,
+      "new_id": "spoke-8",
+      "theta": 240,
+      "r0": 84,
+      "r1": 170,
+      "offset": 1.1
+    },
+    {
+      "id": "spoke-9",
+      "type": "double-line",
+      "redrawn": true,
+      "new_id": "spoke-9",
+      "theta": 270,
+      "r0": 84,
+      "r1": 170,
+      "offset": 1.1
+    },
+    {
+      "id": "spoke-10",
+      "type": "double-line",
+      "redrawn": true,
+      "new_id": "spoke-10",
+      "theta": 300,
+      "r0": 84,
+      "r1": 170,
+      "offset": 1.1
+    },
+    {
+      "id": "spoke-11",
+      "type": "double-line",
+      "redrawn": true,
+      "new_id": "spoke-11",
+      "theta": 330,
+      "r0": 84,
+      "r1": 170,
+      "offset": 1.1
+    },
+    {
+      "id": "X1",
+      "type": "line",
+      "redrawn": true,
+      "new_id": "X1",
+      "d": "M176 242 L635 80",
+      "grade": "B",
+      "why": "可见共线段拟合，遮挡处不补分岔"
+    },
+    {
+      "id": "X2",
+      "type": "line",
+      "redrawn": true,
+      "new_id": "X2",
+      "d": "M176 403 L639 239",
+      "grade": "B",
+      "why": "可见共线段拟合，遮挡处不补分岔"
+    },
+    {
+      "id": "X3",
+      "type": "line",
+      "redrawn": true,
+      "new_id": "X3",
+      "d": "M175 242 L637 239",
+      "grade": "B",
+      "why": "可见共线段拟合，遮挡处不补分岔"
+    },
+    {
+      "id": "X4",
+      "type": "line",
+      "redrawn": true,
+      "new_id": "X4",
+      "d": "M176 403 L639 398",
+      "grade": "B",
+      "why": "可见共线段拟合，遮挡处不补分岔"
+    },
+    {
+      "id": "X5",
+      "type": "dashed",
+      "redrawn": true,
+      "new_id": "X5",
+      "d": "M176 243 L641 395",
+      "grade": "B",
+      "why": "可见共线段拟合，遮挡处不补分岔"
+    },
+    {
+      "id": "X6",
+      "type": "dashed",
+      "redrawn": true,
+      "new_id": "X6",
+      "d": "M176 400 L635 82",
+      "grade": "B",
+      "why": "可见共线段拟合，遮挡处不补分岔"
+    },
+    {
+      "id": "node-chain",
+      "type": "polyline",
+      "redrawn": true,
+      "new_id": "node-chain",
+      "points": [
+        [
+          517,
+          98
+        ],
+        [
+          633,
+          295
+        ],
+        [
+          518,
+          493
+        ],
+        [
+          287,
+          496
+        ],
+        [
+          174,
+          296
+        ],
+        [
+          287,
+          101
+        ],
+        [
+          511,
+          124
+        ],
+        [
+          607,
+          304
+        ],
+        [
+          498,
+          475
+        ],
+        [
+          294,
+          466
+        ],
+        [
+          200,
+          289
+        ],
+        [
+          308,
+          119
+        ]
+      ],
+      "why": "1→3→5→7→9→11→13→15→17→19→21→23→1 直段"
+    },
+    {
+      "id": "cell-L1-L-0",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L1-L-0",
+      "box": [
+        89,
+        94,
+        113,
+        108
+      ]
+    },
+    {
+      "id": "cell-L1-L-1",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L1-L-1",
+      "box": [
+        89,
+        113,
+        113,
+        127
+      ]
+    },
+    {
+      "id": "cell-L1-L-2",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L1-L-2",
+      "box": [
+        90,
+        132,
+        113,
+        146
+      ]
+    },
+    {
+      "id": "cell-L1-L-3",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L1-L-3",
+      "box": [
+        90,
+        152,
+        113,
+        165
+      ]
+    },
+    {
+      "id": "cell-L1-L-4",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L1-L-4",
+      "box": [
+        90,
+        170,
+        113,
+        184
+      ]
+    },
+    {
+      "id": "cell-L1-L-5",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L1-L-5",
+      "box": [
+        92,
+        189,
+        113,
+        204
+      ]
+    },
+    {
+      "id": "cell-L1-R-0",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L1-R-0",
+      "box": [
+        117,
+        94,
+        141,
+        108
+      ]
+    },
+    {
+      "id": "cell-L1-R-1",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L1-R-1",
+      "box": [
+        117,
+        113,
+        141,
+        127
+      ]
+    },
+    {
+      "id": "cell-L1-R-2",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L1-R-2",
+      "box": [
+        117,
+        132,
+        139,
+        146
+      ]
+    },
+    {
+      "id": "cell-L1-R-3",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L1-R-3",
+      "box": [
+        116,
+        151,
+        139,
+        165
+      ]
+    },
+    {
+      "id": "cell-L1-R-4",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L1-R-4",
+      "box": [
+        116,
+        170,
+        141,
+        184
+      ]
+    },
+    {
+      "id": "cell-L1-R-5",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L1-R-5",
+      "box": [
+        116,
+        189,
+        141,
+        203
+      ]
+    },
+    {
+      "id": "cell-L2-L-0",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L2-L-0",
+      "box": [
+        90,
+        250,
+        113,
+        264
+      ]
+    },
+    {
+      "id": "cell-L2-L-1",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L2-L-1",
+      "box": [
+        91,
+        269,
+        114,
+        283
+      ]
+    },
+    {
+      "id": "cell-L2-L-2",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L2-L-2",
+      "box": [
+        94,
+        288,
+        114,
+        302
+      ]
+    },
+    {
+      "id": "cell-L2-L-3",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L2-L-3",
+      "box": [
+        94,
+        308,
+        114,
+        322
+      ]
+    },
+    {
+      "id": "cell-L2-L-4",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L2-L-4",
+      "box": [
+        91,
+        327,
+        114,
+        340
+      ]
+    },
+    {
+      "id": "cell-L2-L-5",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L2-L-5",
+      "box": [
+        91,
+        346,
+        114,
+        358
+      ]
+    },
+    {
+      "id": "cell-L2-R-0",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L2-R-0",
+      "box": [
+        116,
+        251,
+        140,
+        263
+      ]
+    },
+    {
+      "id": "cell-L2-R-1",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L2-R-1",
+      "box": [
+        116,
+        269,
+        140,
+        281
+      ]
+    },
+    {
+      "id": "cell-L2-R-2",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L2-R-2",
+      "box": [
+        117,
+        286,
+        141,
+        302
+      ]
+    },
+    {
+      "id": "cell-L2-R-3",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L2-R-3",
+      "box": [
+        117,
+        307,
+        141,
+        321
+      ]
+    },
+    {
+      "id": "cell-L2-R-4",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L2-R-4",
+      "box": [
+        117,
+        326,
+        141,
+        340
+      ]
+    },
+    {
+      "id": "cell-L2-R-5",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L2-R-5",
+      "box": [
+        117,
+        345,
+        141,
+        359
+      ]
+    },
+    {
+      "id": "cell-L3-L-0",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L3-L-0",
+      "box": [
+        89,
+        411,
+        115,
+        425
+      ]
+    },
+    {
+      "id": "cell-L3-L-1",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L3-L-1",
+      "box": [
+        89,
+        430,
+        115,
+        443
+      ]
+    },
+    {
+      "id": "cell-L3-L-2",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L3-L-2",
+      "box": [
+        89,
+        448,
+        115,
+        462
+      ]
+    },
+    {
+      "id": "cell-L3-L-3",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L3-L-3",
+      "box": [
+        89,
+        467,
+        116,
+        480
+      ]
+    },
+    {
+      "id": "cell-L3-L-4",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L3-L-4",
+      "box": [
+        90,
+        486,
+        116,
+        500
+      ]
+    },
+    {
+      "id": "cell-L3-L-5",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L3-L-5",
+      "box": [
+        90,
+        505,
+        116,
+        519
+      ]
+    },
+    {
+      "id": "cell-L3-R-0",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L3-R-0",
+      "box": [
+        116,
+        411,
+        141,
+        425
+      ]
+    },
+    {
+      "id": "cell-L3-R-1",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L3-R-1",
+      "box": [
+        116,
+        431,
+        141,
+        443
+      ]
+    },
+    {
+      "id": "cell-L3-R-2",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L3-R-2",
+      "box": [
+        116,
+        449,
+        141,
+        462
+      ]
+    },
+    {
+      "id": "cell-L3-R-3",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L3-R-3",
+      "box": [
+        116,
+        467,
+        141,
+        480
+      ]
+    },
+    {
+      "id": "cell-L3-R-4",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L3-R-4",
+      "box": [
+        117,
+        485,
+        141,
+        500
+      ]
+    },
+    {
+      "id": "cell-L3-R-5",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-L3-R-5",
+      "box": [
+        117,
+        505,
+        141,
+        519
+      ]
+    },
+    {
+      "id": "cell-R1-L-0",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R1-L-0",
+      "box": [
+        681,
+        90,
+        703,
+        104
+      ]
+    },
+    {
+      "id": "cell-R1-L-1",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R1-L-1",
+      "box": [
+        681,
+        109,
+        704,
+        124
+      ]
+    },
+    {
+      "id": "cell-R1-L-2",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R1-L-2",
+      "box": [
+        681,
+        130,
+        704,
+        144
+      ]
+    },
+    {
+      "id": "cell-R1-L-3",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R1-L-3",
+      "box": [
+        681,
+        150,
+        704,
+        162
+      ]
+    },
+    {
+      "id": "cell-R1-L-4",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R1-L-4",
+      "box": [
+        681,
+        169,
+        704,
+        182
+      ]
+    },
+    {
+      "id": "cell-R1-L-5",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R1-L-5",
+      "box": [
+        681,
+        188,
+        704,
+        201
+      ]
+    },
+    {
+      "id": "cell-R1-R-0",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R1-R-0",
+      "box": [
+        708,
+        90,
+        731,
+        105
+      ]
+    },
+    {
+      "id": "cell-R1-R-1",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R1-R-1",
+      "box": [
+        708,
+        111,
+        731,
+        125
+      ]
+    },
+    {
+      "id": "cell-R1-R-2",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R1-R-2",
+      "box": [
+        708,
+        130,
+        732,
+        144
+      ]
+    },
+    {
+      "id": "cell-R1-R-3",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R1-R-3",
+      "box": [
+        708,
+        150,
+        732,
+        163
+      ]
+    },
+    {
+      "id": "cell-R1-R-4",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R1-R-4",
+      "box": [
+        708,
+        168,
+        732,
+        181
+      ]
+    },
+    {
+      "id": "cell-R1-R-5",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R1-R-5",
+      "box": [
+        708,
+        186,
+        732,
+        200
+      ]
+    },
+    {
+      "id": "cell-R2-L-0",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R2-L-0",
+      "box": [
+        683,
+        246,
+        706,
+        260
+      ]
+    },
+    {
+      "id": "cell-R2-L-1",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R2-L-1",
+      "box": [
+        683,
+        265,
+        706,
+        279
+      ]
+    },
+    {
+      "id": "cell-R2-L-2",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R2-L-2",
+      "box": [
+        683,
+        285,
+        707,
+        297
+      ]
+    },
+    {
+      "id": "cell-R2-L-3",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R2-L-3",
+      "box": [
+        683,
+        304,
+        708,
+        316
+      ]
+    },
+    {
+      "id": "cell-R2-L-4",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R2-L-4",
+      "box": [
+        683,
+        322,
+        708,
+        335
+      ]
+    },
+    {
+      "id": "cell-R2-L-5",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R2-L-5",
+      "box": [
+        683,
+        341,
+        708,
+        353
+      ]
+    },
+    {
+      "id": "cell-R2-R-0",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R2-R-0",
+      "box": [
+        710,
+        244,
+        733,
+        258
+      ]
+    },
+    {
+      "id": "cell-R2-R-1",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R2-R-1",
+      "box": [
+        711,
+        264,
+        733,
+        278
+      ]
+    },
+    {
+      "id": "cell-R2-R-2",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R2-R-2",
+      "box": [
+        711,
+        284,
+        733,
+        296
+      ]
+    },
+    {
+      "id": "cell-R2-R-3",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R2-R-3",
+      "box": [
+        711,
+        302,
+        734,
+        315
+      ]
+    },
+    {
+      "id": "cell-R2-R-4",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R2-R-4",
+      "box": [
+        711,
+        321,
+        735,
+        334
+      ]
+    },
+    {
+      "id": "cell-R2-R-5",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R2-R-5",
+      "box": [
+        711,
+        339,
+        735,
+        353
+      ]
+    },
+    {
+      "id": "cell-R3-L-0",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R3-L-0",
+      "box": [
+        684,
+        406,
+        708,
+        421
+      ]
+    },
+    {
+      "id": "cell-R3-L-1",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R3-L-1",
+      "box": [
+        684,
+        426,
+        708,
+        438
+      ]
+    },
+    {
+      "id": "cell-R3-L-2",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R3-L-2",
+      "box": [
+        684,
+        444,
+        708,
+        457
+      ]
+    },
+    {
+      "id": "cell-R3-L-3",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R3-L-3",
+      "box": [
+        684,
+        463,
+        708,
+        476
+      ]
+    },
+    {
+      "id": "cell-R3-L-4",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R3-L-4",
+      "box": [
+        684,
+        481,
+        710,
+        494
+      ]
+    },
+    {
+      "id": "cell-R3-L-5",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R3-L-5",
+      "box": [
+        684,
+        500,
+        710,
+        512
+      ]
+    },
+    {
+      "id": "cell-R3-R-0",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R3-R-0",
+      "box": [
+        712,
+        406,
+        737,
+        420
+      ]
+    },
+    {
+      "id": "cell-R3-R-1",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R3-R-1",
+      "box": [
+        712,
+        424,
+        738,
+        438
+      ]
+    },
+    {
+      "id": "cell-R3-R-2",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R3-R-2",
+      "box": [
+        712,
+        444,
+        738,
+        456
+      ]
+    },
+    {
+      "id": "cell-R3-R-3",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R3-R-3",
+      "box": [
+        712,
+        462,
+        739,
+        475
+      ]
+    },
+    {
+      "id": "cell-R3-R-4",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R3-R-4",
+      "box": [
+        713,
+        481,
+        739,
+        493
+      ]
+    },
+    {
+      "id": "cell-R3-R-5",
+      "type": "cell",
+      "redrawn": true,
+      "new_id": "cell-R3-R-5",
+      "box": [
+        713,
+        499,
+        739,
+        512
+      ]
+    },
+    {
+      "id": "seam-0",
+      "type": "line",
+      "redrawn": true,
+      "new_id": "seam-0",
+      "d": "M114 94 V205"
+    },
+    {
+      "id": "seam-1",
+      "type": "line",
+      "redrawn": true,
+      "new_id": "seam-1",
+      "d": "M115 250 V358"
+    },
+    {
+      "id": "seam-2",
+      "type": "line",
+      "redrawn": true,
+      "new_id": "seam-2",
+      "d": "M116 411 V518"
+    },
+    {
+      "id": "seam-3",
+      "type": "line",
+      "redrawn": true,
+      "new_id": "seam-3",
+      "d": "M706 90 V201"
+    },
+    {
+      "id": "seam-4",
+      "type": "line",
+      "redrawn": true,
+      "new_id": "seam-4",
+      "d": "M708 245 V353"
+    },
+    {
+      "id": "seam-5",
+      "type": "line",
+      "redrawn": true,
+      "new_id": "seam-5",
+      "d": "M710 406 V512"
+    },
+    {
+      "id": "dash-L1",
+      "type": "curve",
+      "redrawn": true,
+      "new_id": "dash-L1",
+      "d": "M45 104 C37 132 38 179 49 216",
+      "grade": "B"
+    },
+    {
+      "id": "dash-L2",
+      "type": "curve",
+      "redrawn": true,
+      "new_id": "dash-L2",
+      "d": "M45 250 C35 286 39 350 50 389",
+      "grade": "B"
+    },
+    {
+      "id": "dash-L3",
+      "type": "curve",
+      "redrawn": true,
+      "new_id": "dash-L3",
+      "d": "M46 418 C40 447 45 487 55 515",
+      "grade": "B"
+    },
+    {
+      "id": "dash-R1",
+      "type": "curve",
+      "redrawn": true,
+      "new_id": "dash-R1",
+      "d": "M768 91 C781 124 785 176 769 218",
+      "grade": "B"
+    },
+    {
+      "id": "dash-R2",
+      "type": "curve",
+      "redrawn": true,
+      "new_id": "dash-R2",
+      "d": "M770 248 C784 285 782 341 769 377",
+      "grade": "B"
+    },
+    {
+      "id": "dash-R3",
+      "type": "curve",
+      "redrawn": true,
+      "new_id": "dash-R3",
+      "d": "M771 407 C784 438 780 478 770 507",
+      "grade": "B"
+    },
+    {
+      "id": "C1",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "C1",
+      "cx": 76,
+      "cy": 172,
+      "r": 14,
+      "fill": "#ca4a59"
+    },
+    {
+      "id": "C2",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "C2",
+      "cx": 153,
+      "cy": 116,
+      "r": 16,
+      "fill": "#ca4a59"
+    },
+    {
+      "id": "C3",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "C3",
+      "cx": 75,
+      "cy": 349,
+      "r": 15,
+      "fill": "#ca4a59"
+    },
+    {
+      "id": "C4",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "C4",
+      "cx": 151,
+      "cy": 292,
+      "r": 16,
+      "fill": "#ca4a59"
+    },
+    {
+      "id": "C5",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "C5",
+      "cx": 74,
+      "cy": 414,
+      "r": 16,
+      "fill": "#ca4a59"
+    },
+    {
+      "id": "C6",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "C6",
+      "cx": 152,
+      "cy": 490,
+      "r": 16,
+      "fill": "#ca4a59"
+    },
+    {
+      "id": "C7",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "C7",
+      "cx": 669,
+      "cy": 117,
+      "r": 16,
+      "fill": "#ca4a59"
+    },
+    {
+      "id": "C8",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "C8",
+      "cx": 746,
+      "cy": 192,
+      "r": 14,
+      "fill": "#ca4a59"
+    },
+    {
+      "id": "C9",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "C9",
+      "cx": 672,
+      "cy": 290,
+      "r": 16,
+      "fill": "#ca4a59"
+    },
+    {
+      "id": "C10",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "C10",
+      "cx": 744,
+      "cy": 245,
+      "r": 15,
+      "fill": "#ca4a59"
+    },
+    {
+      "id": "C11",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "C11",
+      "cx": 671,
+      "cy": 485,
+      "r": 14,
+      "fill": "#ca4a59"
+    },
+    {
+      "id": "C12",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "C12",
+      "cx": 749,
+      "cy": 428,
+      "r": 15,
+      "fill": "#ca4a59"
+    },
+    {
+      "id": "bar-L1-L-0",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L1-L-0",
+      "box": [
+        88,
+        89,
+        113,
+        94
+      ],
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "id": "bar-L1-L-1",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L1-L-1",
+      "box": [
+        89,
+        108,
+        113,
+        113
+      ],
+      "klass": "A",
+      "hex": "#a8bcb1"
+    },
+    {
+      "id": "bar-L1-L-2",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L1-L-2",
+      "box": [
+        89,
+        127,
+        113,
+        132
+      ],
+      "klass": "G",
+      "hex": "#75a34f"
+    },
+    {
+      "id": "bar-L1-L-3",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L1-L-3",
+      "box": [
+        90,
+        146,
+        113,
+        152
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-L1-L-4",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L1-L-4",
+      "box": [
+        61,
+        165,
+        89,
+        170
+      ],
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "id": "bar-L1-L-5",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L1-L-5",
+      "box": [
+        92,
+        184,
+        113,
+        189
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-L1-R-0",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L1-R-0",
+      "box": [
+        117,
+        89,
+        138,
+        94
+      ],
+      "klass": "G",
+      "hex": "#75a34f"
+    },
+    {
+      "id": "bar-L1-R-1",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L1-R-1",
+      "box": [
+        137,
+        108,
+        165,
+        113
+      ],
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "id": "bar-L1-R-2",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L1-R-2",
+      "box": [
+        116,
+        127,
+        139,
+        132
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-L1-R-3",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L1-R-3",
+      "box": [
+        116,
+        146,
+        139,
+        151
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-L1-R-4",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L1-R-4",
+      "box": [
+        115,
+        165,
+        141,
+        170
+      ],
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "id": "bar-L1-R-5",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L1-R-5",
+      "box": [
+        116,
+        184,
+        141,
+        189
+      ],
+      "klass": "A",
+      "hex": "#a8bcb1"
+    },
+    {
+      "id": "bar-L2-L-0",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L2-L-0",
+      "box": [
+        88,
+        246,
+        113,
+        250
+      ],
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "id": "bar-L2-L-1",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L2-L-1",
+      "box": [
+        90,
+        264,
+        113,
+        269
+      ],
+      "klass": "A",
+      "hex": "#a8bcb1"
+    },
+    {
+      "id": "bar-L2-L-2",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L2-L-2",
+      "box": [
+        93,
+        283,
+        114,
+        288
+      ],
+      "klass": "G",
+      "hex": "#75a34f"
+    },
+    {
+      "id": "bar-L2-L-3",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L2-L-3",
+      "box": [
+        94,
+        302,
+        114,
+        308
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-L2-L-4",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L2-L-4",
+      "box": [
+        90,
+        322,
+        115,
+        327
+      ],
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "id": "bar-L2-L-5",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L2-L-5",
+      "box": [
+        61,
+        341,
+        83,
+        346
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-L2-R-0",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L2-R-0",
+      "box": [
+        116,
+        246,
+        140,
+        251
+      ],
+      "klass": "G",
+      "hex": "#75a34f"
+    },
+    {
+      "id": "bar-L2-R-1",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L2-R-1",
+      "box": [
+        116,
+        263,
+        140,
+        269
+      ],
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "id": "bar-L2-R-2",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L2-R-2",
+      "box": [
+        140,
+        281,
+        161,
+        286
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-L2-R-3",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L2-R-3",
+      "box": [
+        117,
+        302,
+        141,
+        307
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-L2-R-4",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L2-R-4",
+      "box": [
+        116,
+        321,
+        141,
+        326
+      ],
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "id": "bar-L2-R-5",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L2-R-5",
+      "box": [
+        117,
+        340,
+        141,
+        345
+      ],
+      "klass": "A",
+      "hex": "#a8bcb1"
+    },
+    {
+      "id": "bar-L3-L-0",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L3-L-0",
+      "box": [
+        61,
+        406,
+        89,
+        411
+      ],
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "id": "bar-L3-L-1",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L3-L-1",
+      "box": [
+        89,
+        425,
+        115,
+        430
+      ],
+      "klass": "A",
+      "hex": "#a8bcb1"
+    },
+    {
+      "id": "bar-L3-L-2",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L3-L-2",
+      "box": [
+        89,
+        443,
+        115,
+        448
+      ],
+      "klass": "G",
+      "hex": "#75a34f"
+    },
+    {
+      "id": "bar-L3-L-3",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L3-L-3",
+      "box": [
+        89,
+        462,
+        116,
+        467
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-L3-L-4",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L3-L-4",
+      "box": [
+        89,
+        480,
+        116,
+        486
+      ],
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "id": "bar-L3-L-5",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L3-L-5",
+      "box": [
+        90,
+        500,
+        116,
+        505
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-L3-R-0",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L3-R-0",
+      "box": [
+        116,
+        406,
+        141,
+        411
+      ],
+      "klass": "G",
+      "hex": "#75a34f"
+    },
+    {
+      "id": "bar-L3-R-1",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L3-R-1",
+      "box": [
+        116,
+        425,
+        141,
+        431
+      ],
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "id": "bar-L3-R-2",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L3-R-2",
+      "box": [
+        116,
+        443,
+        141,
+        449
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-L3-R-3",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L3-R-3",
+      "box": [
+        116,
+        462,
+        141,
+        467
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-L3-R-4",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L3-R-4",
+      "box": [
+        139,
+        479,
+        163,
+        485
+      ],
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "id": "bar-L3-R-5",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-L3-R-5",
+      "box": [
+        117,
+        500,
+        141,
+        505
+      ],
+      "klass": "A",
+      "hex": "#a8bcb1"
+    },
+    {
+      "id": "bar-R1-L-0",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R1-L-0",
+      "box": [
+        681,
+        85,
+        703,
+        90
+      ],
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "id": "bar-R1-L-1",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R1-L-1",
+      "box": [
+        657,
+        104,
+        681,
+        109
+      ],
+      "klass": "A",
+      "hex": "#a8bcb1"
+    },
+    {
+      "id": "bar-R1-L-2",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R1-L-2",
+      "box": [
+        681,
+        124,
+        705,
+        130
+      ],
+      "klass": "G",
+      "hex": "#75a34f"
+    },
+    {
+      "id": "bar-R1-L-3",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R1-L-3",
+      "box": [
+        681,
+        144,
+        704,
+        150
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-R1-L-4",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R1-L-4",
+      "box": [
+        681,
+        162,
+        704,
+        169
+      ],
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "id": "bar-R1-L-5",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R1-L-5",
+      "box": [
+        681,
+        182,
+        704,
+        188
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-R1-R-0",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R1-R-0",
+      "box": [
+        708,
+        85,
+        731,
+        90
+      ],
+      "klass": "G",
+      "hex": "#75a34f"
+    },
+    {
+      "id": "bar-R1-R-1",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R1-R-1",
+      "box": [
+        708,
+        105,
+        731,
+        111
+      ],
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "id": "bar-R1-R-2",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R1-R-2",
+      "box": [
+        708,
+        125,
+        731,
+        130
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-R1-R-3",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R1-R-3",
+      "box": [
+        708,
+        144,
+        732,
+        150
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-R1-R-4",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R1-R-4",
+      "box": [
+        708,
+        163,
+        731,
+        168
+      ],
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "id": "bar-R1-R-5",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R1-R-5",
+      "box": [
+        732,
+        181,
+        757,
+        186
+      ],
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "id": "bar-R2-L-0",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R2-L-0",
+      "box": [
+        683,
+        240,
+        706,
+        246
+      ],
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "id": "bar-R2-L-1",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R2-L-1",
+      "box": [
+        683,
+        260,
+        706,
+        265
+      ],
+      "klass": "A",
+      "hex": "#a8bcb1"
+    },
+    {
+      "id": "bar-R2-L-2",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R2-L-2",
+      "box": [
+        660,
+        280,
+        683,
+        285
+      ],
+      "klass": "G",
+      "hex": "#75a34f"
+    },
+    {
+      "id": "bar-R2-L-3",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R2-L-3",
+      "box": [
+        682,
+        297,
+        708,
+        304
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-R2-L-4",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R2-L-4",
+      "box": [
+        683,
+        316,
+        708,
+        322
+      ],
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "id": "bar-R2-L-5",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R2-L-5",
+      "box": [
+        683,
+        335,
+        708,
+        341
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-R2-R-0",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R2-R-0",
+      "box": [
+        733,
+        238,
+        756,
+        244
+      ],
+      "klass": "G",
+      "hex": "#75a34f"
+    },
+    {
+      "id": "bar-R2-R-1",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R2-R-1",
+      "box": [
+        710,
+        258,
+        732,
+        264
+      ],
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "id": "bar-R2-R-2",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R2-R-2",
+      "box": [
+        711,
+        278,
+        733,
+        284
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-R2-R-3",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R2-R-3",
+      "box": [
+        711,
+        296,
+        733,
+        302
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-R2-R-4",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R2-R-4",
+      "box": [
+        711,
+        315,
+        734,
+        321
+      ],
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "id": "bar-R2-R-5",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R2-R-5",
+      "box": [
+        711,
+        334,
+        735,
+        339
+      ],
+      "klass": "A",
+      "hex": "#a8bcb1"
+    },
+    {
+      "id": "bar-R3-L-0",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R3-L-0",
+      "box": [
+        684,
+        400,
+        708,
+        406
+      ],
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "id": "bar-R3-L-1",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R3-L-1",
+      "box": [
+        684,
+        421,
+        709,
+        426
+      ],
+      "klass": "A",
+      "hex": "#a8bcb1"
+    },
+    {
+      "id": "bar-R3-L-2",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R3-L-2",
+      "box": [
+        684,
+        438,
+        708,
+        444
+      ],
+      "klass": "G",
+      "hex": "#75a34f"
+    },
+    {
+      "id": "bar-R3-L-3",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R3-L-3",
+      "box": [
+        684,
+        457,
+        708,
+        463
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-R3-L-4",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R3-L-4",
+      "box": [
+        660,
+        476,
+        684,
+        481
+      ],
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "id": "bar-R3-L-5",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R3-L-5",
+      "box": [
+        684,
+        494,
+        710,
+        500
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-R3-R-0",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R3-R-0",
+      "box": [
+        712,
+        400,
+        737,
+        406
+      ],
+      "klass": "G",
+      "hex": "#75a34f"
+    },
+    {
+      "id": "bar-R3-R-1",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R3-R-1",
+      "box": [
+        736,
+        418,
+        758,
+        424
+      ],
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "id": "bar-R3-R-2",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R3-R-2",
+      "box": [
+        712,
+        438,
+        738,
+        444
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-R3-R-3",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R3-R-3",
+      "box": [
+        712,
+        456,
+        739,
+        462
+      ],
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "id": "bar-R3-R-4",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R3-R-4",
+      "box": [
+        712,
+        475,
+        739,
+        481
+      ],
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "id": "bar-R3-R-5",
+      "type": "color-bar",
+      "redrawn": true,
+      "new_id": "bar-R3-R-5",
+      "box": [
+        713,
+        493,
+        739,
+        499
+      ],
+      "klass": "A",
+      "hex": "#a8bcb1"
+    },
+    {
+      "id": "wing-L1-0",
+      "type": "wing",
+      "redrawn": true,
+      "new_id": "wing-L1-0",
+      "d": "M51 80 C68 70 88 65 103 64 L93 78 Q76 69 51 80 Z",
+      "klass": "R",
+      "grade": "B"
+    },
+    {
+      "id": "wing-L1-1",
+      "type": "wing",
+      "redrawn": true,
+      "new_id": "wing-L1-1",
+      "d": "M128 64 C146 65 162 71 175 79 Q152 68 140 78 Z",
+      "klass": "R",
+      "grade": "B"
+    },
+    {
+      "id": "arc-L1",
+      "type": "header-arc",
+      "redrawn": true,
+      "new_id": "arc-L1",
+      "d": "M50 89 V80 C65 71 89 64 103 64 C109 64 113 69 115 73 C119 65 123 64 128 64 C146 65 162 71 176 79 V89 H145 M50 89 H88",
+      "grade": "B"
+    },
+    {
+      "id": "head-L1-0",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "head-L1-0",
+      "cx": 103.5,
+      "cy": 76.5,
+      "r": 12.5,
+      "klass": "R"
+    },
+    {
+      "id": "head-L1-1",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "head-L1-1",
+      "cx": 127.5,
+      "cy": 76.5,
+      "r": 12.5,
+      "klass": "R"
+    },
+    {
+      "id": "wing-L2-0",
+      "type": "wing",
+      "redrawn": true,
+      "new_id": "wing-L2-0",
+      "d": "M50 234 C68 225 88 220 103 219 L91 233 Q74 224 50 234 Z",
+      "klass": "Y",
+      "grade": "B"
+    },
+    {
+      "id": "wing-L2-1",
+      "type": "wing",
+      "redrawn": true,
+      "new_id": "wing-L2-1",
+      "d": "M128 220 C148 221 164 228 175 235 Q153 225 141 234 Z",
+      "klass": "Y",
+      "grade": "B"
+    },
+    {
+      "id": "arc-L2",
+      "type": "header-arc",
+      "redrawn": true,
+      "new_id": "arc-L2",
+      "d": "M49 245 V234 C64 226 87 220 103 219 C110 219 114 224 116 230 C120 221 124 219 128 220 C145 221 163 227 176 235 V245 H145 M49 245 H86",
+      "grade": "B"
+    },
+    {
+      "id": "head-L2-0",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "head-L2-0",
+      "cx": 103,
+      "cy": 232.5,
+      "r": 12.5,
+      "klass": "Y"
+    },
+    {
+      "id": "head-L2-1",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "head-L2-1",
+      "cx": 128,
+      "cy": 233,
+      "r": 12.5,
+      "klass": "Y"
+    },
+    {
+      "id": "wing-L3-0",
+      "type": "wing",
+      "redrawn": true,
+      "new_id": "wing-L3-0",
+      "d": "M50 396 C68 387 88 383 102 382 L90 396 Q74 386 50 396 Z",
+      "klass": "B",
+      "grade": "B"
+    },
+    {
+      "id": "wing-L3-1",
+      "type": "wing",
+      "redrawn": true,
+      "new_id": "wing-L3-1",
+      "d": "M127 383 C147 384 165 391 175 397 Q151 387 140 397 Z",
+      "klass": "B",
+      "grade": "B"
+    },
+    {
+      "id": "arc-L3",
+      "type": "header-arc",
+      "redrawn": true,
+      "new_id": "arc-L3",
+      "d": "M49 406 V396 C66 387 87 383 102 382 C109 382 112 387 115 393 C119 384 123 383 127 383 C145 383 164 390 176 397 V405 H145 M49 406 H86",
+      "grade": "B"
+    },
+    {
+      "id": "head-L3-0",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "head-L3-0",
+      "cx": 102,
+      "cy": 395,
+      "r": 12.5,
+      "klass": "B"
+    },
+    {
+      "id": "head-L3-1",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "head-L3-1",
+      "cx": 127,
+      "cy": 395,
+      "r": 12.5,
+      "klass": "B"
+    },
+    {
+      "id": "wing-R1-0",
+      "type": "wing",
+      "redrawn": true,
+      "new_id": "wing-R1-0",
+      "d": "M644 76 C659 68 679 62 692 60 L681 75 Q663 67 644 76 Z",
+      "klass": "A",
+      "grade": "B"
+    },
+    {
+      "id": "wing-R1-1",
+      "type": "wing",
+      "redrawn": true,
+      "new_id": "wing-R1-1",
+      "d": "M718 60 C737 61 758 68 772 76 Q748 66 730 74 Z",
+      "klass": "A",
+      "grade": "B"
+    },
+    {
+      "id": "arc-R1",
+      "type": "header-arc",
+      "redrawn": true,
+      "new_id": "arc-R1",
+      "d": "M643 85 V76 C658 68 679 62 692 60 C699 60 704 65 705 71 C710 62 713 60 718 60 C735 61 756 67 773 76 V84 H734 M643 85 H680",
+      "grade": "B"
+    },
+    {
+      "id": "head-R1-0",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "head-R1-0",
+      "cx": 692.5,
+      "cy": 72.5,
+      "r": 12,
+      "klass": "A"
+    },
+    {
+      "id": "head-R1-1",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "head-R1-1",
+      "cx": 717,
+      "cy": 72.5,
+      "r": 12,
+      "klass": "A"
+    },
+    {
+      "id": "wing-R2-0",
+      "type": "wing",
+      "redrawn": true,
+      "new_id": "wing-R2-0",
+      "d": "M644 231 C661 222 680 216 694 214 L682 230 Q666 222 644 231 Z",
+      "klass": "G",
+      "grade": "B"
+    },
+    {
+      "id": "wing-R2-1",
+      "type": "wing",
+      "redrawn": true,
+      "new_id": "wing-R2-1",
+      "d": "M720 214 C741 215 760 222 774 231 Q750 221 732 230 Z",
+      "klass": "G",
+      "grade": "B"
+    },
+    {
+      "id": "arc-R2",
+      "type": "header-arc",
+      "redrawn": true,
+      "new_id": "arc-R2",
+      "d": "M643 240 V231 C658 223 680 216 694 214 C701 214 705 219 707 225 C711 216 716 214 720 214 C739 215 760 221 775 231 V239 H738 M643 240 H681",
+      "grade": "B"
+    },
+    {
+      "id": "head-R2-0",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "head-R2-0",
+      "cx": 694.5,
+      "cy": 226.5,
+      "r": 12.5,
+      "klass": "G"
+    },
+    {
+      "id": "head-R2-1",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "head-R2-1",
+      "cx": 719,
+      "cy": 226,
+      "r": 12.5,
+      "klass": "G"
+    },
+    {
+      "id": "wing-R3-0",
+      "type": "wing",
+      "redrawn": true,
+      "new_id": "wing-R3-0",
+      "d": "M645 391 C662 382 685 376 699 376 L687 390 Q669 382 645 391 Z",
+      "klass": "R",
+      "grade": "B"
+    },
+    {
+      "id": "wing-R3-1",
+      "type": "wing",
+      "redrawn": true,
+      "new_id": "wing-R3-1",
+      "d": "M725 376 C743 377 762 384 774 392 Q750 381 737 391 Z",
+      "klass": "R",
+      "grade": "B"
+    },
+    {
+      "id": "arc-R3",
+      "type": "header-arc",
+      "redrawn": true,
+      "new_id": "arc-R3",
+      "d": "M644 400 V391 C660 383 684 376 699 376 C705 376 709 382 711 387 C715 379 720 376 725 376 C742 377 761 383 775 392 V400 H741 M644 400 H682",
+      "grade": "B"
+    },
+    {
+      "id": "head-R3-0",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "head-R3-0",
+      "cx": 699,
+      "cy": 388.5,
+      "r": 12.5,
+      "klass": "R"
+    },
+    {
+      "id": "head-R3-1",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "head-R3-1",
+      "cx": 724,
+      "cy": 388.5,
+      "r": 12.5,
+      "klass": "R"
+    },
+    {
+      "id": "sensory-0",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "sensory-0",
+      "cx": 165,
+      "cy": 374,
+      "r": 16,
+      "why": "感官圆。圈内未清字只留紧框，不新写"
+    },
+    {
+      "id": "sensory-1",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "sensory-1",
+      "cx": 201,
+      "cy": 511,
+      "r": 18,
+      "why": "感官圆。圈内未清字只留紧框，不新写"
+    },
+    {
+      "id": "sensory-2",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "sensory-2",
+      "cx": 643,
+      "cy": 183,
+      "r": 17,
+      "why": "感官圆。圈内未清字只留紧框，不新写"
+    },
+    {
+      "id": "sensory-3",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "sensory-3",
+      "cx": 648,
+      "cy": 344,
+      "r": 17,
+      "why": "感官圆。圈内未清字只留紧框，不新写"
+    },
+    {
+      "id": "sensory-4",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "sensory-4",
+      "cx": 641,
+      "cy": 425,
+      "r": 18,
+      "why": "感官圆。圈内未清字只留紧框，不新写"
+    },
+    {
+      "id": "half-0",
+      "type": "half-circle",
+      "redrawn": true,
+      "new_id": "half-0",
+      "cx": 61,
+      "cy": 529,
+      "r": 12,
+      "klass": "R"
+    },
+    {
+      "id": "half-1",
+      "type": "half-circle",
+      "redrawn": true,
+      "new_id": "half-1",
+      "cx": 168,
+      "cy": 526,
+      "r": 12,
+      "klass": "G"
+    },
+    {
+      "id": "half-2",
+      "type": "half-circle",
+      "redrawn": true,
+      "new_id": "half-2",
+      "cx": 659,
+      "cy": 524,
+      "r": 12,
+      "klass": "R"
+    },
+    {
+      "id": "half-3",
+      "type": "half-circle",
+      "redrawn": true,
+      "new_id": "half-3",
+      "cx": 762,
+      "cy": 526,
+      "r": 12,
+      "klass": "G"
+    },
+    {
+      "id": "periph-0",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-0",
+      "cx": 206,
+      "cy": 202,
+      "r": 11,
+      "klass": "Y",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-1",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-1",
+      "cx": 205,
+      "cy": 185,
+      "r": 7,
+      "klass": "Y",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-2",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-2",
+      "cx": 247,
+      "cy": 195,
+      "r": 11,
+      "klass": "R",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-3",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-3",
+      "cx": 232,
+      "cy": 191,
+      "r": 7,
+      "klass": "R",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-4",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-4",
+      "cx": 388,
+      "cy": 79,
+      "r": 11,
+      "klass": "R",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-5",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-5",
+      "cx": 401,
+      "cy": 69,
+      "r": 6.5,
+      "klass": "R",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-6",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-6",
+      "cx": 435,
+      "cy": 81,
+      "r": 11,
+      "klass": "G",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-7",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-7",
+      "cx": 418,
+      "cy": 69,
+      "r": 6.5,
+      "klass": "G",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-8",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-8",
+      "cx": 410,
+      "cy": 95,
+      "r": 7,
+      "klass": "G",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-9",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-9",
+      "cx": 585,
+      "cy": 175,
+      "r": 11,
+      "klass": "G",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-10",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-10",
+      "cx": 602,
+      "cy": 179,
+      "r": 7,
+      "klass": "G",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-11",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-11",
+      "cx": 571,
+      "cy": 215,
+      "r": 11,
+      "klass": "R",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-12",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-12",
+      "cx": 584,
+      "cy": 201,
+      "r": 7,
+      "klass": "R",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-13",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-13",
+      "cx": 558,
+      "cy": 400,
+      "r": 10.5,
+      "klass": "A",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-14",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-14",
+      "cx": 576,
+      "cy": 405,
+      "r": 7,
+      "klass": "A",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-15",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-15",
+      "cx": 603,
+      "cy": 393,
+      "r": 11,
+      "klass": "B",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-16",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-16",
+      "cx": 603,
+      "cy": 412,
+      "r": 7,
+      "klass": "B",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-17",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-17",
+      "cx": 393,
+      "cy": 481,
+      "r": 11,
+      "klass": "A",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-18",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-18",
+      "cx": 399,
+      "cy": 499,
+      "r": 7,
+      "klass": "A",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-19",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-19",
+      "cx": 420,
+      "cy": 514,
+      "r": 11,
+      "klass": "B",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-20",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-20",
+      "cx": 407,
+      "cy": 526,
+      "r": 7,
+      "klass": "B",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-21",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-21",
+      "cx": 239,
+      "cy": 383,
+      "r": 11,
+      "klass": "R",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-22",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-22",
+      "cx": 226,
+      "cy": 394,
+      "r": 7,
+      "klass": "R",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-23",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-23",
+      "cx": 224,
+      "cy": 424,
+      "r": 11,
+      "klass": "Y",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "periph-24",
+      "type": "circle",
+      "redrawn": true,
+      "new_id": "periph-24",
+      "cx": 207,
+      "cy": 418,
+      "r": 7,
+      "klass": "Y",
+      "why": "外围彩圆。圈内字未全辨，不自填脏腑名"
+    },
+    {
+      "id": "dot-bracket-0",
+      "type": "curve",
+      "redrawn": true,
+      "new_id": "dot-bracket-0",
+      "d": "M168 139 C180 141 180 149 168 152",
+      "grade": "B"
+    },
+    {
+      "id": "dot-bracket-1",
+      "type": "curve",
+      "redrawn": true,
+      "new_id": "dot-bracket-1",
+      "d": "M174 456 C186 460 186 468 174 472",
+      "grade": "B"
+    },
+    {
+      "id": "dot-bracket-2",
+      "type": "curve",
+      "redrawn": true,
+      "new_id": "dot-bracket-2",
+      "d": "M752 136 C764 139 764 145 752 149",
+      "grade": "B"
+    },
+    {
+      "id": "dot-bracket-3",
+      "type": "curve",
+      "redrawn": true,
+      "new_id": "dot-bracket-3",
+      "d": "M754 289 C768 293 768 299 754 302",
+      "grade": "B"
+    },
+    {
+      "id": "dot-bracket-4",
+      "type": "curve",
+      "redrawn": true,
+      "new_id": "dot-bracket-4",
+      "d": "M760 448 C772 451 772 459 760 462",
+      "grade": "B"
+    },
+    {
+      "id": "tdot-L1-0",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L1-0",
+      "cx": 67.5,
+      "cy": 98.5,
+      "r": 4.4,
+      "klass": "O"
+    },
+    {
+      "id": "tdot-L1-1",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L1-1",
+      "cx": 67,
+      "cy": 136,
+      "r": 4.4,
+      "klass": "R"
+    },
+    {
+      "id": "tdot-L1-2",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L1-2",
+      "cx": 67,
+      "cy": 155,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-L1-3",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L1-3",
+      "cx": 69,
+      "cy": 193,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-L1-4",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L1-4",
+      "cx": 47.5,
+      "cy": 204,
+      "r": 5.0,
+      "klass": "T"
+    },
+    {
+      "id": "tdot-L1-5",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L1-5",
+      "cx": 170,
+      "cy": 98,
+      "r": 4.4,
+      "klass": "R"
+    },
+    {
+      "id": "tdot-L1-6",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L1-6",
+      "cx": 130,
+      "cy": 117,
+      "r": 4.4,
+      "klass": "G"
+    },
+    {
+      "id": "tdot-L1-7",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L1-7",
+      "cx": 158,
+      "cy": 136,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-L1-8",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L1-8",
+      "cx": 167,
+      "cy": 136,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-L1-9",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L1-9",
+      "cx": 158,
+      "cy": 154,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-L1-10",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L1-10",
+      "cx": 167,
+      "cy": 154,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-L1-11",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L1-11",
+      "cx": 145,
+      "cy": 209,
+      "r": 5.0,
+      "klass": "T"
+    },
+    {
+      "id": "tdot-L2-0",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L2-0",
+      "cx": 69,
+      "cy": 257.5,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-L2-1",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L2-1",
+      "cx": 58,
+      "cy": 313.5,
+      "r": 4.4,
+      "klass": "G"
+    },
+    {
+      "id": "tdot-L2-2",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L2-2",
+      "cx": 69,
+      "cy": 314,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-L2-3",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L2-3",
+      "cx": 67,
+      "cy": 333,
+      "r": 4.4,
+      "klass": "R"
+    },
+    {
+      "id": "tdot-L2-4",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L2-4",
+      "cx": 94,
+      "cy": 350,
+      "r": 4.4,
+      "klass": "R"
+    },
+    {
+      "id": "tdot-L2-5",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L2-5",
+      "cx": 177,
+      "cy": 352,
+      "r": 5.0,
+      "klass": "T"
+    },
+    {
+      "id": "tdot-L2-6",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L2-6",
+      "cx": 157,
+      "cy": 256,
+      "r": 4.4,
+      "klass": "O"
+    },
+    {
+      "id": "tdot-L2-7",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L2-7",
+      "cx": 157,
+      "cy": 273,
+      "r": 4.4,
+      "klass": "R"
+    },
+    {
+      "id": "tdot-L2-8",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L2-8",
+      "cx": 128,
+      "cy": 293,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-L2-9",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L2-9",
+      "cx": 157,
+      "cy": 312,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-L2-10",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L2-10",
+      "cx": 158,
+      "cy": 327,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-L3-0",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L3-0",
+      "cx": 69,
+      "cy": 434,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-L3-1",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L3-1",
+      "cx": 70,
+      "cy": 454,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-L3-2",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L3-2",
+      "cx": 58,
+      "cy": 473,
+      "r": 4.4,
+      "klass": "O"
+    },
+    {
+      "id": "tdot-L3-3",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L3-3",
+      "cx": 69,
+      "cy": 473,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-L3-4",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L3-4",
+      "cx": 68,
+      "cy": 511,
+      "r": 4.4,
+      "klass": "R"
+    },
+    {
+      "id": "tdot-L3-5",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L3-5",
+      "cx": 163,
+      "cy": 455,
+      "r": 4.4,
+      "klass": "R"
+    },
+    {
+      "id": "tdot-L3-6",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L3-6",
+      "cx": 173,
+      "cy": 455,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-L3-7",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L3-7",
+      "cx": 163,
+      "cy": 473,
+      "r": 4.4,
+      "klass": "R"
+    },
+    {
+      "id": "tdot-L3-8",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L3-8",
+      "cx": 173,
+      "cy": 473,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-L3-9",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L3-9",
+      "cx": 165,
+      "cy": 508,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-L3-10",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-L3-10",
+      "cx": 187,
+      "cy": 486,
+      "r": 5.0,
+      "klass": "T"
+    },
+    {
+      "id": "tdot-R1-0",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R1-0",
+      "cx": 658,
+      "cy": 95,
+      "r": 4.4,
+      "klass": "G"
+    },
+    {
+      "id": "tdot-R1-1",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R1-1",
+      "cx": 667,
+      "cy": 96,
+      "r": 4.4,
+      "klass": "R"
+    },
+    {
+      "id": "tdot-R1-2",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R1-2",
+      "cx": 660,
+      "cy": 134,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-R1-3",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R1-3",
+      "cx": 660,
+      "cy": 154,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-R1-4",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R1-4",
+      "cx": 648,
+      "cy": 208,
+      "r": 5.0,
+      "klass": "T"
+    },
+    {
+      "id": "tdot-R1-5",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R1-5",
+      "cx": 754,
+      "cy": 93,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-R1-6",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R1-6",
+      "cx": 759,
+      "cy": 102,
+      "r": 4.4,
+      "klass": "O"
+    },
+    {
+      "id": "tdot-R1-7",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R1-7",
+      "cx": 749,
+      "cy": 114,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-R1-8",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R1-8",
+      "cx": 750,
+      "cy": 133,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-R1-9",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R1-9",
+      "cx": 751,
+      "cy": 151,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-R1-10",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R1-10",
+      "cx": 749,
+      "cy": 171,
+      "r": 4.4,
+      "klass": "R"
+    },
+    {
+      "id": "tdot-R1-11",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R1-11",
+      "cx": 751,
+      "cy": 211,
+      "r": 5.0,
+      "klass": "T"
+    },
+    {
+      "id": "tdot-R2-0",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R2-0",
+      "cx": 663,
+      "cy": 270,
+      "r": 4.4,
+      "klass": "R"
+    },
+    {
+      "id": "tdot-R2-1",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R2-1",
+      "cx": 692,
+      "cy": 288,
+      "r": 5.0,
+      "klass": "T"
+    },
+    {
+      "id": "tdot-R2-2",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R2-2",
+      "cx": 700,
+      "cy": 288,
+      "r": 4.4,
+      "klass": "G"
+    },
+    {
+      "id": "tdot-R2-3",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R2-3",
+      "cx": 664,
+      "cy": 309,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-R2-4",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R2-4",
+      "cx": 664,
+      "cy": 328,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-R2-5",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R2-5",
+      "cx": 667,
+      "cy": 364,
+      "r": 5.0,
+      "klass": "T"
+    },
+    {
+      "id": "tdot-R2-6",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R2-6",
+      "cx": 722,
+      "cy": 249,
+      "r": 4.4,
+      "klass": "O"
+    },
+    {
+      "id": "tdot-R2-7",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R2-7",
+      "cx": 752,
+      "cy": 268,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-R2-8",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R2-8",
+      "cx": 752,
+      "cy": 286,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-R2-9",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R2-9",
+      "cx": 753,
+      "cy": 305,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-R2-10",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R2-10",
+      "cx": 755,
+      "cy": 338,
+      "r": 4.4,
+      "klass": "R"
+    },
+    {
+      "id": "tdot-R3-0",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R3-0",
+      "cx": 664,
+      "cy": 409,
+      "r": 4.4,
+      "klass": "O"
+    },
+    {
+      "id": "tdot-R3-1",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R3-1",
+      "cx": 655,
+      "cy": 445,
+      "r": 5.0,
+      "klass": "T"
+    },
+    {
+      "id": "tdot-R3-2",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R3-2",
+      "cx": 664,
+      "cy": 446,
+      "r": 4.4,
+      "klass": "R"
+    },
+    {
+      "id": "tdot-R3-3",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R3-3",
+      "cx": 665,
+      "cy": 464,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-R3-4",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R3-4",
+      "cx": 664,
+      "cy": 503,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-R3-5",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R3-5",
+      "cx": 645,
+      "cy": 514,
+      "r": 5.0,
+      "klass": "T"
+    },
+    {
+      "id": "tdot-R3-6",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R3-6",
+      "cx": 755,
+      "cy": 406,
+      "r": 4.4,
+      "klass": "R"
+    },
+    {
+      "id": "tdot-R3-7",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R3-7",
+      "cx": 765,
+      "cy": 410,
+      "r": 4.4,
+      "klass": "G"
+    },
+    {
+      "id": "tdot-R3-8",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R3-8",
+      "cx": 749,
+      "cy": 446,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-R3-9",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R3-9",
+      "cx": 758,
+      "cy": 446,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "tdot-R3-10",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R3-10",
+      "cx": 750,
+      "cy": 464,
+      "r": 4.4,
+      "klass": "D"
+    },
+    {
+      "id": "tdot-R3-11",
+      "type": "dot",
+      "redrawn": true,
+      "new_id": "tdot-R3-11",
+      "cx": 759,
+      "cy": 464,
+      "r": 4.4,
+      "klass": "Y"
+    },
+    {
+      "id": "ndot-神门-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-神门-0",
+      "name": "神门",
+      "cx": 349.9,
+      "cy": 157.9,
+      "r": 2.2,
+      "klass": "D"
+    },
+    {
+      "id": "ndot-神门-1",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-神门-1",
+      "name": "神门",
+      "cx": 356.3,
+      "cy": 157.9,
+      "r": 2.2,
+      "klass": "Y"
+    },
+    {
+      "id": "ndot-少冲-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-少冲-0",
+      "name": "少冲",
+      "cx": 349.9,
+      "cy": 166.8,
+      "r": 2.2,
+      "klass": "R"
+    },
+    {
+      "id": "ndot-少冲-1",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-少冲-1",
+      "name": "少冲",
+      "cx": 356.3,
+      "cy": 166.6,
+      "r": 2.2,
+      "klass": "O"
+    },
+    {
+      "id": "ndot-通里-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-通里-0",
+      "name": "通里",
+      "cx": 356.7,
+      "cy": 175.5,
+      "r": 2.2,
+      "klass": "K"
+    },
+    {
+      "id": "ndot-心俞-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-心俞-0",
+      "name": "心俞",
+      "cx": 356.7,
+      "cy": 193.3,
+      "r": 2.2,
+      "klass": "K"
+    },
+    {
+      "id": "ndot-巨阙-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-巨阙-0",
+      "name": "巨阙",
+      "cx": 356.5,
+      "cy": 202.5,
+      "r": 2.2,
+      "klass": "P"
+    },
+    {
+      "id": "ndot-天井-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-天井-0",
+      "name": "天井",
+      "cx": 298.7,
+      "cy": 192.0,
+      "r": 2.2,
+      "klass": "B"
+    },
+    {
+      "id": "ndot-关冲-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-关冲-0",
+      "name": "关冲",
+      "cx": 298.5,
+      "cy": 201.7,
+      "r": 2.2,
+      "klass": "O"
+    },
+    {
+      "id": "ndot-外关-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-外关-0",
+      "name": "外关",
+      "cx": 298.5,
+      "cy": 211.0,
+      "r": 2.2,
+      "klass": "K"
+    },
+    {
+      "id": "ndot-石门-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-石门-0",
+      "name": "石门",
+      "cx": 298.6,
+      "cy": 220.6,
+      "r": 2.2,
+      "klass": "P"
+    },
+    {
+      "id": "ndot-三焦俞-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-三焦俞-0",
+      "name": "三焦俞",
+      "cx": 298.5,
+      "cy": 230.0,
+      "r": 2.2,
+      "klass": "K"
+    },
+    {
+      "id": "ndot-丰隆-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-丰隆-0",
+      "name": "丰隆",
+      "cx": 307.7,
+      "cy": 386.0,
+      "r": 2.2,
+      "klass": "K"
+    },
+    {
+      "id": "ndot-中脘-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-中脘-0",
+      "name": "中脘",
+      "cx": 307.8,
+      "cy": 394.2,
+      "r": 2.2,
+      "klass": "P"
+    },
+    {
+      "id": "ndot-胃俞-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-胃俞-0",
+      "name": "胃俞",
+      "cx": 307.5,
+      "cy": 402.5,
+      "r": 2.2,
+      "klass": "K"
+    },
+    {
+      "id": "ndot-厉兑-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-厉兑-0",
+      "name": "厉兑",
+      "cx": 307.5,
+      "cy": 370.2,
+      "r": 2.2,
+      "klass": "B"
+    },
+    {
+      "id": "ndot-头维-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-头维-0",
+      "name": "头维",
+      "cx": 307.7,
+      "cy": 378.1,
+      "r": 2.2,
+      "klass": "O"
+    },
+    {
+      "id": "ndot-解溪-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-解溪-0",
+      "name": "解溪",
+      "cx": 308.0,
+      "cy": 363.0,
+      "r": 2.2,
+      "klass": "R"
+    },
+    {
+      "id": "ndot-冲阳-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-冲阳-0",
+      "name": "冲阳",
+      "cx": 302.0,
+      "cy": 355.0,
+      "r": 2.2,
+      "klass": "G"
+    },
+    {
+      "id": "ndot-冲阳-1",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-冲阳-1",
+      "name": "冲阳",
+      "cx": 308.0,
+      "cy": 355.0,
+      "r": 2.2,
+      "klass": "Y"
+    },
+    {
+      "id": "ndot-太溪-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-太溪-0",
+      "name": "太溪",
+      "cx": 371.3,
+      "cy": 383.0,
+      "r": 2.2,
+      "klass": "Y"
+    },
+    {
+      "id": "ndot-复溜-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-复溜-0",
+      "name": "复溜",
+      "cx": 371.1,
+      "cy": 391.2,
+      "r": 2.2,
+      "klass": "R"
+    },
+    {
+      "id": "ndot-涌泉-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-涌泉-0",
+      "name": "涌泉",
+      "cx": 365.6,
+      "cy": 398.9,
+      "r": 2.2,
+      "klass": "B"
+    },
+    {
+      "id": "ndot-涌泉-1",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-涌泉-1",
+      "name": "涌泉",
+      "cx": 371.5,
+      "cy": 399.1,
+      "r": 2.2,
+      "klass": "O"
+    },
+    {
+      "id": "ndot-然谷-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-然谷-0",
+      "name": "然谷",
+      "cx": 371.5,
+      "cy": 407.4,
+      "r": 2.2,
+      "klass": "B"
+    },
+    {
+      "id": "ndot-大钟-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-大钟-0",
+      "name": "大钟",
+      "cx": 371.5,
+      "cy": 416.0,
+      "r": 2.2,
+      "klass": "K"
+    },
+    {
+      "id": "ndot-步廊-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-步廊-0",
+      "name": "步廊",
+      "cx": 371.3,
+      "cy": 424.8,
+      "r": 2.2,
+      "klass": "G"
+    },
+    {
+      "id": "ndot-京门-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-京门-0",
+      "name": "京门",
+      "cx": 371.2,
+      "cy": 432.2,
+      "r": 2.2,
+      "klass": "P"
+    },
+    {
+      "id": "ndot-肾俞-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-肾俞-0",
+      "name": "肾俞",
+      "cx": 371.0,
+      "cy": 440.5,
+      "r": 2.2,
+      "klass": "K"
+    },
+    {
+      "id": "ndot-五枢-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-五枢-0",
+      "name": "五枢",
+      "cx": 371.0,
+      "cy": 448.5,
+      "r": 2.2,
+      "klass": "K"
+    },
+    {
+      "id": "ndot-丘墟-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-丘墟-0",
+      "name": "丘墟",
+      "cx": 407.1,
+      "cy": 130.8,
+      "r": 2.2,
+      "klass": "Y"
+    },
+    {
+      "id": "ndot-侠溪-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-侠溪-0",
+      "name": "侠溪",
+      "cx": 407.3,
+      "cy": 138.5,
+      "r": 2.2,
+      "klass": "R"
+    },
+    {
+      "id": "ndot-阳辅-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-阳辅-0",
+      "name": "阳辅",
+      "cx": 406.5,
+      "cy": 147.8,
+      "r": 2.2,
+      "klass": "B"
+    },
+    {
+      "id": "ndot-童子髎-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-童子髎-0",
+      "name": "童子髎",
+      "cx": 406.7,
+      "cy": 155.8,
+      "r": 2.2,
+      "klass": "O"
+    },
+    {
+      "id": "ndot-足临泣-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "ndot-足临泣-0",
+      "name": "足临泣",
+      "cx": 436.6,
+      "cy": 164.4,
+      "r": 2.2,
+      "klass": "G"
+    },
+    {
+      "id": "lead-0",
+      "type": "lead-node",
+      "redrawn": true,
+      "new_id": "lead-0",
+      "cx": 328.6,
+      "cy": 211.4,
+      "r": 5.0,
+      "why": "引线节点，不绑穴名。巨阙不使用 (328.6,211.4)，照海不使用 (401,458)"
+    },
+    {
+      "id": "lead-1",
+      "type": "lead-node",
+      "redrawn": true,
+      "new_id": "lead-1",
+      "cx": 401.0,
+      "cy": 458.0,
+      "r": 5.0,
+      "why": "引线节点，不绑穴名。巨阙不使用 (328.6,211.4)，照海不使用 (401,458)"
+    },
+    {
+      "id": "wuxing-wheel",
+      "type": "wheel",
+      "redrawn": true,
+      "new_id": "wuxing-wheel",
+      "cx": 260,
+      "cy": 512,
+      "r": 22,
+      "box": [
+        226,
+        482,
+        298,
+        546
+      ],
+      "why": "绿上、灰青左、红右、蓝下、黄心。不是五个等角外瓣。轮外字待核"
+    },
+    {
+      "id": "legend-table",
+      "type": "grid",
+      "redrawn": true,
+      "new_id": "legend-table",
+      "box": [
+        555,
+        451,
+        594,
+        533
+      ],
+      "y": [
+        451,
+        466,
+        479,
+        493,
+        506,
+        519,
+        533
+      ],
+      "x": [
+        555,
+        569,
+        575,
+        589,
+        594
+      ],
+      "why": "6 行窄彩条。格内小字未辨，只留紧框，不按六经填写"
+    },
+    {
+      "id": "path-legend",
+      "type": "line",
+      "redrawn": true,
+      "new_id": "path-dash",
+      "why": "路径图例样线。字用已确认的路径：、可行、破滞"
+    },
+    {
+      "id": "taiji-interior",
+      "type": "curves",
+      "redrawn": false,
+      "new_id": "taiji-edge",
+      "box": [
+        384,
+        276,
+        424,
+        316
+      ],
+      "why": "C 级。中心约 r20 的边已画。内部 S 曲线在此分辨率下控制点不可靠，不编造太极符号，原盘仍叠在旋转层"
+    },
+    {
+      "id": "wheel-text-0",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        248,
+        481,
+        267,
+        490
+      ],
+      "why": "轮外手写不够清晰，待核，不贴五行标签"
+    },
+    {
+      "id": "wheel-text-1",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        229,
+        500,
+        239,
+        519
+      ],
+      "why": "轮外手写不够清晰，待核，不贴五行标签"
+    },
+    {
+      "id": "wheel-text-2",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        280,
+        501,
+        295,
+        516
+      ],
+      "why": "轮外手写不够清晰，待核，不贴五行标签"
+    },
+    {
+      "id": "wheel-text-3",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        231,
+        528,
+        248,
+        544
+      ],
+      "why": "轮外手写不够清晰，待核，不贴五行标签"
+    },
+    {
+      "id": "wheel-text-4",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        275,
+        526,
+        294,
+        540
+      ],
+      "why": "轮外手写不够清晰，待核，不贴五行标签"
+    },
+    {
+      "id": "spleen-0",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "spleen-0",
+      "name": "太白",
+      "cx": 267,
+      "cy": 241,
+      "why": "同一行实测，不是邻行饱和度抢配"
+    },
+    {
+      "id": "spleen-1",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "spleen-1",
+      "name": "大都",
+      "cx": 267,
+      "cy": 249,
+      "why": "同一行实测，不是邻行饱和度抢配"
+    },
+    {
+      "id": "spleen-2",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "spleen-2",
+      "name": "商丘",
+      "cx": 267,
+      "cy": 257,
+      "why": "同一行实测，不是邻行饱和度抢配"
+    },
+    {
+      "id": "spleen-3",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "spleen-3",
+      "name": "大包",
+      "cx": 267,
+      "cy": 266,
+      "why": "同一行实测，不是邻行饱和度抢配"
+    },
+    {
+      "id": "spleen-4",
+      "type": "acupoint-dot",
+      "redrawn": true,
+      "new_id": "spleen-4",
+      "name": "公孙",
+      "cx": 266,
+      "cy": 279,
+      "why": "同一行实测，不是邻行饱和度抢配"
+    },
+    {
+      "id": "pending-576-163",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        576,
+        163,
+        585,
+        170
+      ],
+      "why": "框内没有分离出不含圆边的字，待核，不把圆边或色条当成字"
+    },
+    {
+      "id": "pending-233-430",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        233,
+        430,
+        245,
+        443
+      ],
+      "why": "框内没有分离出不含圆边的字，待核，不把圆边或色条当成字"
+    },
+    {
+      "id": "pending-214-410",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        214,
+        410,
+        224,
+        417
+      ],
+      "why": "框内没有分离出不含圆边的字，待核，不把圆边或色条当成字"
+    },
+    {
+      "id": "pending-400-480",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        400,
+        480,
+        410,
+        487
+      ],
+      "why": "框内没有分离出不含圆边的字，待核，不把圆边或色条当成字"
+    },
+    {
+      "id": "pending-633-170",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        633,
+        170,
+        653,
+        197
+      ],
+      "why": "框内没有分离出不含圆边的字，待核，不把圆边或色条当成字"
+    },
+    {
+      "id": "pending-576-507",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        576,
+        507,
+        588,
+        518
+      ],
+      "why": "框内没有分离出不含圆边的字，待核，不把圆边或色条当成字"
+    },
+    {
+      "id": "ink-660-285",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        660,
+        285,
+        685,
+        301
+      ],
+      "why": "C9 圈内原字不能确认，紧框待核，不按胆经顺序起名"
+    },
+    {
+      "id": "ink-153-359",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        153,
+        359,
+        178,
+        388
+      ],
+      "why": "圈内原字未辨清，整块紧框保留，不拆成偏旁，也不猜名"
+    },
+    {
+      "id": "ink-187-495",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        187,
+        495,
+        213,
+        526
+      ],
+      "why": "圈内原字未辨清，整块紧框保留，不拆成偏旁，也不猜名"
+    },
+    {
+      "id": "ink-639-332",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        639,
+        332,
+        658,
+        358
+      ],
+      "why": "圈内原字未辨清，整块紧框保留，不拆成偏旁，也不猜名"
+    },
+    {
+      "id": "ink-239-196",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        239,
+        196,
+        245,
+        204
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-430-76",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        430,
+        76,
+        444,
+        90
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "periph-gan",
+      "type": "text",
+      "redrawn": true,
+      "cx": 585,
+      "cy": 175,
+      "why": "右上绿圈已有确认字肝，不叠旧墨"
+    },
+    {
+      "id": "ink-569-217",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        569,
+        217,
+        580,
+        224
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-550-394",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        550,
+        394,
+        567,
+        409
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-572-400",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        572,
+        400,
+        581,
+        410
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-598-386",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        598,
+        386,
+        612,
+        402
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-599-414",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        599,
+        414,
+        608,
+        417
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-384-473",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        384,
+        473,
+        402,
+        490
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-395-495",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        395,
+        495,
+        404,
+        504
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-411-508",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        411,
+        508,
+        429,
+        523
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-239-384",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        239,
+        384,
+        248,
+        392
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-215-424",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        215,
+        424,
+        233,
+        432
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ring0-numerals",
+      "type": "text-pending",
+      "redrawn": false,
+      "r": 24.45,
+      "why": "环上原字和刻度分不开，不把含线裁片当字体，也不新写数字"
+    },
+    {
+      "id": "ring1-numerals",
+      "type": "text-pending",
+      "redrawn": false,
+      "r": 32.0,
+      "why": "环上原字和刻度分不开，不把含线裁片当字体，也不新写数字"
+    },
+    {
+      "id": "ring2-numerals",
+      "type": "text-pending",
+      "redrawn": false,
+      "r": 38.95,
+      "why": "环上原字和刻度分不开，不把含线裁片当字体，也不新写数字"
+    },
+    {
+      "id": "ring3-numerals",
+      "type": "text-pending",
+      "redrawn": false,
+      "r": 45.95,
+      "why": "环上原字和刻度分不开，不把含线裁片当字体，也不新写数字"
+    },
+    {
+      "id": "ring4-numerals",
+      "type": "text-pending",
+      "redrawn": false,
+      "r": 53.45,
+      "why": "环上原字和刻度分不开，不把含线裁片当字体，也不新写数字"
+    },
+    {
+      "id": "ring5-numerals",
+      "type": "text-pending",
+      "redrawn": false,
+      "r": 60.45,
+      "why": "环上原字和刻度分不开，不把含线裁片当字体，也不新写数字"
+    },
+    {
+      "id": "ring6-numerals",
+      "type": "text-pending",
+      "redrawn": false,
+      "r": 68.0,
+      "why": "环上原字和刻度分不开，不把含线裁片当字体，也不新写数字"
+    },
+    {
+      "id": "ring7-numerals",
+      "type": "text-pending",
+      "redrawn": false,
+      "r": 74.95,
+      "why": "环上原字和刻度分不开，不把含线裁片当字体，也不新写数字"
+    },
+    {
+      "id": "ring8-numerals",
+      "type": "text-pending",
+      "redrawn": false,
+      "r": 81.45,
+      "why": "环上原字和刻度分不开，不把含线裁片当字体，也不新写数字"
+    },
+    {
+      "id": "ring0",
+      "type": "circle-band",
+      "redrawn": true,
+      "r": 24.45,
+      "hex": "#9ba8a2",
+      "why": "色类按规格，不沿用先前采成米色的第3、第4、第9层"
+    },
+    {
+      "id": "ring1",
+      "type": "circle-band",
+      "redrawn": true,
+      "r": 32.0,
+      "hex": "#edea62",
+      "why": "色类按规格，不沿用先前采成米色的第3、第4、第9层"
+    },
+    {
+      "id": "ring2",
+      "type": "circle-band",
+      "redrawn": true,
+      "r": 38.95,
+      "hex": "#c53b31",
+      "why": "色类按规格，不沿用先前采成米色的第3、第4、第9层"
+    },
+    {
+      "id": "ring3",
+      "type": "circle-band",
+      "redrawn": true,
+      "r": 45.95,
+      "hex": "#2e3464",
+      "why": "色类按规格，不沿用先前采成米色的第3、第4、第9层"
+    },
+    {
+      "id": "ring4",
+      "type": "circle-band",
+      "redrawn": true,
+      "r": 53.45,
+      "hex": "#d5803e",
+      "why": "色类按规格，不沿用先前采成米色的第3、第4、第9层"
+    },
+    {
+      "id": "ring5",
+      "type": "circle-band",
+      "redrawn": true,
+      "r": 60.45,
+      "hex": "#73a24e",
+      "why": "色类按规格，不沿用先前采成米色的第3、第4、第9层"
+    },
+    {
+      "id": "ring6",
+      "type": "circle-band",
+      "redrawn": true,
+      "r": 68.0,
+      "hex": "#9dafac",
+      "why": "色类按规格，不沿用先前采成米色的第3、第4、第9层"
+    },
+    {
+      "id": "ring7",
+      "type": "circle-band",
+      "redrawn": true,
+      "r": 74.95,
+      "hex": "#a087ac",
+      "why": "色类按规格，不沿用先前采成米色的第3、第4、第9层"
+    },
+    {
+      "id": "ring8",
+      "type": "circle-band",
+      "redrawn": true,
+      "r": 81.45,
+      "hex": "#4e2d28",
+      "why": "色类按规格，不沿用先前采成米色的第3、第4、第9层"
+    }
+  ],
+  "names": [
+    {
+      "name": "神门",
+      "group": "手少阴心经",
+      "status": "有点",
+      "x": 349.9,
+      "y": 157.9,
+      "klass": "D",
+      "hex": "#29305e"
+    },
+    {
+      "name": "神门",
+      "group": "手少阴心经",
+      "status": "有点",
+      "x": 356.3,
+      "y": 157.9,
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "name": "少冲",
+      "group": "手少阴心经",
+      "status": "有点",
+      "x": 349.9,
+      "y": 166.8,
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "name": "少冲",
+      "group": "手少阴心经",
+      "status": "有点",
+      "x": 356.3,
+      "y": 166.6,
+      "klass": "O",
+      "hex": "#cf8746"
+    },
+    {
+      "name": "通里",
+      "group": "手少阴心经",
+      "status": "有点",
+      "x": 356.7,
+      "y": 175.5,
+      "klass": "K",
+      "hex": "#8d8a84"
+    },
+    {
+      "name": "极泉",
+      "group": "手少阴心经",
+      "status": "待核",
+      "y": 181,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "心俞",
+      "group": "手少阴心经",
+      "status": "有点",
+      "x": 356.7,
+      "y": 193.3,
+      "klass": "K",
+      "hex": "#8d8a84"
+    },
+    {
+      "name": "巨阙",
+      "group": "手少阴心经",
+      "status": "有点",
+      "x": 356.5,
+      "y": 202.5,
+      "klass": "P",
+      "hex": "#8d5a84"
+    },
+    {
+      "name": "丝竹空",
+      "group": "手少阳三焦经",
+      "status": "待核",
+      "y": 160,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "阳池",
+      "group": "手少阳三焦经",
+      "status": "待核",
+      "y": 170,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "中渚",
+      "group": "手少阳三焦经",
+      "status": "待核",
+      "y": 180,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "天井",
+      "group": "手少阳三焦经",
+      "status": "有点",
+      "x": 298.7,
+      "y": 192.0,
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "name": "关冲",
+      "group": "手少阳三焦经",
+      "status": "有点",
+      "x": 298.5,
+      "y": 201.7,
+      "klass": "O",
+      "hex": "#cf8746"
+    },
+    {
+      "name": "外关",
+      "group": "手少阳三焦经",
+      "status": "有点",
+      "x": 298.5,
+      "y": 211.0,
+      "klass": "K",
+      "hex": "#8d8a84"
+    },
+    {
+      "name": "石门",
+      "group": "手少阳三焦经",
+      "status": "有点",
+      "x": 298.6,
+      "y": 220.6,
+      "klass": "P",
+      "hex": "#8d5a84"
+    },
+    {
+      "name": "三焦俞",
+      "group": "手少阳三焦经",
+      "status": "有点",
+      "x": 298.5,
+      "y": 230.0,
+      "klass": "K",
+      "hex": "#8d8a84"
+    },
+    {
+      "name": "大陵",
+      "group": "手厥阴心包经",
+      "status": "待核",
+      "y": 306,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "中冲",
+      "group": "手厥阴心包经",
+      "status": "待核",
+      "y": 315,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "天池",
+      "group": "手厥阴心包经",
+      "status": "待核",
+      "y": 324,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "劳宫",
+      "group": "手厥阴心包经",
+      "status": "待核",
+      "y": 333,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "内关",
+      "group": "手厥阴心包经",
+      "status": "待核",
+      "y": 342,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "厥阴俞",
+      "group": "手厥阴心包经",
+      "status": "待核",
+      "y": 351,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "冲阳",
+      "group": "足阳明胃经",
+      "status": "有点",
+      "x": 308.0,
+      "y": 355.0,
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "name": "解溪",
+      "group": "足阳明胃经",
+      "status": "有点",
+      "x": 308.0,
+      "y": 363.0,
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "name": "厉兑",
+      "group": "足阳明胃经",
+      "status": "有点",
+      "x": 307.5,
+      "y": 370.2,
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "name": "头维",
+      "group": "足阳明胃经",
+      "status": "有点",
+      "x": 307.7,
+      "y": 378.1,
+      "klass": "O",
+      "hex": "#cf8746"
+    },
+    {
+      "name": "丰隆",
+      "group": "足阳明胃经",
+      "status": "有点",
+      "x": 307.7,
+      "y": 386.0,
+      "klass": "K",
+      "hex": "#8d8a84"
+    },
+    {
+      "name": "中脘",
+      "group": "足阳明胃经",
+      "status": "有点",
+      "x": 307.8,
+      "y": 394.2,
+      "klass": "P",
+      "hex": "#8d5a84"
+    },
+    {
+      "name": "胃俞",
+      "group": "足阳明胃经",
+      "status": "有点",
+      "x": 307.5,
+      "y": 402.5,
+      "klass": "K",
+      "hex": "#8d8a84"
+    },
+    {
+      "name": "太溪",
+      "group": "足少阴肾经",
+      "status": "有点",
+      "x": 371.3,
+      "y": 383.0,
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "name": "复溜",
+      "group": "足少阴肾经",
+      "status": "有点",
+      "x": 371.1,
+      "y": 391.2,
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "name": "涌泉",
+      "group": "足少阴肾经",
+      "status": "有点",
+      "x": 371.5,
+      "y": 399.1,
+      "klass": "O",
+      "hex": "#cf8746"
+    },
+    {
+      "name": "然谷",
+      "group": "足少阴肾经",
+      "status": "有点",
+      "x": 371.5,
+      "y": 407.4,
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "name": "大钟",
+      "group": "足少阴肾经",
+      "status": "有点",
+      "x": 371.5,
+      "y": 416.0,
+      "klass": "K",
+      "hex": "#8d8a84"
+    },
+    {
+      "name": "步廊",
+      "group": "足少阴肾经",
+      "status": "有点",
+      "x": 371.3,
+      "y": 424.8,
+      "klass": "G",
+      "hex": "#75a34f"
+    },
+    {
+      "name": "京门",
+      "group": "足少阴肾经",
+      "status": "有点",
+      "x": 371.2,
+      "y": 432.2,
+      "klass": "P",
+      "hex": "#8d5a84"
+    },
+    {
+      "name": "肾俞",
+      "group": "足少阴肾经",
+      "status": "有点",
+      "x": 371.0,
+      "y": 440.5,
+      "klass": "K",
+      "hex": "#8d8a84"
+    },
+    {
+      "name": "五枢",
+      "group": "足少阴肾经",
+      "status": "有点",
+      "x": 371.0,
+      "y": 448.5,
+      "klass": "K",
+      "hex": "#8d8a84"
+    },
+    {
+      "name": "照海",
+      "group": "足少阴肾经",
+      "status": "待核",
+      "y": 456,
+      "why": "规格写明这一行未见明确独立小彩点。(401,458) 是引线端，不造点"
+    },
+    {
+      "name": "丘墟",
+      "group": "足少阳胆经",
+      "status": "有点",
+      "x": 407.1,
+      "y": 130.8,
+      "klass": "Y",
+      "hex": "#efed5d"
+    },
+    {
+      "name": "侠溪",
+      "group": "足少阳胆经",
+      "status": "有点",
+      "x": 407.3,
+      "y": 138.5,
+      "klass": "R",
+      "hex": "#c83a36"
+    },
+    {
+      "name": "阳辅",
+      "group": "足少阳胆经",
+      "status": "有点",
+      "x": 406.5,
+      "y": 147.8,
+      "klass": "B",
+      "hex": "#5898bb"
+    },
+    {
+      "name": "童子髎",
+      "group": "足少阳胆经",
+      "status": "有点",
+      "x": 406.7,
+      "y": 155.8,
+      "klass": "O",
+      "hex": "#cf8746"
+    },
+    {
+      "name": "足临泣",
+      "group": "足少阳胆经",
+      "status": "有点",
+      "x": 436.6,
+      "y": 164.4,
+      "klass": "G",
+      "hex": "#75a34f"
+    },
+    {
+      "name": "光明",
+      "group": "足少阳胆经",
+      "status": "待核",
+      "y": 170,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "中渎",
+      "group": "足少阳胆经",
+      "status": "待核",
+      "y": 178,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "悬钟",
+      "group": "足少阳胆经",
+      "status": "待核",
+      "y": 186,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "日月",
+      "group": "足少阳胆经",
+      "status": "待核",
+      "y": 194,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "胆俞",
+      "group": "足少阳胆经",
+      "status": "待核",
+      "y": 202,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "太冲",
+      "group": "足厥阴肝经",
+      "status": "待核",
+      "y": 156,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "曲泉",
+      "group": "足厥阴肝经",
+      "status": "待核",
+      "y": 166,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "行间",
+      "group": "足厥阴肝经",
+      "status": "待核",
+      "y": 176,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "大敦",
+      "group": "足厥阴肝经",
+      "status": "待核",
+      "y": 186,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "期门",
+      "group": "足厥阴肝经",
+      "status": "待核",
+      "y": 196,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "蠡沟",
+      "group": "足厥阴肝经",
+      "status": "待核",
+      "y": 206,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "肝俞",
+      "group": "足厥阴肝经",
+      "status": "待核",
+      "y": 216,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "腕骨",
+      "group": "手太阳小肠经",
+      "status": "待核",
+      "y": 226,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "后溪",
+      "group": "手太阳小肠经",
+      "status": "待核",
+      "y": 235,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "小海",
+      "group": "手太阳小肠经",
+      "status": "待核",
+      "y": 244,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "支正",
+      "group": "手太阳小肠经",
+      "status": "待核",
+      "y": 253,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "少泽",
+      "group": "手太阳小肠经",
+      "status": "待核",
+      "y": 262,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "颧髎",
+      "group": "手太阳小肠经",
+      "status": "待核",
+      "y": 271,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "关元",
+      "group": "手太阳小肠经",
+      "status": "待核",
+      "y": 280,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "小肠俞",
+      "group": "手太阳小肠经",
+      "status": "待核",
+      "y": 289,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "太渊",
+      "group": "手太阴肺经",
+      "status": "待核",
+      "y": 306,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "尺泽",
+      "group": "手太阴肺经",
+      "status": "待核",
+      "y": 316,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "中府",
+      "group": "手太阴肺经",
+      "status": "待核",
+      "y": 326,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "列缺",
+      "group": "手太阴肺经",
+      "status": "待核",
+      "y": 336,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "肺俞",
+      "group": "手太阴肺经",
+      "status": "待核",
+      "y": 346,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "合谷",
+      "group": "手阳明大肠经",
+      "status": "待核",
+      "y": 402,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "曲池",
+      "group": "手阳明大肠经",
+      "status": "待核",
+      "y": 410,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "二间",
+      "group": "手阳明大肠经",
+      "status": "待核",
+      "y": 418,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "三间",
+      "group": "手阳明大肠经",
+      "status": "待核",
+      "y": 426,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "偏历",
+      "group": "手阳明大肠经",
+      "status": "待核",
+      "y": 434,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "天枢",
+      "group": "手阳明大肠经",
+      "status": "待核",
+      "y": 442,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "大肠俞",
+      "group": "手阳明大肠经",
+      "status": "待核",
+      "y": 450,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "迎香",
+      "group": "手阳明大肠经",
+      "status": "待核",
+      "y": 458,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "厉兑",
+      "group": "中下原图串",
+      "status": "待核",
+      "y": 362,
+      "why": "同名点的源坐标和这一处字框对不上，不把别处的点绑过来"
+    },
+    {
+      "name": "至阴",
+      "group": "中下原图串",
+      "status": "待核",
+      "y": 373,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "冲阳",
+      "group": "中下原图串",
+      "status": "待核",
+      "y": 384,
+      "why": "同名点的源坐标和这一处字框对不上，不把别处的点绑过来"
+    },
+    {
+      "name": "束骨",
+      "group": "中下原图串",
+      "status": "待核",
+      "y": 395,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "承扬",
+      "group": "中下原图串",
+      "status": "待核",
+      "y": 406,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "睛明",
+      "group": "中下原图串",
+      "status": "待核",
+      "y": 417,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "中极",
+      "group": "中下原图串",
+      "status": "待核",
+      "y": 428,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "膀胱俞",
+      "group": "中下原图串",
+      "status": "待核",
+      "y": 439,
+      "why": "规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点"
+    },
+    {
+      "name": "太白",
+      "group": "足太阴脾经",
+      "status": "有点",
+      "x": 267,
+      "y": 241,
+      "hex": "#851a21",
+      "why": "规格未逐字给脾经。只取该字框同一行 x258–274 的色块"
+    },
+    {
+      "name": "大都",
+      "group": "足太阴脾经",
+      "status": "有点",
+      "x": 267,
+      "y": 249,
+      "hex": "#00023a",
+      "why": "规格未逐字给脾经。只取该字框同一行 x258–274 的色块"
+    },
+    {
+      "name": "商丘",
+      "group": "足太阴脾经",
+      "status": "有点",
+      "x": 267,
+      "y": 257,
+      "hex": "#dbde7a",
+      "why": "规格未逐字给脾经。只取该字框同一行 x258–274 的色块"
+    },
+    {
+      "name": "隐白",
+      "group": "足太阴脾经",
+      "status": "待核",
+      "y": 259,
+      "why": "这一行色块和上一行是同一颗，不重复绑定"
+    },
+    {
+      "name": "大包",
+      "group": "足太阴脾经",
+      "status": "有点",
+      "x": 267,
+      "y": 266,
+      "hex": "#63794d",
+      "why": "规格未逐字给脾经。只取该字框同一行 x258–274 的色块"
+    },
+    {
+      "name": "公孙",
+      "group": "足太阴脾经",
+      "status": "有点",
+      "x": 266,
+      "y": 279,
+      "hex": "#966f85",
+      "why": "规格未逐字给脾经。只取该字框同一行 x258–274 的色块"
+    },
+    {
+      "name": "章门",
+      "group": "足太阴脾经",
+      "status": "待核",
+      "y": 280,
+      "why": "这一行色块和上一行是同一颗，不重复绑定"
+    },
+    {
+      "name": "脾俞",
+      "group": "足太阴脾经",
+      "status": "待核",
+      "y": 287,
+      "why": "这一行 x258–274 没有饱和色块。待核不是无点"
+    }
+  ]
+}
