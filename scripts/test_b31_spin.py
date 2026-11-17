@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -13,7 +14,8 @@ from playwright.sync_api import sync_playwright
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record import chrome_path  # noqa: E402
 
-HTML = Path('examples/b31-cunguan-siji/寸关尺四季表里图_逐环旋转文字版.html').resolve()
+HTML = Path(os.environ.get(
+    'B31_HTML', 'examples/b31-cunguan-siji/寸关尺四季表里图_逐环旋转文字版.html')).resolve()
 OUT = Path('/tmp/b31spin')
 OUT.mkdir(exist_ok=True)
 

@@ -147,7 +147,26 @@ def soft_cover(arr: np.ndarray, boxes: list, kind: str = 'paper') -> None:
             col = dark.mean(axis=0)
             rules[row > 0.45, :] = True
             rules[:, col > 0.45] = True
-            mask = (sl < (205 if kind == 'light' else 175)) & ~rules
+            if kind == 'glyph':
+                import cv2
+                ink = ((sl < 200).astype(np.uint8)) * 255
+                hk = cv2.getStructuringElement(cv2.MORPH_RECT, (max(10, sl.shape[1] * 2 // 3), 1))
+                vk = cv2.getStructuringElement(cv2.MORPH_RECT, (1, max(8, sl.shape[0] // 2)))
+                lines = cv2.bitwise_or(
+                    cv2.morphologyEx(ink, cv2.MORPH_OPEN, hk),
+                    cv2.morphologyEx(ink, cv2.MORPH_OPEN, vk),
+                )
+                mask = (ink > 0) & (lines == 0)
+            else:
+                mask = (sl < (205 if kind == 'light' else 175)) & ~rules
+        if kind == 'glyph':
+            by0, by1 = max(0, y0 - 3), min(H, y1 + 3)
+            bx0, bx1 = max(0, x0 - 3), min(W, x1 + 3)
+            border = arr[by0:by1, bx0:bx1].reshape(-1, 3)
+            border = border[border.mean(axis=1) > 188]
+            fill = np.median(border, axis=0) if len(border) > 8 else np.array([246, 242, 230])
+            arr[y0:y1, x0:x1][mask] = fill
+            continue
         if int(mask.sum()) < 4 or float(mask.mean()) > 0.82:
             continue
         paper = arr[y0:y1, x0:x1][~mask]
@@ -288,16 +307,18 @@ def label_row(t, x0, y0, x1, y1, zone):
         fs = min(fs, 8)
     if zone == 'legend':
         fs = 7
+    if zone == 'strip':
+        fs = 6 if h <= 8 else 7
     row = {
         't': t,
         'x': round((x0 + x1) / 2, 1),
         'y': round((y0 + y1) / 2, 1),
         'fs': fs,
         'fw': 700,
-        'halo': 0.3 if zone == 'legend' else (0.45 if h < 16 else 0.6),
+        'halo': 0.25 if zone in ('legend', 'strip') else (0.45 if h < 16 else 0.6),
         'zone': zone,
     }
-    if zone != 'legend' and len(t) > 1 and 7 * len(t) <= w <= 20 * len(t):
+    if zone != 'legend' and zone != 'strip' and len(t) > 1 and 7 * len(t) <= w <= 20 * len(t):
         row['tl'] = w
     return row
 
@@ -360,7 +381,7 @@ window.spinState=function(){return [...document.querySelectorAll('[data-spin]')]
 '''
 
 
-def main():
+def main(extra_labels=None, out_html=None, coverage_path=None, inner=False):
     if not FONT.is_file():
         raise SystemExit('缺少 Noto 字体文件')
     before = {
@@ -371,7 +392,10 @@ def main():
     user = json.loads(USER_JSON.read_text(encoding='utf-8'))
     cfg = json.loads((DIR / 'config.json').read_text(encoding='utf-8'))
     raw_uri = image_from(SRC_HTML)
-    reads = list(READS) + list(EXTRA)
+    more = list(EXTRA) + list(extra_labels or [])
+    out_path = Path(out_html) if out_html else OUT_HTML
+    cov_path = Path(coverage_path) if coverage_path else (DIR / 'coverage-逐环旋转.json')
+    reads = list(READS) + more
     placed_names = [{'t': t, 'zone': zone} for t, x0, y0, x1, y1, zone in reads]
     # 神门在原印里是上下两字，图上分成「神」「门」，待核名单里仍算这一个穴名。
     placed_names.append({'t': '神门', 'zone': 'lw-lo'})
@@ -382,7 +406,11 @@ def main():
         'draft': True,
         'title': '寸关尺 / 四季表里图（B/31）—— 逐环旋转文字版',
         'sub': '采用用户口述版。九层环各自整数圈旋转，24 秒回到原位，标为示意独立旋转。画面左是人体右腕，画面右是人体左腕。',
-        'note': '采用用户口述版。按原图及用户转写复刻，未作经穴归属改编；动画为示意。默认主图保留未替换的原印。圈内字没有全部换成字体。心疏、中腕、腹瘤、步廊、经门待用户重录确认，没有写上主图。',
+        'note': (
+            '采用用户确认的轮周十二组原文，已写在主图对应彩点旁。未改的原印仍留在默认主图。动画为示意。'
+            if inner else
+            '采用用户口述版。按原图及用户转写复刻，未作经穴归属改编；动画为示意。默认主图保留未替换的原印。圈内字没有全部换成字体。心疏、中腕、腹瘤、步廊、经门待用户重录确认，没有写上主图。'
+        ),
         'assumption': '能量仍沿原有路径。环的转向没有箭头，标示意独立旋转，不是六经传变。没有新的医理连线。',
         'credit': '原图 J. Martin-Hartz / Fondation Cornelius Celsus · 动画示意 · 用户补充署名：J.Martin-Herz（不覆盖原图手签，也不改写原署名）',
         'cycle': cfg['cycle'],
@@ -417,12 +445,16 @@ def main():
         doc['labels'].append(label_row(t, x0, y0, x1, y1, zone))
     covered = cover_glyphs(raw_uri, [[x0, y0, x1, y1] for t, x0, y0, x1, y1, zone in READS])
     arr = decode_uri(covered)
-    paper = [e for e in EXTRA if (e[0], e[1]) not in DISK_KEYS and (e[0], e[1]) not in LIGHT_KEYS]
-    lights = [e for e in EXTRA if (e[0], e[1]) in LIGHT_KEYS]
-    disks = [e for e in EXTRA if (e[0], e[1]) in DISK_KEYS]
+    light_keys = set(LIGHT_KEYS)
+    glyph_keys = {(t, x0) for t, x0, y0, x1, y1, zone in (extra_labels or [])}
+    paper = [e for e in more if (e[0], e[1]) not in DISK_KEYS and (e[0], e[1]) not in light_keys and (e[0], e[1]) not in glyph_keys]
+    lights = [e for e in more if (e[0], e[1]) in light_keys]
+    disks = [e for e in more if (e[0], e[1]) in DISK_KEYS]
+    glyphs = [e for e in more if (e[0], e[1]) in glyph_keys]
     soft_cover(arr, [[x0, y0, x1, y1] for t, x0, y0, x1, y1, zone in paper], 'paper')
     soft_cover(arr, [[x0, y0, x1, y1] for t, x0, y0, x1, y1, zone in lights], 'light')
     soft_cover(arr, [[x0, y0, x1, y1] for t, x0, y0, x1, y1, zone in disks], 'disk')
+    soft_cover(arr, [[x0, y0, x1, y1] for t, x0, y0, x1, y1, zone in glyphs], 'glyph')
     soft_cover(arr, digit_boxes)
     sprites, taiji = ring_and_taiji(arr)
     skip = [(CX, CY, 92)]
@@ -503,7 +535,14 @@ def main():
         '底部路径图例按口述写成路径：、可行、破滞。上面这些圆各自有亮弧自转，圈内新字保持正向。'
         '勾选原图对照时，旋转层、能量和新字一起藏起，底图换成未改的原图。</p></div>'
     )
-    oral = (
+    oral_confirmed = (
+        '<h2>轮周十二组，按用户确认文字写在主图</h2>'
+        '<p>2026-11-17 11:08 与 11:09 的十二组优先于先前口述。心俞、丝竹空、中脘、复溜、京门、步廊、五枢按这次文字。'
+        '丝竹空只写在中央三焦这一串，外围夏火区的阳谷不动。'
+        '中下这一串是厉兑、至阴、冲阳、束骨、承扬、睛明、中极、膀胱俞，不覆盖另一串冲阳、解溪、厉兑、头维、丰隆、中脘、胃俞，也不另起经名。'
+        '没有逐字对上彩点的词不会被猜放；这一轮十二组的穴名都按彩点顺序写在原串上。</p>'
+    )
+    oral_archive = (
         '<h2>采用用户口述版</h2>'
         '<p>文字消息里已经写明、并且字框对得上的，留在主图。组号只是口述顺序，不是扇区坐标。'
         '位置对不上的不往扇区里猜放，主图仍是原印。这一页不是国家标准核对，圈内字也没有全部换成字体。</p>'
@@ -527,14 +566,24 @@ def main():
         '中腕、腹瘤、步廊、经门见上，待重录，不写上主图。'
         '太溪、涌泉、然谷已在冬水区原位。丰隆、胃俞、大钟、肾俞、照海没有新字框，主图留原印。</p>'
     )
+    oral = oral_confirmed if inner else oral_archive
     gap_html = '<h2>轮内还没有写入的字</h2><ul>' + ''.join('<li>' + line + '</li>' for line in WHEEL_GAPS) + '</ul>'
-    kept_html = (
-        '<h2>默认主图里的原印</h2>'
-        '<p>底图是完整原图。只遮已经换成嵌入字体、并且字框落在原笔画上的那些字。'
-        '左右轮周约 25 条图例横条、环上序号、尚未替换的圆内字、黑线旁注，都留在默认主图。'
-        '环层只取九层色环自身的像素，不盖环外扇区。底部路径三字已换成路径：、可行、破滞，样条线仍在。</p>'
-        + oral
-    )
+    if inner:
+        kept_html = (
+            '<h2>默认主图里的原印</h2>'
+            '<p>底图是完整原图。轮周十二组已换成嵌入字体，只遮这十二串和先前已经换过的字。'
+            '环上序号、还没换的圆内字、黑线旁注仍留在默认主图。环层不盖环外扇区。'
+            '底部路径三字是路径：、可行、破滞。</p>'
+            + oral
+        )
+    else:
+        kept_html = (
+            '<h2>默认主图里的原印</h2>'
+            '<p>底图是完整原图。只遮已经换成嵌入字体、并且字框落在原笔画上的那些字。'
+            '左右轮周约 25 条图例横条、环上序号、尚未替换的圆内字、黑线旁注，都留在默认主图。'
+            '环层只取九层色环自身的像素，不盖环外扇区。底部路径三字已换成路径：、可行、破滞，样条线仍在。</p>'
+            + oral
+        )
     if gap_html not in panel:
         raise SystemExit('找不到轮内缺口段落')
     panel = panel.replace(gap_html, kept_html)
@@ -561,7 +610,7 @@ def main():
         external = external.replace(cite, '')
     if 'http://' in external or 'https://' in external:
         raise SystemExit('逐环旋转版出现了外链')
-    OUT_HTML.write_text(page, encoding='utf-8')
+    out_path.write_text(page, encoding='utf-8')
     after = {
         'source': sha256(SRC_HTML),
         'clear': sha256(OLD_HTML),
@@ -572,8 +621,8 @@ def main():
     font_labels = len(doc['labels']) + len(nodes)
     report = {
         'id': 'b31-spin',
-        'html': OUT_HTML.name,
-        'bytes': OUT_HTML.stat().st_size,
+        'html': out_path.name,
+        'bytes': out_path.stat().st_size,
         'draft': True,
         'not_full_transcription': True,
         'circle_interiors_not_all_replaced': True,
@@ -607,6 +656,7 @@ def main():
         'labels_font': font_labels,
         'labels_from_correction': len(READS),
         'labels_added_1030': len(EXTRA),
+        'labels_inner': len(extra_labels or []),
         'node_digits_font': NODE_NUMS,
         'names_accounted': placed_n,
         'names_pending_position': pending_n,
@@ -621,9 +671,9 @@ def main():
         'circle_count': 9 + 1 + len(circles),
         'unchanged_sha': {k: v[:16] for k, v in before.items()},
     }
-    (DIR / 'coverage-逐环旋转.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+    cov_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
     print('labels', len(doc['labels']), 'nodes', len(nodes), 'dots', len(blobs), 'named', len(MANUAL_CIRCLES))
-    print('accounted', placed_n, 'pending', pending_n, 'MB', round(OUT_HTML.stat().st_size / 1e6, 2))
+    print('accounted', placed_n, 'pending', pending_n, 'MB', round(out_path.stat().st_size / 1e6, 2))
     print('unchanged', report['unchanged_sha'])
 
 
