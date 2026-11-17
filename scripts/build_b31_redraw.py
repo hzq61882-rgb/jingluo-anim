@@ -243,7 +243,14 @@ def sprite_png(scan, x, y, w, h, mask):
 
 
 def main_redraw():
+    # 只改这一次进程里的读数，不改校正版源文件。L2 第一格源图是冲阳，L3 右列那格源图是鱼际。
+    for i, row in enumerate(READS):
+        if row[:5] == ('解溪', 91, 310, 111, 320):
+            READS[i] = ('冲阳', 91, 310, 111, 320, row[5])
+        elif row[:5] == ('商阳', 117, 433, 132, 445):
+            READS[i] = ('鱼际', 117, 433, 132, 445, row[5])
     strips = [row for _t, _w, rows in GROUPS for row in rows]
+    strips.append(('商阳', 66, 406, 82, 422, 'disk'))
     main(extra_labels=strips, out_html=OUT, coverage_path=COV, inner=True)
     scan = np.array(Image.open(SCAN).convert('RGB'))
     h, w = scan.shape[:2]
@@ -252,186 +259,183 @@ def main_redraw():
     yy, xx = np.mgrid[:h, :w]
     dist = np.sqrt((xx - CX) ** 2 + (yy - CY) ** 2)
     gray = scan.mean(2)
+    from b31_qc_geom import RING_HEX, build_spec_svg, NAMED_DOTS
     ring_colors = []
-    for rad in RING_RADII:
-        band = (np.abs(dist - rad) <= 2.4) & (gray > 150)
-        med = np.median(scan[band], 0) if band.any() else np.array([220, 210, 190])
-        rgb = [int(v) for v in med]
-        if max(rgb) - min(rgb) < 26 and np.mean(rgb) > 210:
-            rgb = [232, 214, 150]
-        else:
-            rgb = boost(rgb, 1.85, 1.06)
-        ring_colors.append(rgb)
+    for hex_color in RING_HEX:
+        ring_colors.append([int(hex_color[1:3], 16), int(hex_color[3:5], 16), int(hex_color[5:7], 16)])
 
-    # 签名只留紧框里的深色字，不带表格线。
-    sig = scan[546:576, 688:786].copy()
-    sg = sig.mean(2)
-    alpha = np.zeros(sig.shape[:2], np.uint8)
-    alpha[(sg < 80)] = 230
-    sig_rgba = np.zeros((*sig.shape[:2], 4), np.uint8)
-    sig_rgba[..., :3] = 20
-    sig_rgba[..., 3] = alpha
-    sig_uri = uri_png(Image.fromarray(sig_rgba))
-
-    parts = ['<g id="geom">']
-    parts.append('<rect x="32" y="20" width="748" height="556" fill="none" stroke="#161616" stroke-width="1.6"/>')
-    columns = [
-        (72, 112, 88, 214), (116, 158, 88, 214),
-        (72, 112, 248, 360), (116, 162, 248, 360),
-        (70, 112, 395, 525), (116, 160, 395, 525),
-        (662, 704, 82, 210), (708, 758, 82, 210),
-        (662, 704, 225, 355), (708, 758, 225, 355),
-        (648, 704, 385, 525), (708, 764, 385, 525),
-    ]
-    bars = []
-    for x0, x1, y0, y1 in columns:
-        bars.extend(column_bars(scan, x0, x1, y0, y1))
-    parts.append('<g id="bars">')
-    for b in bars:
-        parts.append(f'<rect x="{b["x"]}" y="{b["y"]}" width="{b["w"]}" height="{b["h"]}" fill="{b["hex"]}"/>')
-    parts.append('</g>')
-    parts.append('<circle id="node-ring-outer" cx="404" cy="296" r="229" fill="none" stroke="#1a1a1a" stroke-width="1.15"/>')
-    parts.append('<circle id="node-ring-inner" cx="404" cy="296" r="203" fill="none" stroke="#1a1a1a" stroke-width="1.05"/>')
-    # 右下小图例：按测到的格线画，格子填原色。
-    leg_x = [556, 570, 582, 594]
-    leg_y = [506, 519, 532]
-    parts.append('<g id="legend-table">')
-    for i in range(len(leg_x) - 1):
-        for j in range(len(leg_y) - 1):
-            rgb, _s = sample_box(scan, leg_x[i] + 1, leg_y[j] + 1, leg_x[i + 1] - 1, leg_y[j + 1] - 1)
-            parts.append(
-                f'<rect id="leg-{j}-{i}" x="{leg_x[i]}" y="{leg_y[j]}" width="{leg_x[i+1]-leg_x[i]}" '
-                f'height="{leg_y[j+1]-leg_y[j]}" fill="{hex_of(rgb)}" stroke="#222" stroke-width="0.7"/>'
-            )
-    parts.append('</g>')
-    parts.append('<g id="rules" fill="none" stroke="#1a1a1a" stroke-width="1.05">')
-    for x0, x1, y0, y1 in columns:
-        for y in column_rules(scan, x0, x1, y0, y1):
-            parts.append(f'<line x1="{x0}" y1="{y}" x2="{x1}" y2="{y}"/>')
-    for x, y0, y1 in ((114, 96, 206), (114, 268, 352), (115, 408, 518),
-                      (706, 90, 200), (706, 248, 348), (705, 400, 516)):
-        parts.append(f'<line x1="{x}" y1="{y0}" x2="{x}" y2="{y1}"/>')
-    parts.append('</g>')
-
-    # 表头成对大圆，以及已经定位的穴圆。每圆只画一次。
-    heads = [
-        (104, 76, 12, '神'), (128, 76, 12, '火'),
-        (104, 228, 13, '意'), (128, 228, 13, '土'),
-        (104, 384, 13, '魄'), (128, 384, 13, '金'),
-        (690, 70, 13, '志'), (722, 70, 13, '水'),
-        (690, 222, 13, '魂'), (722, 222, 13, '木'),
-        (694, 376, 13, '神'), (722, 376, 13, '火'),
-    ]
-    organs = []
-    parts.append('<g id="organs">')
-    for cx, cy, r, name in heads:
-        rgb, _sat = sample_box(scan, int(cx - 6), int(cy - 6), int(cx + 6), int(cy + 6))
-        organs.append({'name': name, 'x': cx, 'y': cy, 'r': r, 'hex': hex_of(boost(rgb))})
-    for c in MANUAL_CIRCLES:
-        rgb, _sat = sample_box(scan, int(c['cx'] - 5), int(c['cy'] - 5), int(c['cx'] + 5), int(c['cy'] + 5))
-        organs.append({'name': c['name'], 'x': c['cx'], 'y': c['cy'], 'r': c['r'], 'hex': hex_of(boost(rgb))})
-    # 去掉叠在一起的重复圆。
-    kept_organs = []
-    for item in organs:
-        if any((item['x'] - o['x']) ** 2 + (item['y'] - o['y']) ** 2 < 12 ** 2 for o in kept_organs):
-            continue
-        kept_organs.append(item)
-    for i, item in enumerate(kept_organs):
-        parts.append(
-            f'<circle cx="{item["x"]}" cy="{item["y"]}" r="{item["r"]}" fill="{item["hex"]}" '
-            f'stroke="#222" stroke-width="1.2"/>'
-        )
-        parts.append(
-            f'<circle data-glow="1" data-ph="{i * 0.2:.2f}" cx="{item["x"]}" cy="{item["y"]}" '
-            f'r="{item["r"]}" fill="none" stroke="#fff" stroke-width="1.3" '
-            f'stroke-dasharray="4 10" opacity="0.85"/>'
-        )
-    parts.append('</g>')
-
-    # 底部图例的两条样线，字在已有标签上。
-    parts.append(
-        '<line x1="468" y1="520" x2="502" y2="520" stroke="#222" stroke-width="1.3" stroke-dasharray="3 2"/>'
-        '<line x1="468" y1="532" x2="502" y2="532" stroke="#222" stroke-width="1.6"/>'
+    from b31_qc_geom import (
+        PAL, WHEEL_TEXT, PLUS_BOXES, SIDE_BOXES, CHAIN, NODE_IDS,
     )
+    geom, inv, circles, named_dots, bar_n = build_spec_svg()
 
-    raw_dots = detect_dots(scan)
-    # 同一位置只留一颗。
-    dots_unique = []
-    for d in raw_dots:
-        if any((d['x'] - o['x']) ** 2 + (d['y'] - o['y']) ** 2 < 7 ** 2 for o in dots_unique):
-            continue
-        dots_unique.append(d)
+    def bind_label(name, x0, y0, x1, y1):
+        cy = (y0 + y1) / 2
+        if name not in NAMED_DOTS:
+            return None
+        if name == '照海':
+            return []
+        hits = []
+        for (px, py), klass, r in NAMED_DOTS[name]:
+            if abs(py - cy) <= 8 and (x0 - 10) <= px <= (x1 + 28):
+                hits.append((px, py, klass, r))
+        return hits
+
     name_status = []
-    used = set()
-    for title, where, rows in GROUPS:
-        for name, x0, y0, x1, y1, zone in rows:
-            hit = row_dot(scan, x0, y0, x1, y1)
-            if hit is None:
-                name_status.append({'name': name, 'group': title, 'status': '待核', 'y': y0,
-                                    'why': '这一行没有采到饱和度够高的色块，不能据此说原图没有点'})
-            else:
-                px, py, rgb, sat = hit
-                if any((px - d['x']) ** 2 + (py - d['y']) ** 2 < 36 for d in dots_unique):
-                    pass
-                else:
-                    dots_unique.append({'x': px, 'y': py, 'hex': hex_of(rgb)})
+    for title, _where, rows in GROUPS:
+        for name, x0, y0, x1, y1, _zone in rows:
+            hits = bind_label(name, x0, y0, x1, y1)
+            if hits is None:
                 name_status.append({
-                    'name': name, 'group': title, 'status': '有点',
-                    'x': px, 'y': py, 'hex': hex_of(rgb), 'sat': sat,
+                    'name': name, 'group': title, 'status': '待核', 'y': y0,
+                    'why': '规格没有逐字绑这一组，不按附近饱和色块配，也不把未取到写成无点',
                 })
-    parts.append('<g id="dots">')
-    for i, d in enumerate(dots_unique):
-        parts.append(
-            f'<circle cx="{d["x"]}" cy="{d["y"]}" r="3.1" fill="{d["hex"]}" stroke="#222" stroke-width="0.5"/>'
-        )
-        parts.append(
-            f'<circle data-glow="1" data-ph="{i * 0.17:.2f}" cx="{d["x"]}" cy="{d["y"]}" r="3.1" '
-            f'fill="none" stroke="{d["hex"]}" stroke-width="1.05" opacity="0.75"/>'
-        )
-    parts.append('</g></g>')
-    # 未替换文字：去掉长线和已换字框后，按连通域做紧框。
-    ink = ((gray < 120) & ((scan.max(2).astype(int) - scan.min(2).astype(int)) < 42))
-    ink_u8 = ink.astype(np.uint8) * 255
-    hk = cv2.getStructuringElement(cv2.MORPH_RECT, (14, 1))
-    vk = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 12))
-    lines = cv2.bitwise_or(cv2.morphologyEx(ink_u8, cv2.MORPH_OPEN, hk), cv2.morphologyEx(ink_u8, cv2.MORPH_OPEN, vk))
-    keep = ink & (lines == 0) & (dist > 90)
-    for _n, x0, y0, x1, y1, _z in all_labels():
-        keep[max(0, y0 - 6):y1 + 7, max(0, x0 - 6):x1 + 7] = False
-    side = [s for s in glyph_sprites(scan, keep, 400)
-            if ((s[0] + s[2] / 2 - CX) ** 2 + (s[1] + s[3] / 2 - CY) ** 2) ** 0.5 > 210
-            and s[4] >= 28 and s[2] >= 5 and s[3] >= 5]
+            elif hits == [] and name == '照海':
+                name_status.append({
+                    'name': name, 'group': title, 'status': '待核', 'y': y0,
+                    'why': '规格写明这一行未见明确独立小彩点。(401,458) 是引线端，不造点',
+                })
+            elif not hits:
+                name_status.append({
+                    'name': name, 'group': title, 'status': '待核', 'y': y0,
+                    'why': '同名点的源坐标和这一处字框对不上，不把别处的点绑过来',
+                })
+            else:
+                for px, py, klass, _r in hits:
+                    name_status.append({
+                        'name': name, 'group': title, 'status': '有点',
+                        'x': px, 'y': py, 'klass': klass, 'hex': PAL[klass],
+                    })
+
+    # 脾经规格未逐字给点。只在每个字框自己的行高、x258–274 里取色块，不借用邻行。
+    spleen_bits = []
+    spleen_used = []
+    for title, _where, rows in GROUPS:
+        if title != '足太阴脾经':
+            continue
+        for name, x0, y0, x1, y1, _zone in rows:
+            def drop_prior(name=name, y0=y0, title=title):
+                name_status[:] = [s for s in name_status if not (
+                    s['name'] == name and s['group'] == title and s.get('y') == y0)]
+            wy0 = max(0, y0)
+            sl = scan[wy0:min(h, y1 + 1), 258:275]
+            if sl.size == 0:
+                continue
+            sat = sl.max(2).astype(int) - sl.min(2).astype(int)
+            if int(sat.max()) < 28:
+                drop_prior()
+                name_status.append({'name': name, 'group': title, 'status': '待核', 'y': y0,
+                                    'why': '这一行 x258–274 没有饱和色块。待核不是无点'})
+                continue
+            iy, ix = np.unravel_index(int(sat.argmax()), sat.shape)
+            py, px = wy0 + int(iy), 258 + int(ix)
+            if any(abs(px - a) <= 3 and abs(py - b) <= 3 for a, b in spleen_used):
+                drop_prior()
+                name_status.append({'name': name, 'group': title, 'status': '待核', 'y': y0,
+                                    'why': '这一行色块和上一行是同一颗，不重复绑定'})
+                continue
+            spleen_used.append((px, py))
+            patch = scan[max(0, py - 1):py + 2, max(0, px - 1):px + 2]
+            med = np.median(patch.reshape(-1, 3), 0)
+            rgb = boost(med, 1.25, 1.02)
+            spleen_bits.append((name, px, py, hex_of(rgb)))
+            drop_prior()
+            name_status.append({'name': name, 'group': title, 'status': '有点', 'x': px, 'y': py,
+                                'hex': hex_of(rgb), 'why': '规格未逐字给脾经。只取该字框同一行 x258–274 的色块'})
+    if spleen_bits:
+        extra = ['<g id="spleen-dots">']
+        for i, (name, px, py, hx) in enumerate(spleen_bits):
+            extra.append(
+                f'<g id="spleen-{i}" data-spin="1" data-kind="spec" data-turns="1" data-cx="{px}" data-cy="{py}">'
+                f'<circle cx="{px}" cy="{py}" r="2.2" fill="{hx}" stroke="#202020" stroke-width="0.45"/>'
+                f'</g>'
+            )
+            inv.append({'id': f'spleen-{i}', 'type': 'acupoint-dot', 'redrawn': True, 'new_id': f'spleen-{i}',
+                        'name': name, 'cx': px, 'cy': py, 'why': '同一行实测，不是邻行饱和度抢配'})
+        extra.append('</g>')
+        geom = geom[:-4] + ''.join(extra) + '</g>'
+
+    def crop_components(box):
+        x0, y0, x1, y1 = [int(v) for v in box]
+        x0, y0 = max(0, x0), max(0, y0)
+        x1, y1 = min(w, x1), min(h, y1)
+        if x1 - x0 < 3 or y1 - y0 < 3:
+            return []
+        sl = scan[y0:y1, x0:x1]
+        g = sl.mean(2)
+        sat = sl.max(2).astype(int) - sl.min(2).astype(int)
+        ink = (g < 140) & (sat < 50)
+        # 小框里的竖笔会被当成表格线删掉，B/31 和表内细字不再做开运算。
+        if (y1 - y0) >= 28 and (x1 - x0) >= 24:
+            u8 = ink.astype(np.uint8) * 255
+            hk = cv2.getStructuringElement(cv2.MORPH_RECT, (max(12, (x1 - x0) * 2 // 3), 1))
+            vk = cv2.getStructuringElement(cv2.MORPH_RECT, (1, max(12, (y1 - y0) * 2 // 3)))
+            lines = cv2.bitwise_or(cv2.morphologyEx(u8, cv2.MORPH_OPEN, hk), cv2.morphologyEx(u8, cv2.MORPH_OPEN, vk))
+            ink = ink & (lines == 0)
+        yy, xx = np.mgrid[y0:y1, x0:x1]
+        edge = np.zeros(ink.shape, bool)
+        for cx, cy, rad in circles:
+            if rad > 40:
+                continue
+            if cx + rad < x0 - 2 or cx - rad > x1 + 2 or cy + rad < y0 - 2 or cy - rad > y1 + 2:
+                continue
+            d = np.sqrt((xx - cx) ** 2 + (yy - cy) ** 2)
+            if rad <= 6.2:
+                edge |= d <= rad + 1.1
+            else:
+                edge |= np.abs(d - rad) <= 1.5
+        ink = ink & ~edge
+        count, labels, stats, _cent = cv2.connectedComponentsWithStats(ink.astype(np.uint8), 8)
+        found = []
+        for i in range(1, count):
+            x, y, ww, hh, area = stats[i]
+            if area < 8 or ww < 2 or hh < 2:
+                continue
+            if ww > hh * 4 and ww > 14:
+                continue
+            if (y1 - y0) >= 28 and 0.75 <= ww / max(hh, 1) <= 1.3 and area > 18 and area / float(ww * hh) > 0.55 and max(ww, hh) < 16:
+                continue
+            mask = labels[y:y + hh, x:x + ww] == i
+            found.append((x0 + int(x), y0 + int(y), int(ww), int(hh), mask))
+        return found
+
+    legend_boxes = []
+    legend_y = [451, 466, 479, 493, 506, 519, 533]
+    for i in range(6):
+        if i == 3:
+            legend_boxes.append((556, legend_y[i] + 1, 588, legend_y[i + 1] - 1))
+        else:
+            legend_boxes.append((556, legend_y[i] + 1, 568, legend_y[i + 1] - 1))
+            legend_boxes.append((576, legend_y[i] + 1, 588, legend_y[i + 1] - 1))
+    pending_boxes = list(WHEEL_TEXT) + list(PLUS_BOXES) + list(SIDE_BOXES) + legend_boxes
     kept = ['<g id="kept">']
-    for x, y, ww, hh, _a in side:
-        png = sprite_png(scan, x, y, ww, hh, keep)
-        if png:
+    side = []
+    empty_pending = []
+    for box in pending_boxes:
+        bits = crop_components(box)
+        if not bits:
+            empty_pending.append(list(box))
+            inv.append({'id': f'pending-{box[0]}-{box[1]}', 'type': 'text-pending', 'redrawn': False,
+                        'box': list(box), 'why': '框内没有分离出不含圆边的字，待核，不把圆边或色条当成字'})
+            continue
+        for x, y, ww, hh, mask in bits:
+            rgba = np.zeros((hh, ww, 4), np.uint8)
+            rgba[mask, :3] = 25
+            rgba[mask, 3] = 230
+            png = uri_png(Image.fromarray(rgba))
             kept.append(f'<image href="{png}" x="{x}" y="{y}" width="{ww}" height="{hh}"/>')
+            side.append((x, y, ww, hh))
     kept.append('</g>')
     ring_glyphs = [[] for _ in RING_RADII]
     for i, rad in enumerate(RING_RADII):
-        band = (np.abs(dist - rad) <= 3.0) & (gray < 105) & ((scan.max(2).astype(int) - scan.min(2).astype(int)) < 40)
-        for x, y, ww, hh, _a in glyph_sprites(scan, band, 80):
-            png = sprite_png(scan, x, y, ww, hh, band)
-            if png:
-                ring_glyphs[i].append((png, x, y, ww, hh))
-    geom = ''.join(parts) + ''.join(kept)
-
-    # 环上短刻度，随环转，不用扫描碎点。
-    def ticks(rad, color):
-        bits = []
-        dark = boost(color, 1.0, 0.55)
-        for k in range(36):
-            ang = np.radians(k * 10 - 90)
-            r0, r1 = rad - 2.1, rad + 2.1
-            x1 = CX + r0 * np.cos(ang)
-            y1 = CY + r0 * np.sin(ang)
-            x2 = CX + r1 * np.cos(ang)
-            y2 = CY + r1 * np.sin(ang)
-            bits.append(
-                f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" '
-                f'stroke="{hex_of(dark)}" stroke-width="0.8"/>'
-            )
-        return ''.join(bits)
+        inv.append({'id': f'ring{i}-numerals', 'type': 'text-pending', 'redrawn': False, 'r': rad,
+                    'why': '环上原字和刻度分不开，不把含线裁片当字体，也不新写数字'})
+    geom = geom + ''.join(kept)
+    bars = [s for s in inv if s['type'] == 'color-bar']
+    kept_organs = [s for s in inv if s['type'] == 'circle']
+    dots_unique = list(named_dots) + [
+        {'name': n, 'x': x, 'y': y, 'hex': hx} for n, x, y, hx in spleen_bits
+    ]
 
     html = OUT.read_text(encoding='utf-8')
     key = '<image id="bg" href="'
@@ -446,12 +450,9 @@ def main_redraw():
         end = html.find('/>', img) + 2
         piece = (
             f'<circle cx="{CX}" cy="{CY}" r="{rad}" fill="none" stroke="{hex_of(ring_colors[n])}" '
-            f'stroke-width="6.6"/>'
+            f'stroke-width="7"/>'
         )
-        for png, x, y, ww, hh in ring_glyphs[n]:
-            piece += f'<image href="{png}" x="{x}" y="{y}" width="{ww}" height="{hh}"/>'
         html = html[:img] + piece + html[end:]
-    # 太极只留提亮后的原图圆盘，外加一道矢量圆边。扫描碎点不进环。
     taiji = dist <= 19.4
     ys, xs = np.where(taiji)
     x0, x1 = int(xs.min()), int(xs.max()) + 1
@@ -467,85 +468,79 @@ def main_redraw():
     href_at = html.find('href="', tk) + 6
     href_end = html.find('"', href_at)
     html = html[:href_at] + taiji_png + html[href_end:]
-    # 删掉自动散点的偏心虚线圈。大圆的光晕已经画在同一圆心上。
     html = re.sub(r'<g id="dot\d+"[^>]*>.*?</g>', '', html)
+    for cid in ('shaofu', 'yanggu', 'yang', 'yin', 'mianxue', 'zutong', 'yingu', 'fa', 'gan-link', 'xiao-link'):
+        html = re.sub(rf'<g id="{cid}" data-spin="1".*?</g>', '', html, count=1)
+    marker = 'const CFG='
+    ci = html.find(marker)
+    cj = html.find(';\n', ci)
+    cfg = json.loads(html[ci + len(marker):cj])
+    for node in cfg.get('nodes') or []:
+        if node.get('id') in NODE_IDS:
+            x, y = CHAIN[NODE_IDS.index(node['id'])]
+            node['x'], node['y'] = x, y
+            node['r'] = 7
+            node['fs'] = 6
+            node['fill'] = '#fff'
+            node['halo'] = 0.35
+            if 'tl' in node and len(str(node.get('t') or '')) == 2:
+                node['tl'] = 8
+    html = html[:ci + len(marker)] + json.dumps(cfg, ensure_ascii=False).replace('<', '\\u003c') + html[cj:]
+    html = html.replace('</style>', '#ink path,#flows path,#pipes path{stroke:none !important}\n</style>', 1)
     html = html.replace(
         "$('spin').style.display=scan?'none':'';",
         "$('spin').style.display=scan?'none':'';\n  if($('geom')) $('geom').style.display=scan?'none':'';\n  if($('kept')) $('kept').style.display=scan?'none':'';",
         1,
     )
     html = html.replace(
-        "el.setAttribute('transform','rotate('+deg.toFixed(3)+' '+el.getAttribute('data-cx')+' '+el.getAttribute('data-cy')+')');\n  });",
-        "el.setAttribute('transform','rotate('+deg.toFixed(3)+' '+el.getAttribute('data-cx')+' '+el.getAttribute('data-cy')+')');\n  });\n"
-        "  document.querySelectorAll('[data-glow]').forEach(el=>{\n"
-        "    const a=0.35+0.65*Math.abs(Math.sin((u*8+(+el.getAttribute('data-ph')))*Math.PI));\n"
-        "    el.setAttribute('stroke-opacity', a.toFixed(3));\n"
-        "  });",
-        1,
-    )
-    html = html.replace(
         '全图重绘点亮版。默认是矢量几何、已确认字体，和尚未换字的原印文字。扫描整图只在原图对照里。动画为示意。',
-        '全图重绘点亮版。默认是矢量表格、色环、圆和已确认字体。原图整页只在对照里。签名是单独的字裁片。动画为示意。',
+        '全图重绘点亮版。几何按 809×596 源坐标规格。已确认字体留在原位。未辨字只留紧框。动画为示意。',
     )
-    # 上一轮可能没这句话，补在 note 字段。
     html = html.replace(
         '采用用户确认的轮周十二组原文，已写在主图对应彩点旁。未改的原印仍留在默认主图。动画为示意。',
-        '全图重绘点亮版。默认是矢量表格、色环、圆和已确认字体。原图整页只在对照里。签名是单独的字裁片。动画为示意。',
+        '全图重绘点亮版。几何按 809×596 源坐标规格。已确认字体留在原位。未辨字只留紧框。动画为示意。',
     )
     OUT.write_text(html, encoding='utf-8')
+    for i, (rad, col) in enumerate(zip(RING_RADII, ring_colors)):
+        inv.append({'id': f'ring{i}', 'type': 'circle-band', 'redrawn': True, 'r': rad, 'hex': hex_of(col),
+                    'why': '色类按规格，不沿用先前采成米色的第3、第4、第9层'})
     report = {
         'html': OUT.name,
-        'default_layer': '纸色底、参数化六区表格、九层色带、单圆心穴点、已确认字体、签名裁片。没有整页墨层，没有霍夫碎线。',
-        'pure_geometry': '隐藏签名裁片和原图对照后，只剩矢量形状和字体。',
+        'default_layer': '纸色底。六表 72 条短格、穹顶、五行轮、右下六行表、三道外围圆、双线辐条，都按源坐标。',
+        'pure_geometry': '藏起待核字裁片后，矢量层仍在。中心花形内部曲线未描。',
         'not_done': [
-            '六区横条和横线按原图列宽重画，还不是每一格的弧形括号都逐段复刻。',
-            '环上原印以紧框深色裁片随环转动，没有认成字体。',
-            '没有彩点的穴名不新造点。',
+            '中心 (384,276)-(424,316) 的 S 曲线是 C 级，只画了 r20 圆边，没有编造太极。',
+            '五行轮外五处手写、右下表细字、环上原字没有辨清，只留紧框或标待核，没有新写。',
+            '规格没有逐字绑点的组保持待核，没有用附近饱和色块配名。',
+            'L3 外侧虚线和 R3 末端被字挡住，端点容差约 3 像素，没有补箭头。',
         ],
         'geometry': {
-            'frame': 1,
             'color_bars': len(bars),
-            'organ_circles': len(kept_organs),
-            'original_dots': len(dots_unique),
+            'circles': len(kept_organs),
+            'named_dots': len(named_dots),
+            'spleen_row_dots': len(spleen_bits),
+            'pending_crops': len(side),
+            'pending_boxes_without_ink': len(empty_pending),
             'name_dot_status': {
                 '有点': sum(1 for s in name_status if s['status'] == '有点'),
                 '待核': sum(1 for s in name_status if s['status'] == '待核'),
             },
-            'side_text_crops': len(side),
-            'ring_glyph_crops': [len(g) for g in ring_glyphs],
             'rings': [{'r': r, 'hex': hex_of(c)} for r, c in zip(RING_RADII, ring_colors)],
-            'config_paths_kept': {'spokes': 12, 'gold': 12, 'dashed': 4, 'black': 2, 'nodes': 12},
         },
-        'dots': dots_unique,
         'name_status': name_status,
-        'bars': bars,
-        'organs': kept_organs,
+        'empty_pending': empty_pending,
         'labels_from_previous': len(all_labels()),
     }
     COV.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
-    inv = []
-    inv.append({'id': 'frame', 'type': 'rect', 'redrawn': True, 'new_id': 'frame',
-                'box': [32, 20, 780, 576]})
-    inv.append({'id': 'node-ring-outer', 'type': 'circle', 'redrawn': True, 'cx': 404, 'cy': 296, 'r': 229,
-                'why': '外圈序号圆所在的大圆，原图 r≈229 的深色圆弧'})
-    inv.append({'id': 'node-ring-inner', 'type': 'circle', 'redrawn': True, 'cx': 404, 'cy': 296, 'r': 203,
-                'why': '内圈序号圆所在的大圆'})
-    for i, (r, c) in enumerate(zip(RING_RADII, ring_colors)):
-        inv.append({'id': f'ring{i}', 'type': 'circle-band', 'redrawn': True, 'r': r, 'hex': hex_of(c)})
-    inv.append({'id': 'legend-table', 'type': 'grid', 'redrawn': True,
-                'x': leg_x, 'y': leg_y, 'why': '右下小图例按测到的格线重画，格内字仍是小裁片或未全转写'})
-    inv.append({'id': 'wuxing-wheel', 'type': 'circle', 'redrawn': False,
-                'why': '在 (110,500)-(260,575) 没有找到五色分瓣小轮，这一项未画，避免把别的圆错当成它'})
-    for b in bars:
-        inv.append({'id': f'bar-{b["x"]}-{b["y"]}', 'type': 'color-bar', 'redrawn': True, **b})
     (ROOT / 'examples/b31-cunguan-siji/source_vs_vector_inventory.json').write_text(
-        json.dumps({'shapes': inv, 'dots': dots_unique, 'names': name_status}, ensure_ascii=False, indent=2),
+        json.dumps({'coord': '809x596 source jpg', 'shapes': inv, 'names': name_status}, ensure_ascii=False, indent=2),
         encoding='utf-8')
-    print('bars', len(bars), 'organs', len(kept_organs), 'dots', len(dots_unique),
-          '有点', sum(1 for s in name_status if s['status'] == '有点'),
-          '待核', sum(1 for s in name_status if s['status'] == '待核'),
-          'side', len(side), 'ringglyphs', [len(g) for g in ring_glyphs])
+    print('bars', len(bars), 'circles', len(kept_organs), 'named', len(named_dots), 'spleen', len(spleen_bits),
+          '有点', report['geometry']['name_dot_status']['有点'],
+          '待核', report['geometry']['name_dot_status']['待核'],
+          'crops', len(side), 'empty', len(empty_pending))
     print('rings', [hex_of(c) for c in ring_colors])
+
 
 
 if __name__ == '__main__':
