@@ -75,6 +75,27 @@ def all_labels():
     return rows
 
 
+def row_dot(scan, x0, y0, x1, y1):
+    """这一行里饱和度最高的小色块。深色高饱和也算，纯黑字不算。"""
+    h, w = scan.shape[:2]
+    wy0, wy1 = max(0, y0 - 1), min(h, y1 + 2)
+    wx0, wx1 = max(0, x0 - 22), min(w, x1 + 6)
+    sl = scan[wy0:wy1, wx0:wx1]
+    if sl.size == 0:
+        return None
+    sat = sl.max(2).astype(int) - sl.min(2).astype(int)
+    if int(sat.max()) < 28:
+        return None
+    iy, ix = np.unravel_index(int(sat.argmax()), sat.shape)
+    py, px = wy0 + int(iy), wx0 + int(ix)
+    patch = scan[max(0, py - 1):py + 2, max(0, px - 1):px + 2]
+    med = np.median(patch.reshape(-1, 3), 0)
+    psat = int(patch.max() - patch.min())
+    if psat < 24 or float(patch.mean()) < 18:
+        return None
+    return px, py, boost(med, 1.4, 1.02), int(sat.max())
+
+
 def dot_for(scan, x0, y0, x1, y1):
     """在字行左侧的彩点里取高饱和像素，不拿文字黑边当填色。"""
     h, w = scan.shape[:2]
@@ -149,7 +170,7 @@ def detect_dots(scan):
     h, w = scan.shape[:2]
     sat = scan.max(2).astype(int) - scan.min(2).astype(int)
     gray = scan.mean(2)
-    mask = (sat > 28) & (gray > 40) & (gray < 230)
+    mask = (sat > 16) & (gray > 35) & (gray < 245)
     yy, xx = np.mgrid[:h, :w]
     dist = np.sqrt((xx - CX) ** 2 + (yy - CY) ** 2)
     mask &= (dist > 96) | (dist < 88)
@@ -177,13 +198,15 @@ def detect_dots(scan):
             ys = np.array([p[0] for p in pts])
             xs = np.array([p[1] for p in pts])
             bw, bh = int(xs.max() - xs.min() + 1), int(ys.max() - ys.min() + 1)
-            if not (3 <= bw <= 9 and 3 <= bh <= 9 and 0.6 <= bw / bh <= 1.6):
+            if not (3 <= bw <= 12 and 3 <= bh <= 12 and 0.55 <= bw / max(bh, 1) <= 1.8):
                 continue
             colors = scan[ys, xs]
             order = np.argsort(colors.mean(1))
             core = colors[order[len(order) // 3:]]
             med = np.median(core, 0)
-            if float(np.mean(med)) < 50:
+            core_sat = int(core.max(1).astype(int).mean() - core.min(1).astype(int).mean()) if False else int(
+                (core.max() - core.min()))
+            if int(np.max(core, 1).mean() - np.min(core, 1).mean()) < 18:
                 continue
             found.append({
                 'x': round(float(xs.mean()), 1),
@@ -267,9 +290,22 @@ def main_redraw():
     for b in bars:
         parts.append(f'<rect x="{b["x"]}" y="{b["y"]}" width="{b["w"]}" height="{b["h"]}" fill="{b["hex"]}"/>')
     parts.append('</g>')
+    parts.append('<circle id="node-ring-outer" cx="404" cy="296" r="229" fill="none" stroke="#1a1a1a" stroke-width="1.15"/>')
+    parts.append('<circle id="node-ring-inner" cx="404" cy="296" r="203" fill="none" stroke="#1a1a1a" stroke-width="1.05"/>')
+    # 右下小图例：按测到的格线画，格子填原色。
+    leg_x = [556, 570, 582, 594]
+    leg_y = [506, 519, 532]
+    parts.append('<g id="legend-table">')
+    for i in range(len(leg_x) - 1):
+        for j in range(len(leg_y) - 1):
+            rgb, _s = sample_box(scan, leg_x[i] + 1, leg_y[j] + 1, leg_x[i + 1] - 1, leg_y[j + 1] - 1)
+            parts.append(
+                f'<rect id="leg-{j}-{i}" x="{leg_x[i]}" y="{leg_y[j]}" width="{leg_x[i+1]-leg_x[i]}" '
+                f'height="{leg_y[j+1]-leg_y[j]}" fill="{hex_of(rgb)}" stroke="#222" stroke-width="0.7"/>'
+            )
+    parts.append('</g>')
     parts.append('<g id="rules" fill="none" stroke="#1a1a1a" stroke-width="1.05">')
-    for x0, x1, y0, y1 in ((50, 190, 80, 220), (50, 190, 245, 365), (50, 200, 390, 530),
-                           (640, 775, 75, 215), (645, 775, 220, 360), (640, 780, 380, 530)):
+    for x0, x1, y0, y1 in columns:
         for y in column_rules(scan, x0, x1, y0, y1):
             parts.append(f'<line x1="{x0}" y1="{y}" x2="{x1}" y2="{y}"/>')
     for x, y0, y1 in ((114, 96, 206), (114, 268, 352), (115, 408, 518),
@@ -329,23 +365,19 @@ def main_redraw():
     used = set()
     for title, where, rows in GROUPS:
         for name, x0, y0, x1, y1, zone in rows:
-            cy = (y0 + y1) / 2
-            best = None
-            bestd = 1e9
-            for i, d in enumerate(dots_unique):
-                if abs(d['y'] - cy) > 8 or not (x0 - 28) <= d['x'] <= x0 + 8:
-                    continue
-                dist2 = (d['x'] - (x0 - 8)) ** 2 + (d['y'] - cy) ** 2
-                if dist2 < bestd:
-                    bestd, best = dist2, i
-            if best is None:
-                name_status.append({'name': name, 'group': title, 'status': '无点', 'y': y0})
+            hit = row_dot(scan, x0, y0, x1, y1)
+            if hit is None:
+                name_status.append({'name': name, 'group': title, 'status': '待核', 'y': y0,
+                                    'why': '这一行没有采到饱和度够高的色块，不能据此说原图没有点'})
             else:
-                used.add(best)
+                px, py, rgb, sat = hit
+                if any((px - d['x']) ** 2 + (py - d['y']) ** 2 < 36 for d in dots_unique):
+                    pass
+                else:
+                    dots_unique.append({'x': px, 'y': py, 'hex': hex_of(rgb)})
                 name_status.append({
                     'name': name, 'group': title, 'status': '有点',
-                    'x': dots_unique[best]['x'], 'y': dots_unique[best]['y'],
-                    'hex': dots_unique[best]['hex'],
+                    'x': px, 'y': py, 'hex': hex_of(rgb), 'sat': sat,
                 })
     parts.append('<g id="dots">')
     for i, d in enumerate(dots_unique):
@@ -477,7 +509,7 @@ def main_redraw():
             'original_dots': len(dots_unique),
             'name_dot_status': {
                 '有点': sum(1 for s in name_status if s['status'] == '有点'),
-                '无点': sum(1 for s in name_status if s['status'] == '无点'),
+                '待核': sum(1 for s in name_status if s['status'] == '待核'),
             },
             'side_text_crops': len(side),
             'ring_glyph_crops': [len(g) for g in ring_glyphs],
@@ -491,9 +523,27 @@ def main_redraw():
         'labels_from_previous': len(all_labels()),
     }
     COV.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+    inv = []
+    inv.append({'id': 'frame', 'type': 'rect', 'redrawn': True, 'new_id': 'frame',
+                'box': [32, 20, 780, 576]})
+    inv.append({'id': 'node-ring-outer', 'type': 'circle', 'redrawn': True, 'cx': 404, 'cy': 296, 'r': 229,
+                'why': '外圈序号圆所在的大圆，原图 r≈229 的深色圆弧'})
+    inv.append({'id': 'node-ring-inner', 'type': 'circle', 'redrawn': True, 'cx': 404, 'cy': 296, 'r': 203,
+                'why': '内圈序号圆所在的大圆'})
+    for i, (r, c) in enumerate(zip(RING_RADII, ring_colors)):
+        inv.append({'id': f'ring{i}', 'type': 'circle-band', 'redrawn': True, 'r': r, 'hex': hex_of(c)})
+    inv.append({'id': 'legend-table', 'type': 'grid', 'redrawn': True,
+                'x': leg_x, 'y': leg_y, 'why': '右下小图例按测到的格线重画，格内字仍是小裁片或未全转写'})
+    inv.append({'id': 'wuxing-wheel', 'type': 'circle', 'redrawn': False,
+                'why': '在 (110,500)-(260,575) 没有找到五色分瓣小轮，这一项未画，避免把别的圆错当成它'})
+    for b in bars:
+        inv.append({'id': f'bar-{b["x"]}-{b["y"]}', 'type': 'color-bar', 'redrawn': True, **b})
+    (ROOT / 'examples/b31-cunguan-siji/source_vs_vector_inventory.json').write_text(
+        json.dumps({'shapes': inv, 'dots': dots_unique, 'names': name_status}, ensure_ascii=False, indent=2),
+        encoding='utf-8')
     print('bars', len(bars), 'organs', len(kept_organs), 'dots', len(dots_unique),
           '有点', sum(1 for s in name_status if s['status'] == '有点'),
-          '无点', sum(1 for s in name_status if s['status'] == '无点'),
+          '待核', sum(1 for s in name_status if s['status'] == '待核'),
           'side', len(side), 'ringglyphs', [len(g) for g in ring_glyphs])
     print('rings', [hex_of(c) for c in ring_colors])
 
