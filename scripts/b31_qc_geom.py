@@ -359,12 +359,24 @@ def build_spec_svg():
         sid = f'half-{i}'
         x0, x1 = cx - r, cx + r
         # y 向下：左点到右点、sweep 0 经过上方。
+        half_text = ''
+        if i == 0:
+            half_text = (
+                '<text x="61" y="523" text-anchor="middle" dominant-baseline="central" '
+                'font-size="8.5" font-weight="700" fill="#111" stroke="#fff" stroke-width="0.45" paint-order="stroke">阳</text>'
+            )
+        elif i == 1:
+            half_text = (
+                '<text x="168" y="521" text-anchor="middle" dominant-baseline="central" '
+                'font-size="8.5" font-weight="700" fill="#111" stroke="#fff" stroke-width="0.45" paint-order="stroke">阴</text>'
+            )
         parts.append(
             f'<g id="{sid}" data-spin="1" data-kind="spec" data-turns="{1 if i % 2 == 0 else -1}" data-cx="{cx}" data-cy="{cy}">'
             f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="#f7f4ea" stroke="#202020" stroke-width="1"/>'
-            f'<path d="M{x0} {cy} A{r} {r} 0 0 0 {x1} {cy} Z" fill="{PAL[klass]}" stroke="#202020" stroke-width="0.6"/>'
+            f'<path d="M{x0} {cy} A{r} {r} 0 0 1 {x1} {cy} Z" fill="{PAL[klass]}" stroke="#202020" stroke-width="0.6"/>'
             f'<path d="M{x0} {cy} H{x1}" fill="none" stroke="#202020" stroke-width="0.8"/>'
             f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="#4a3b24" stroke-width="0.8" stroke-dasharray="3 5" opacity="0.75"/>'
+            f'{half_text}'
             f'</g>'
         )
         circles.append((cx, cy, r))

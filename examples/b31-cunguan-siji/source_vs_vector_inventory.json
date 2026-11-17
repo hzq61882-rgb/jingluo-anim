@@ -4354,6 +4354,18 @@
       "why": "框内没有分离出不含圆边的字，待核，不把圆边或色条当成字"
     },
     {
+      "id": "pending-633-170",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        633,
+        170,
+        653,
+        197
+      ],
+      "why": "框内没有分离出不含圆边的字，待核，不把圆边或色条当成字"
+    },
+    {
       "id": "pending-576-507",
       "type": "text-pending",
       "redrawn": false,
@@ -4364,6 +4376,206 @@
         518
       ],
       "why": "框内没有分离出不含圆边的字，待核，不把圆边或色条当成字"
+    },
+    {
+      "id": "ink-660-285",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        660,
+        285,
+        685,
+        301
+      ],
+      "why": "C9 圈内原字不能确认，紧框待核，不按胆经顺序起名"
+    },
+    {
+      "id": "ink-153-359",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        153,
+        359,
+        178,
+        388
+      ],
+      "why": "圈内原字未辨清，整块紧框保留，不拆成偏旁，也不猜名"
+    },
+    {
+      "id": "ink-187-495",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        187,
+        495,
+        213,
+        526
+      ],
+      "why": "圈内原字未辨清，整块紧框保留，不拆成偏旁，也不猜名"
+    },
+    {
+      "id": "ink-639-332",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        639,
+        332,
+        658,
+        358
+      ],
+      "why": "圈内原字未辨清，整块紧框保留，不拆成偏旁，也不猜名"
+    },
+    {
+      "id": "ink-239-196",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        239,
+        196,
+        245,
+        204
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-430-76",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        430,
+        76,
+        444,
+        90
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "periph-gan",
+      "type": "text",
+      "redrawn": true,
+      "cx": 585,
+      "cy": 175,
+      "why": "右上绿圈已有确认字肝，不叠旧墨"
+    },
+    {
+      "id": "ink-569-217",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        569,
+        217,
+        580,
+        224
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-550-394",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        550,
+        394,
+        567,
+        409
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-572-400",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        572,
+        400,
+        581,
+        410
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-598-386",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        598,
+        386,
+        612,
+        402
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-599-414",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        599,
+        414,
+        608,
+        417
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-384-473",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        384,
+        473,
+        402,
+        490
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-395-495",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        395,
+        495,
+        404,
+        504
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-411-508",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        411,
+        508,
+        429,
+        523
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-239-384",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        239,
+        384,
+        248,
+        392
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
+    },
+    {
+      "id": "ink-215-424",
+      "type": "text-pending",
+      "redrawn": false,
+      "box": [
+        215,
+        424,
+        233,
+        432
+      ],
+      "why": "外围彩圆内原字未辨清，紧框待核，不编号"
     },
     {
       "id": "ring0-numerals",

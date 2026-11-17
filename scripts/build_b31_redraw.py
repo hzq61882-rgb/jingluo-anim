@@ -16,7 +16,7 @@ from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_b31_corrected import READS  # noqa: E402
 from build_b31_inner import GROUPS  # noqa: E402
-from build_b31_spin import EXTRA, MANUAL_CIRCLES, main  # noqa: E402
+from build_b31_spin import EXTRA, main  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 SCAN = Path('/tmp/scans/b31.jpg')
@@ -251,6 +251,26 @@ def main_redraw():
             READS[i] = ('鱼际', 117, 433, 132, 445, row[5])
     strips = [row for _t, _w, rows in GROUPS for row in rows]
     strips.append(('商阳', 66, 406, 82, 422, 'disk'))
+    # 报告点名的空白圆和空格。只补这些字，不改已经在位的商阳、足通谷、阴谷、阳谷、少府。
+    fixes = [
+        ('支沟', 66, 171, 86, 181, 'cellfix'),
+        ('劳宫', 142, 116, 164, 126, 'cellfix'),
+        ('三里', 64, 348, 86, 358, 'cellfix'),
+        ('足', 50, 345, 60, 356, 'cellfix'),
+        ('太', 145, 290, 157, 300, 'cellfix'),
+        ('经渠', 141, 489, 163, 499, 'cellfix'),
+        ('大敦', 733, 244, 755, 254, 'cellfix'),
+        ('大', 121, 133, 135, 143, 'cellfix'),
+        ('陵', 121, 152, 135, 162, 'cellfix'),
+        ('厉兑', 90, 252, 112, 262, 'cellfix'),
+        ('隐白', 116, 252, 140, 262, 'cellfix'),
+        ('白', 122, 310, 136, 320, 'cellfix'),
+        ('二间', 90, 432, 112, 442, 'cellfix'),
+        ('三间', 90, 450, 112, 460, 'cellfix'),
+        ('太', 121, 450, 135, 460, 'cellfix'),
+        ('渊', 121, 469, 135, 479, 'cellfix'),
+    ]
+    strips.extend(fixes)
     main(extra_labels=strips, out_html=OUT, coverage_path=COV, inner=True)
     scan = np.array(Image.open(SCAN).convert('RGB'))
     h, w = scan.shape[:2]
@@ -265,8 +285,9 @@ def main_redraw():
         ring_colors.append([int(hex_color[1:3], 16), int(hex_color[3:5], 16), int(hex_color[5:7], 16)])
 
     from b31_qc_geom import (
-        PAL, WHEEL_TEXT, PLUS_BOXES, SIDE_BOXES, CHAIN, NODE_IDS,
+        PAL, WHEEL_TEXT, PLUS_BOXES, SIDE_BOXES, CHAIN, NODE_IDS, PERIPH,
     )
+    confirmed = [(x0 - 1, y0 - 1, x1 + 1, y1 + 1) for _t, x0, y0, x1, y1, _z in list(READS) + list(EXTRA) + strips]
     geom, inv, circles, named_dots, bar_n = build_spec_svg()
 
     def bind_label(name, x0, y0, x1, y1):
@@ -385,6 +406,11 @@ def main_redraw():
             else:
                 edge |= np.abs(d - rad) <= 1.5
         ink = ink & ~edge
+        for bx0, by0, bx1, by1 in confirmed:
+            ix0, iy0 = max(0, int(bx0) - x0), max(0, int(by0) - y0)
+            ix1, iy1 = min(ink.shape[1], int(bx1) - x0), min(ink.shape[0], int(by1) - y0)
+            if ix1 > ix0 and iy1 > iy0:
+                ink[iy0:iy1, ix0:ix1] = False
         count, labels, stats, _cent = cv2.connectedComponentsWithStats(ink.astype(np.uint8), 8)
         found = []
         for i in range(1, count):
@@ -407,7 +433,12 @@ def main_redraw():
         else:
             legend_boxes.append((556, legend_y[i] + 1, 568, legend_y[i + 1] - 1))
             legend_boxes.append((576, legend_y[i] + 1, 588, legend_y[i + 1] - 1))
-    pending_boxes = list(WHEEL_TEXT) + list(PLUS_BOXES) + list(SIDE_BOXES) + legend_boxes
+    # 这三个感官圈改成一整块圈内墨字，不再拆成偏旁。右上发/骨/听觉已是新字，不贴回旧圈。
+    whole_interiors = [(153, 359, 178, 389), (187, 495, 213, 529), (636, 332, 659, 358)]
+    pending_boxes = [
+        b for b in list(WHEEL_TEXT) + list(PLUS_BOXES) + list(SIDE_BOXES) + legend_boxes
+        if b not in whole_interiors
+    ]
     kept = ['<g id="kept">']
     side = []
     empty_pending = []
@@ -423,8 +454,68 @@ def main_redraw():
             rgba[mask, :3] = 25
             rgba[mask, 3] = 230
             png = uri_png(Image.fromarray(rgba))
-            kept.append(f'<image href="{png}" x="{x}" y="{y}" width="{ww}" height="{hh}"/>')
+            kept.append(f'<image data-scan-ink="1" href="{png}" x="{x}" y="{y}" width="{ww}" height="{hh}"/>')
             side.append((x, y, ww, hh))
+
+    def emit_ink(mask, x0, y0, why):
+        if int(mask.sum()) < 8:
+            return False
+        ys, xs = np.where(mask)
+        xa, xb = int(xs.min()), int(xs.max()) + 1
+        ya, yb = int(ys.min()), int(ys.max()) + 1
+        sub = mask[ya:yb, xa:xb]
+        rgba = np.zeros((yb - ya, xb - xa, 4), np.uint8)
+        rgba[sub, :3] = 25
+        rgba[sub, 3] = 230
+        kept.append(
+            f'<image data-scan-ink="1" href="{uri_png(Image.fromarray(rgba))}" '
+            f'x="{x0 + xa}" y="{y0 + ya}" width="{xb - xa}" height="{yb - ya}"/>'
+        )
+        side.append((x0 + xa, y0 + ya, xb - xa, yb - ya))
+        inv.append({'id': f'ink-{x0 + xa}-{y0 + ya}', 'type': 'text-pending', 'redrawn': False,
+                    'box': [x0 + xa, y0 + ya, x0 + xb, y0 + yb], 'why': why})
+        return True
+
+    def interior_ink(x0, y0, x1, y1):
+        x0, y0, x1, y1 = int(x0), int(y0), int(x1), int(y1)
+        sl = scan[y0:y1, x0:x1]
+        g = sl.mean(2)
+        sat = sl.max(2).astype(int) - sl.min(2).astype(int)
+        ink = (g < 145) & (sat < 48)
+        yy, xx = np.mgrid[y0:y1, x0:x1]
+        edge = np.zeros(ink.shape, bool)
+        for cx, cy, rad in circles:
+            if rad > 40 or cx + rad < x0 - 2 or cx - rad > x1 + 2 or cy + rad < y0 - 2 or cy - rad > y1 + 2:
+                continue
+            d = np.sqrt((xx - cx) ** 2 + (yy - cy) ** 2)
+            edge |= np.abs(d - rad) <= 1.6
+        ink = ink & ~edge
+        for bx0, by0, bx1, by1 in confirmed:
+            ix0, iy0 = max(0, int(bx0) - x0), max(0, int(by0) - y0)
+            ix1, iy1 = min(ink.shape[1], int(bx1) - x0), min(ink.shape[0], int(by1) - y0)
+            if ix1 > ix0 and iy1 > iy0:
+                ink[iy0:iy1, ix0:ix1] = False
+        return ink, x0, y0
+
+    # C9 红底上的黑字饱和度不低，不能用低饱和阈值。只取圈内比红底更暗的像素。
+    c9 = scan[285:301, 658:687]
+    c9g = c9.mean(2)
+    yy, xx = np.mgrid[285:301, 658:687]
+    c9m = (c9g < 80) & (((xx - 672) ** 2 + (yy - 290) ** 2) < (16 - 2.8) ** 2)
+    emit_ink(c9m, 658, 285, 'C9 圈内原字不能确认，紧框待核，不按胆经顺序起名')
+    for box in whole_interiors:
+        ink, x0, y0 = interior_ink(*box)
+        if not emit_ink(ink, x0, y0, '圈内原字未辨清，整块紧框保留，不拆成偏旁，也不猜名'):
+            empty_pending.append(list(box))
+    for cx, cy, rad, _klass in PERIPH:
+        if abs(cx - 585) < 1 and abs(cy - 175) < 1:
+            inv.append({'id': 'periph-gan', 'type': 'text', 'redrawn': True, 'cx': cx, 'cy': cy,
+                        'why': '右上绿圈已有确认字肝，不叠旧墨'})
+            continue
+        ink, x0, y0 = interior_ink(cx - rad + 1.5, cy - rad + 1.5, cx + rad - 1.5, cy + rad - 1.5)
+        yy, xx = np.mgrid[0:ink.shape[0], 0:ink.shape[1]]
+        inside = (xx + x0 - cx) ** 2 + (yy + y0 - cy) ** 2 <= (rad - 2.0) ** 2
+        emit_ink(ink & inside, x0, y0, '外围彩圆内原字未辨清，紧框待核，不编号')
     kept.append('</g>')
     ring_glyphs = [[] for _ in RING_RADII]
     for i, rad in enumerate(RING_RADII):
@@ -508,11 +599,15 @@ def main_redraw():
         'html': OUT.name,
         'default_layer': '纸色底。六表 72 条短格、穹顶、五行轮、右下六行表、三道外围圆、双线辐条，都按源坐标。',
         'pure_geometry': '藏起待核字裁片后，矢量层仍在。中心花形内部曲线未描。',
+        'stage': '混合阶段稿。几何和九环色序沿用 2887065，本轮只补确定被盖掉的字。默认仍有待核原字裁片，不是全矢量。',
+        'restored_font': [t for t, *_rest in fixes] + ['阳', '阴'],
         'not_done': [
-            '中心 (384,276)-(424,316) 的 S 曲线是 C 级，只画了 r20 圆边，没有编造太极。',
-            '五行轮外五处手写、右下表细字、环上原字没有辨清，只留紧框或标待核，没有新写。',
-            '规格没有逐字绑点的组保持待核，没有用附近饱和色块配名。',
-            'L3 外侧虚线和 R3 末端被字挡住，端点容差约 3 像素，没有补箭头。',
+            '九环原微字和刻度没有转成字体。ring0-numerals 到 ring8-numerals 仍是待核，没有新写数字。',
+            '五行轮外 5 个手写框待核，没有贴五行名。',
+            '右下表细字待核。(576,507)-(588,518) 这一格没有可靠字，仍是缺字框。',
+            '中心 (384,276)-(424,316) 仍是原曲线裁片，只另有 r20 圆边，不是矢量重绘。',
+            'C9 (658,285)-(687,301) 原字不能确认，只留紧框，没有写成临泣或绝骨。',
+            '规格没有逐字绑点的组保持待核。隐白、章门与邻行同一色块，没有重复绑定。脾俞这一行没有饱和色块。',
         ],
         'geometry': {
             'color_bars': len(bars),
